@@ -21,7 +21,7 @@ class AccessibleImageImpl(AccessibleImage):
 		self.prefixId = configure.getParameter('prefix-generated-ids')
 		self.classListImageAreas = configure.getParameter('class-list-image-areas')
 		self.classLongDescriptionLink = configure.getParameter('class-longdescription-link')
-		self.textLongDescriptionLink = configure.getParameter('text-longdescription-link')
+		self.sufixLongDescriptionLink = configure.getParameter('sufix-longdescription-link')
 		self.dataListForImage = configure.getParameter('data-list-for-image')
 		self.dataLongDescriptionForImage = configure.getParameter('data-longdescription-for-image')
 		self.dataIgnore = configure.getParameter('data-ignore')
@@ -65,9 +65,9 @@ class AccessibleImageImpl(AccessibleImage):
 			if self.parser.find('[' + self.dataLongDescriptionForImage + '=' + element.getAttribute('id') + ']').firstResult() == None:
 				text = None
 				if element.hasAttribute('alt'):
-					text = element.getAttribute('alt') + ' ' + self.textLongDescriptionLink
+					text = element.getAttribute('alt') + ' ' + self.sufixLongDescriptionLink
 				else:
-					text = self.textLongDescriptionLink
+					text = self.sufixLongDescriptionLink
 				longDescription = element.getAttribute('longdesc')
 				anchor = self.parser.createElement('a')
 				anchor.setAttribute('href', longDescription)
