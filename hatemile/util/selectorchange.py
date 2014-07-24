@@ -13,25 +13,49 @@
 #limitations under the License.
 
 class SelectorChange:
+	"""
+	The SelectorChange class store the selector that be attribute change.
+	__version__ = 2014-07-23
+	"""
+	
 	def __init__(self, selector = None, attribute = None, valueForAttribute = None):
+		"""
+		Inicializes a new object with the values pre-defineds.
+		@param selector: The selector.
+		@type selector: str
+		@param attribute: The attribute.
+		@type attribute: str
+		@param valueForAttribute: The value of the attribute.
+		@type valueForAttribute: str
+		"""
+		
 		self.selector = selector
 		self.attribute = attribute
 		self.valueForAttribute = valueForAttribute
 	
 	def getSelector(self):
+		"""
+		Returns the selector.
+		@return: The selector.
+		@rtype: str
+		"""
+		
 		return self.selector
 	
-	def setSelector(self, selector):
-		self.selector = selector
-		
 	def getAttribute(self):
+		"""
+		Returns the attribute.
+		@return: The attribute.
+		@rtype: str
+		"""
+		
 		return self.attribute
 	
-	def setAttribute(self, attribute):
-		self.attribute = attribute
-	
 	def getValueForAttribute(self):
+		"""
+		Returns the value of the attribute.
+		@return: The value of the attribute.
+		@rtype: str
+		"""
+		
 		return self.valueForAttribute
-	
-	def setValueForAttribute(self, valueForAttribute):
-		self.valueForAttribute = valueForAttribute

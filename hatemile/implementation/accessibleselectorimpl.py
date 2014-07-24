@@ -15,10 +15,26 @@
 from hatemile import AccessibleSelector
 
 class AccessibleSelectorImpl(AccessibleSelector):
+	"""
+	The AccessibleSelectorImpl class is official implementation of
+	AccessibleSelector interface.
+	__version__ = 2014-07-23
+	"""
+	
 	def __init__(self, parser, configure):
+		"""
+		Initializes a new object that manipulate the accessibility through of the
+		selectors of the configuration file.
+		@param parser: The HTML parser.
+		@type parser: L{hatemile.util.HTMLDOMParser}
+		@param configure: The configuration of HaTeMiLe.
+		@type configure: L{hatemile.util.Configure}
+		"""
+		
 		self.parser = parser
 		self.changes = configure.getSelectorChanges()
-		self.dataIgnore = configure.getParameter('data-ignore')
+		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+	
 	def fixSelectors(self):
 		for change in self.changes:
 			elements = self.parser.find(change.getSelector()).listResults()

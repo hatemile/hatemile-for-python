@@ -13,5 +13,14 @@
 #limitations under the License.
 
 class AccessibleSelector:
+	"""
+	The AccessibleSelector interface do changes in selectors.
+	__version__ = 2014-07-23
+	"""
+	
 	def fixSelectors(self):
+		"""
+		Fix changes in selectors.
+		"""
+		
 		pass

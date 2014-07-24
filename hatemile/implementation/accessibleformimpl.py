@@ -17,97 +17,161 @@ from hatemile import AccessibleForm
 import re
 
 class AccessibleFormImpl(AccessibleForm):
+	"""
+	The AccessibleFormImpl class is official implementation of AccessibleForm
+	interface.
+	__version__ = 2014-07-23
+	"""
+	
 	def __init__(self, parser, configure):
+		"""
+		Initializes a new object that manipulate the accessibility of the forms
+		of parser.
+		@param parser: The HTML parser.
+		@type parser: L{hatemile.util.HTMLDOMParser}
+		@param configure: The configuration of HaTeMiLe.
+		@type configure: L{hatemile.util.Configure}
+		"""
+		
 		self.parser = parser
 		self.prefixId = configure.getParameter('prefix-generated-ids')
-		self.classRequiredField = configure.getParameter('class-required-field')
-		self.sufixRequiredField = configure.getParameter('sufix-required-field')
-		self.dataIgnore = configure.getParameter('data-ignore')
-	def fixRequiredField(self, element):
-		if element.hasAttribute('required'):
-			element.setAttribute('aria-required', 'true')
+		self.dataLabelRequiredField = 'data-' + configure.getParameter('data-label-required-field')
+		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+		self.prefixRequiredField = configure.getParameter('prefix-required-field')
+		self.suffixRequiredField = configure.getParameter('suffix-required-field')
+	
+	def _fixLabelRequiredField(self, label, requiredField):
+		"""
+		Do the label or the aria-label to inform in label that the field is
+		required.
+		@param label: The label.
+		@type label: L{hatemile.util.HTMLDOMElement}
+		@param requiredField: The required field.
+		@type requiredField: L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		if (requiredField.hasAttribute('required')) or ((requiredField.hasAttribute('aria-required')) and (requiredField.getAttribute('aria-required').lower() == 'true')):
+			if not label.hasAttribute(self.dataLabelRequiredField):
+				label.setAttribute(self.dataLabelRequiredField, 'true')
+			
+			if requiredField.hasAttribute('aria-label'):
+				contentLabel = requiredField.getAttribute('aria-label')
+				if (self.prefixRequiredField != '') and (self.prefixRequiredField not in contentLabel):
+					contentLabel = self.prefixRequiredField + ' ' + contentLabel
+				if (self.suffixRequiredField != '') and (self.suffixRequiredField not in contentLabel):
+					contentLabel = contentLabel + ' ' + self.suffixRequiredField
+				requiredField.setAttribute('aria-label', contentLabel)
+	
+	def _fixControlAutoComplete(self, control, active):
+		"""
+		Fix the control to inform if it has autocomplete and the type.
+		@param control: The form control.
+		@type control: L{hatemile.util.HTMLDOMElement}
+		@param active: If the element has autocomplete.
+		@type active: bool
+		"""
+		
+		if active == True:
+			control.setAttribute('aria-autocomplete', 'both')
+		elif not ((active == None) and (control.hasAttribute('aria-autocomplete'))):
+			if control.hasAttribute('list'):
+				datalist = self.parser.find('datalist[id=' + control.getAttribute('list') + ']').firstResult()
+				if datalist != None:
+					control.setAttribute('aria-autocomplete', 'list')
+			if (active == False) and ((not control.hasAttribute('aria-autocomplete')) or (control.getAttribute('aria-autocomplete').lower() != 'list')):
+				control.setAttribute('aria-autocomplete', 'none')
+	
+	def fixRequiredField(self, requiredField):
+		if requiredField.hasAttribute('required'):
+			requiredField.setAttribute('aria-required', 'true')
+			
 			labels = None
-			if element.hasAttribute('id'):
-				labels = self.parser.find('label[for=' + element.getAttribute('id') + ']').listResults()
+			if requiredField.hasAttribute('id'):
+				labels = self.parser.find('label[for=' + requiredField.getAttribute('id') + ']').listResults()
 			if not bool(labels):
-				labels = self.parser.find(element).findAncestors('label').listResults()
+				labels = self.parser.find(requiredField).findAncestors('label').listResults()
 			for label in labels:
-				label.setAttribute('class', CommonFunctions.increaseInList(label.getAttribute('class'), self.classRequiredField))
+				self._fixLabelRequiredField(label, requiredField)
+	
 	def fixRequiredFields(self):
-		elements = self.parser.find('[required]').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixRequiredField(element)
-	def fixDisabledField(self, element):
-		if element.hasAttribute('disabled'):
-			element.setAttribute('aria-disabled', 'true')
-	def fixDisabledFields(self):
-		elements = self.parser.find('[disabled]').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixDisabledField(element)
-	def fixReadOnlyField(self, element):
-		if element.hasAttribute('readonly'):
-			element.setAttribute('aria-readonly', 'true')
-	def fixReadOnlyFields(self):
-		elements = self.parser.find('[readonly]').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixReadOnlyField(element)
-	def fixRangeField(self, element):
-		if element.hasAttribute('min'):
-			element.setAttribute('aria-valuemin', element.getAttribute('min'))
-		if element.hasAttribute('max'):
-			element.setAttribute('aria-valuemax', element.getAttribute('max'))
+		requiredFields = self.parser.find('[required]').listResults()
+		for requiredField in requiredFields:
+			if not requiredField.hasAttribute(self.dataIgnore):
+				self.fixRequiredField(requiredField)
+	
+	def fixRangeField(self, rangeField):
+		if rangeField.hasAttribute('min'):
+			rangeField.setAttribute('aria-valuemin', rangeField.getAttribute('min'))
+		if rangeField.hasAttribute('max'):
+			rangeField.setAttribute('aria-valuemax', rangeField.getAttribute('max'))
+	
 	def fixRangeFields(self):
-		elements = self.parser.find('[min],[max]').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixRangeField(element)
-	def fixTextField(self, element):
-		if (element.getTagName() == 'INPUT') and (element.hasAttribute('type')):
-			typeAttribute = element.getAttribute('type').lower()
-			if (typeAttribute == 'text') or (typeAttribute == 'search') or (typeAttribute == 'email') or (typeAttribute == 'url') or (typeAttribute == 'tel') or (typeAttribute == 'number'):
-				element.setAttribute('aria-multiline', 'false')
-		elif element.getTagName() == 'TEXTAREA':
-			element.setAttribute('aria-multiline', 'true')
-	def fixTextFields(self):
-		elements = self.parser.find('input[type=text],input[type=search],input[type=email],input[type=url],input[type=tel],input[type=number],textarea').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixTextField(element)
-	def fixSelectField(self, element):
-		if element.getTagName() == 'SELECT':
-			if element.hasAttribute('multiple'):
-				element.setAttribute('aria-multiselectable', 'true')
+		rangeFields = self.parser.find('[min],[max]').listResults()
+		for rangeField in rangeFields:
+			if not rangeField.hasAttribute(self.dataIgnore):
+				self.fixRangeField(rangeField)
+	
+	def fixLabel(self, label):
+		if label.getTagName() == 'LABEL':
+			field = None
+			if label.hasAttribute('for'):
+				field = self.parser.find('#' + label.getAttribute('for')).firstResult()
 			else:
-				element.setAttribute('aria-multiselectable', 'false')
-	def fixSelectFields(self):
-		elements = self.parser.find('select').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixSelectField(element)
-	def fixLabel(self, element):
-		if element.getTagName() == 'LABEL':
-			inputTag = None
-			if element.hasAttribute('for'):
-				inputTag = self.parser.find('#' + element.getAttribute('for')).firstResult()
-			else:
-				inputTag = self.parser.find(element).findDescendants('input,select,textarea').firstResult()
-				if inputTag != None:
-					CommonFunctions.generateId(inputTag, self.prefixId)
-					element.setAttribute('for', inputTag.getAttribute('id'))
-			if inputTag != None:
-				if not inputTag.hasAttribute('aria-label'):
-					label = re.sub('[ \n\r\t]+', ' ', element.getTextContent().strip())
-					if inputTag.hasAttribute('aria-required'):
-						if (inputTag.getAttribute('aria-required').lower() == 'true') and (not self.sufixRequiredField in label):
-							label += ' ' + self.sufixRequiredField
-					inputTag.setAttribute('aria-label', label)
-				CommonFunctions.generateId(element, self.prefixId)
-				inputTag.setAttribute('aria-labelledby', CommonFunctions.increaseInList(inputTag.getAttribute('aria-labelledby'), element.getAttribute('id')))
+				field = self.parser.find(label).findDescendants('input,select,textarea').firstResult()
+				
+				if field != None:
+					CommonFunctions.generateId(field, self.prefixId)
+					label.setAttribute('for', field.getAttribute('id'))
+			if field != None:
+				if not field.hasAttribute('aria-label'):
+					field.setAttribute('aria-label', re.sub('[ \n\r\t]+', ' ', label.getTextContent().strip()))
+				
+				self._fixLabelRequiredField(label, field)
+				
+				CommonFunctions.generateId(label, self.prefixId)
+				field.setAttribute('aria-labelledby', CommonFunctions.increaseInList(field.getAttribute('aria-labelledby'), label.getAttribute('id')))
+	
 	def fixLabels(self):
-		elements = self.parser.find('label').listResults()
+		labels = self.parser.find('label').listResults()
+		for label in labels:
+			if not label.hasAttribute(self.dataIgnore):
+				self.fixLabel(label)
+	
+	def fixAutoComplete(self, element):
+		if element.hasAttribute('autocomplete'):
+			active = None
+			value = element.getAttribute('autocomplete')
+			if value == 'on':
+				active = True
+			elif value == 'off':
+				active = False
+			if active != None:
+				if element.getTagName() == 'FORM':
+					controls = self.parser.find(element).findDescendants('input,textarea').listResults()
+					if element.hasAttribute('id'):
+						idElement = element.getAttribute('id')
+						controls = controls + self.parser.find('input[form=' + idElement + '],textarea[form=' + idElement + ']').listResults()
+					for control in controls:
+						fix = True
+						if (control.getTagName() == 'INPUT') and (control.hasAttribute('type')):
+							typeControl = control.getAttribute('type').lower()
+							if (typeControl == 'button') or (typeControl == 'submit') or (typeControl == 'reset') or (typeControl == 'image') or (typeControl == 'file') or (typeControl == 'checkbox') or (typeControl == 'radio') or (typeControl == 'password') or (typeControl == 'hidden'):
+								fix = False
+						if fix:
+							autoCompleteControlFormValue = control.getAttribute('autocomplete')
+							if 'on' == autoCompleteControlFormValue:
+								self._fixControlAutoComplete(control, True)
+							elif 'off' == autoCompleteControlFormValue:
+								self._fixControlAutoComplete(control, False)
+							else:
+								self._fixControlAutoComplete(control, active)
+				else:
+					self._fixControlAutoComplete(element, active)
+		if (not element.hasAttribute('aria-autocomplete')) and (element.hasAttribute('list')):
+			self._fixControlAutoComplete(element, None)
+	
+	def fixAutoCompletes(self):
+		elements = self.parser.find('[autocomplete],[list]').listResults()
 		for element in elements:
 			if not element.hasAttribute(self.dataIgnore):
-				self.fixLabel(element)
+				self.fixAutoComplete(element)

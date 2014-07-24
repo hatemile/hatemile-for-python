@@ -13,9 +13,33 @@
 #limitations under the License.
 
 class AccessibleShortcut:
+	"""
+	The AccessibleShortcut interface fix the problems of accessibility associated
+	with the shortcuts.
+	__version__ = 2014-07-23
+	"""
+	
 	def getPrefix(self):
+		"""
+		Returns the browser shortcut prefix.
+		@return: The browser shortcut prefix.
+		@rtype: str
+		"""
+		
 		pass
+	
 	def fixShortcut(self, element):
+		"""
+		Fix the element with shortcuts.
+		@param element: The element with shortcuts.
+		@type element: L{hatemile.util.HTMLDOMElement}
+		"""
+		
 		pass
+	
 	def fixShortcuts(self):
+		"""
+		Fix the elements with shortcuts.
+		"""
+		
 		pass

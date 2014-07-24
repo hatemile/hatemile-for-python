@@ -14,6 +14,16 @@
 
 from accessibleshortcut import AccessibleShortcut
 
-class ClienteSideAccessibleShortcut(AccessibleShortcut):
-    def showShortcuts(self):
-        pass
+class ClientSideAccessibleShortcut(AccessibleShortcut):
+	"""
+	The ClientSideAccessibleShortcut interface fix the problems of accessibility
+	associated with the shortcuts, with more options in by the client-side.
+	__version__ = 2014-07-23
+	"""
+	
+	def showShortcuts(self):
+		"""
+		Show the shortcuts for the user.
+		"""
+		
+		pass

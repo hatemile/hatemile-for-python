@@ -16,66 +16,89 @@ from hatemile.util import CommonFunctions
 from hatemile import AccessibleImage
 
 class AccessibleImageImpl(AccessibleImage):
+	"""
+	The AccessibleImageImpl class is official implementation of AccessibleImage
+	interface.
+	__version__ = 2014-07-23
+	"""
+	
 	def __init__(self, parser, configure):
+		"""
+		Initializes a new object that manipulate the accessibility of the images
+		of parser.
+		@param parser: The HTML parser.
+		@type parser: L{hatemile.util.HTMLDOMParser}
+		@param configure: The configuration of HaTeMiLe.
+		@type configure: L{hatemile.util.Configure}
+		"""
+		
 		self.parser = parser
 		self.prefixId = configure.getParameter('prefix-generated-ids')
 		self.classListImageAreas = configure.getParameter('class-list-image-areas')
 		self.classLongDescriptionLink = configure.getParameter('class-longdescription-link')
-		self.sufixLongDescriptionLink = configure.getParameter('sufix-longdescription-link')
-		self.dataListForImage = configure.getParameter('data-list-for-image')
-		self.dataLongDescriptionForImage = configure.getParameter('data-longdescription-for-image')
-		self.dataIgnore = configure.getParameter('data-ignore')
-	def fixMap(self, element):
-		if element.getTagName() == 'MAP':
+		self.prefixLongDescriptionLink = configure.getParameter('prefix-longdescription-link')
+		self.suffixLongDescriptionLink = configure.getParameter('suffix-longdescription-link')
+		self.dataListForImage = 'data-' + configure.getParameter('data-list-for-image')
+		self.dataLongDescriptionForImage = 'data-' + configure.getParameter('data-longdescription-for-image')
+		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+	
+	def fixMap(self, elementMap):
+		if elementMap.getTagName() == 'MAP':
 			name = None
-			if element.hasAttribute('name'):
-				name = element.getAttribute('name')
-			elif element.hasAttribute('id'):
-				name = element.getAttribute('id')
+			if elementMap.hasAttribute('name'):
+				name = elementMap.getAttribute('name')
+			elif elementMap.hasAttribute('id'):
+				name = elementMap.getAttribute('id')
 			if bool(name):
-				listTag = self.parser.createElement('ul')
-				listTag.setAttribute('class', self.classListImageAreas)
-				areas = self.parser.find(element).findChildren('area, a').listResults()
+				elementList = self.parser.createElement('ul')
+				areas = self.parser.find(elementMap).findChildren('area[alt]').listResults()
 				for area in areas:
-					if area.hasAttribute('alt'):
-						item = self.parser.createElement('li')
-						anchor = self.parser.createElement('a')
-						anchor.appendText(area.getAttribute('alt'))
-						CommonFunctions.setListAttributes(area, anchor, ['href',
-								'target', 'download', 'hreflang', 'media',
-								'rel', 'type', 'title'])
-						item.appendElement(anchor)
-						listTag.appendElement(item)
-				if listTag.hasChildren():
+					item = self.parser.createElement('li')
+					anchor = self.parser.createElement('a')
+					anchor.appendText(area.getAttribute('alt'))
+					
+					CommonFunctions.setListAttributes(area, anchor, ['href', 'tabindex'
+							, 'target', 'download', 'hreflang', 'media', 'nohref', 'ping', 'rel'
+							, 'type', 'title', 'accesskey', 'name', 'onblur', 'onfocus', 'onmouseout'
+							, 'onmouseover', 'onkeydown', 'onkeypress', 'onkeyup', 'onmousedown'
+							, 'onclick', 'ondblclick', 'onmouseup'])
+					
+					item.appendElement(anchor)
+					elementList.appendElement(item)
+				if elementList.hasChildren():
+					elementList.setAttribute('class', self.classListImageAreas)
 					images = self.parser.find('[usemap=#' + name + ']').listResults()
 					for image in images:
 						CommonFunctions.generateId(image, self.prefixId)
-						if self.parser.find('[' + self.dataListForImage + '=' + image.getAttribute('id') + ']').firstResult() == None:
-							newList = listTag.cloneElement()
-							newList.setAttribute(self.dataListForImage, image.getAttribute('id'))
+						idElement = image.getAttribute('id')
+						if self.parser.find('[' + self.dataListForImage + '=' + idElement + ']').firstResult() == None:
+							newList = elementList.cloneElement()
+							newList.setAttribute(self.dataListForImage, idElement)
 							image.insertAfter(newList)
+	
 	def fixMaps(self):
-		elements = self.parser.find('map').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixMap(element)
+		maps = self.parser.find('map').listResults()
+		for elementMap in maps:
+			if not elementMap.hasAttribute(self.dataIgnore):
+				self.fixMap(elementMap)
+	
 	def fixLongDescription(self, element):
 		if element.hasAttribute('longdesc'):
 			CommonFunctions.generateId(element, self.prefixId)
-			if self.parser.find('[' + self.dataLongDescriptionForImage + '=' + element.getAttribute('id') + ']').firstResult() == None:
-				text = None
+			idElement = element.getAttribute('id')
+			if self.parser.find('[' + self.dataLongDescriptionForImage + '=' + idElement + ']').firstResult() == None:
 				if element.hasAttribute('alt'):
-					text = element.getAttribute('alt') + ' ' + self.sufixLongDescriptionLink
+					text = self.prefixLongDescriptionLink + ' ' + element.getAttribute('alt') + ' ' + self.suffixLongDescriptionLink
 				else:
-					text = self.sufixLongDescriptionLink
-				longDescription = element.getAttribute('longdesc')
+					text = self.prefixLongDescriptionLink + ' ' + self.suffixLongDescriptionLink
 				anchor = self.parser.createElement('a')
-				anchor.setAttribute('href', longDescription)
+				anchor.setAttribute('href', element.getAttribute('longdesc'))
 				anchor.setAttribute('target', '_blank')
-				anchor.setAttribute(self.dataLongDescriptionForImage, element.getAttribute('id'))
+				anchor.setAttribute(self.dataLongDescriptionForImage, idElement)
 				anchor.setAttribute('class', self.classLongDescriptionLink)
-				anchor.appendText(text)
+				anchor.appendText(text.strip())
 				element.insertAfter(anchor)
+	
 	def fixLongDescriptions(self):
 		elements = self.parser.find('[longdesc]').listResults()
 		for element in elements:

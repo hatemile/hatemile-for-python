@@ -16,17 +16,50 @@ from hatemile.util import CommonFunctions
 from hatemile import AccessibleTable
 
 class AccessibleTableImpl(AccessibleTable):
+	"""
+	The AccessibleTableImpl class is official implementation of AccessibleTable
+	interface.
+	__version__ = 2014-07-23
+	"""
+	
 	def __init__(self, parser, configure):
+		"""
+		Initializes a new object that manipulate the accessibility of the tables
+		of parser.
+		@param parser: The HTML parser.
+		@type parser: L{hatemile.util.HTMLDOMParser}
+		@param configure: The configuration of HaTeMiLe.
+		@type configure: L{hatemile.util.Configure}
+		"""
+		
 		self.parser = parser
 		self.prefixId = configure.getParameter('prefix-generated-ids')
-		self.dataIgnore = configure.getParameter('data-ignore')
-	def generatePart(self, part):
+		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+	
+	def _generatePart(self, part):
+		"""
+		Returns a list that represents the table.
+		@param part: The table header, table footer or table body.
+		@type part: L{hatemile.util.HTMLDOMElement}
+		@return: The list that represents the table.
+		@rtype: array.array.L{hatemile.util.HTMLDOMElement}
+		"""
+		
 		rows = self.parser.find(part).findChildren('tr').listResults()
 		table = []
 		for row in rows:
-			table.append(self.generateColspan(self.parser.find(row).findChildren('td,th').listResults()))
-		return self.generateRowspan(table)
-	def generateRowspan(self, rows):
+			table.append(self._generateColspan(self.parser.find(row).findChildren('td,th').listResults()))
+		return self._generateRowspan(table)
+	
+	def _generateRowspan(self, rows):
+		"""
+		Returns a list that represents the table with the rowspans.
+		@param rows: The list that represents the table without the rowspans.
+		@type rows: array.array.L{hatemile.util.HTMLDOMElement}
+		@return The list that represents the table with the rowspans.
+		@rtype: array.array.L{hatemile.util.HTMLDOMElement}
+		"""
+		
 		copy = [] + rows
 		table = []
 		if bool(rows):
@@ -62,8 +95,18 @@ class AccessibleTableImpl(AccessibleTable):
 									table[n].append(None)
 								table[n].append(cell)
 		return table
-	def generateColspan(self, row):
-		copy = []  + row
+	
+	def _generateColspan(self, row):
+		"""
+		Returns a list that represents the line of table with the colspans.
+		@param row: The list that represents the line of table without the
+		colspans.
+		@type row: array.L{hatemile.util.HTMLDOMElement}
+		@return: The list that represents the line of table with the colspans.
+		@rtype: array.L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		copy = [] + row
 		cells = [] + row
 		size = len(row)
 		for i in range(0, size):
@@ -74,84 +117,113 @@ class AccessibleTableImpl(AccessibleTable):
 					for j in range(1, colspan):
 						copy.insert(i + j, cell)
 		return copy
-	def validateHeader(self, header):
+	
+	def _validateHeader(self, header):
+		"""
+		Validate the list that represents the table header.
+		@param header: The list that represents the table header.
+		@type header: array.array.L{hatemile.util.HTMLDOMElement}
+		@return: True if the table header is valid or False if the table header is
+		not valid.
+		@rtype: bool
+		"""
+		
 		if not bool(header):
 			return False
 		length = -1
-		for elements in header:
-			if not bool(elements):
+		for row in header:
+			if not bool(row):
 				return False
 			elif length == -1:
-				length = len(elements)
-			elif len(elements) != length:
+				length = len(row)
+			elif len(row) != length:
 				return False
 		return True
-	def returnListIdsColumns(self, header, index):
+	
+	def _returnListIdsColumns(self, header, index):
+		"""
+		Returns a list with ids of rows of same column.
+		@param header: The list that represents the table header.
+		@type header: array.array.L{hatemile.util.HTMLDOMElement}
+		@param index: The index of columns.
+		@type index: int
+		@return: The list with ids of rows of same column.
+		@rtype: array.str
+		"""
+		
 		ids = []
 		for row in header:
 			if row[index].getTagName() == 'TH':
 				ids.append(row[index].getAttribute('id'))
 		return ids
-	def fixBodyOrFooter(self, element):
-		table = self.generatePart(element)
+	
+	def _fixBodyOrFooter(self, element):
+		"""
+		Fix the table body or table footer.
+		@param element: The table body or table footer.
+		@type element: L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		table = self._generatePart(element)
 		for cells in table:
 			headersIds = []
 			for cell in cells:
 				if cell.getTagName() == 'TH':
 					CommonFunctions.generateId(cell, self.prefixId)
-					cell.setAttribute('scope', 'row')
 					headersIds.append(cell.getAttribute('id'))
+					
+					cell.setAttribute('scope', 'row')
 			if bool(headersIds):
 				for cell in cells:
 					if cell.getTagName() == 'TD':
-						headers = None
-						if cell.hasAttribute('headers'):
-							headers = cell.getAttribute('headers')
+						headers = cell.getAttribute('headers')
 						for headerId in headersIds:
 							headers = CommonFunctions.increaseInList(headers, headerId)
 						cell.setAttribute('headers', headers)
-	def fixHeader(self, element):
-		if element.getTagName() == 'THEAD':
-			cells = self.parser.find(element).findChildren('tr').findChildren('th').listResults()
-			for cell in cells:
-				CommonFunctions.generateId(cell, self.prefixId)
-				cell.setAttribute('scope', 'col')
-	def fixFooter(self, element):
-		if element.getTagName() == 'TFOOT':
-			self.fixBodyOrFooter(element)
-	def fixBody(self, element):
-		if element.getTagName() == 'TBODY':
-			self.fixBodyOrFooter(element)
-	def fixTable(self, element):
-		header = self.parser.find(element).findChildren('thead').firstResult()
-		body = self.parser.find(element).findChildren('tbody').firstResult()
-		footer = self.parser.find(element).findChildren('tfoot').firstResult()
+	
+	def _fixHeader(self, tableHeader):
+		"""
+		Fix the table header.
+		@param tableHeader: The table header.
+		@type tableHeader: L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		cells = self.parser.find(tableHeader).findChildren('tr').findChildren('th').listResults()
+		for cell in cells:
+			CommonFunctions.generateId(cell, self.prefixId)
+			
+			cell.setAttribute('scope', 'col')
+	
+	def fixTable(self, table):
+		header = self.parser.find(table).findChildren('thead').firstResult()
+		body = self.parser.find(table).findChildren('tbody').firstResult()
+		footer = self.parser.find(table).findChildren('tfoot').firstResult()
 		if header != None:
-			self.fixHeader(header)
-			headerCells = self.generatePart(header)
-			if (self.validateHeader(headerCells)) and (body != None):
+			self._fixHeader(header)
+			
+			headerCells = self._generatePart(header)
+			if (body != None) and (self._validateHeader(headerCells)):
 				lengthHeader = len(headerCells[0])
-				table = self.generatePart(body)
+				fakeTable = self._generatePart(body)
 				if footer != None:
-					table = table + self.generatePart(footer)
-				for cells in table:
-					i = 0
+					fakeTable = fakeTable + self._generatePart(footer)
+				for cells in fakeTable:
 					if len(cells) == lengthHeader:
+						i = 0
 						for cell in cells:
-							ids = self.returnListIdsColumns(headerCells, i)
-							headers = None
-							if cell.hasAttribute('headers'):
-								headers = cell.getAttribute('headers')
-							for idElement in ids:
-								headers = CommonFunctions.increaseInList(headers, idElement)
+							headersIds = self._returnListIdsColumns(headerCells, i)
+							headers = cell.getAttribute('headers')
+							for headersId in headersIds:
+								headers = CommonFunctions.increaseInList(headers, headersId)
 							cell.setAttribute('headers', headers)
 							i += 1
 		if body != None:
-			self.fixBody(body)
+			self._fixBodyOrFooter(body)
 		if footer != None:
-			self.fixFooter(footer)
+			self._fixBodyOrFooter(footer)
+	
 	def fixTables(self):
-		elements = self.parser.find('table').listResults()
-		for element in elements:
-			if not element.hasAttribute(self.dataIgnore):
-				self.fixTable(element)
+		tables = self.parser.find('table').listResults()
+		for table in tables:
+			if not table.hasAttribute(self.dataIgnore):
+				self.fixTable(table)

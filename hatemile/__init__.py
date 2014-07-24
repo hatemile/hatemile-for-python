@@ -4,4 +4,4 @@ from .accessibleimage import AccessibleImage
 from .accessibleselector import AccessibleSelector
 from .accessibleshortcut import AccessibleShortcut
 from .accessibletable import AccessibleTable
-from .clientesideaccessibleshortcut import ClienteSideAccessibleShortcut
+from .clientsideaccessibleshortcut import ClientSideAccessibleShortcut
