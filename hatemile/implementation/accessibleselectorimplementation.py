@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -14,11 +12,10 @@
 
 from hatemile import AccessibleSelector
 
-class AccessibleSelectorImpl(AccessibleSelector):
+class AccessibleSelectorImplementation(AccessibleSelector):
 	"""
 	The AccessibleSelectorImpl class is official implementation of
 	AccessibleSelector interface.
-	__version__ = 2014-07-23
 	"""
 	
 	def __init__(self, parser, configure):
@@ -33,7 +30,7 @@ class AccessibleSelectorImpl(AccessibleSelector):
 		
 		self.parser = parser
 		self.changes = configure.getSelectorChanges()
-		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+		self.dataIgnore = 'data-ignoreaccessibilityfix'
 	
 	def fixSelectors(self):
 		for change in self.changes:

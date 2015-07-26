@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -14,11 +12,12 @@
 
 from xml.dom import minidom
 from selectorchange import SelectorChange
+from skipper import Skipper
+import os
 
 class Configure:
 	"""
 	The Configure class contains the configuration of HaTeMiLe.
-	__version__ = 2014-07-23
 	"""
 	
 	def __init__(self, fileName = None):
@@ -30,8 +29,9 @@ class Configure:
 		
 		self.parameters = {}
 		self.selectorChanges = []
+		self.skippers = []
 		if fileName == None:
-			fileName = 'hatemile-configure.xml'
+			fileName = os.path.dirname(os.path.realpath(__file__)) + '/../../hatemile-configure.xml'
 		xmldoc = minidom.parse(fileName)
 		params = xmldoc.getElementsByTagName('parameters')[0].getElementsByTagName('parameter')
 		for param in params:
@@ -42,6 +42,9 @@ class Configure:
 		changes = xmldoc.getElementsByTagName('selector-changes')[0].getElementsByTagName('selector-change')
 		for change in changes:
 			self.selectorChanges.append(SelectorChange(change.attributes['selector'].value, change.attributes['attribute'].value, change.attributes['value-attribute'].value))
+		skippers = xmldoc.getElementsByTagName('skippers')[0].getElementsByTagName('skipper')
+		for skipper in skippers:
+			self.skippers.append(Skipper(skipper.attributes['selector'].value, skipper.attributes['default-text'].value, skipper.attributes['shortcut'].value))
 	
 	def getParameters(self):
 		"""
@@ -71,3 +74,12 @@ class Configure:
 		"""
 		
 		return [] + self.selectorChanges
+	
+	def getSkippers(self):
+		"""
+		Returns the skippers.
+		@return: The skippers.
+		@rtype: array.L{hatemile.util.Skipper}
+		"""
+		
+		return [] + self.skippers

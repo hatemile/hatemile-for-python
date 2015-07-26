@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -17,7 +15,6 @@ import re
 class CommonFunctions:
 	"""
 	The CommonFuncionts class contains the used methods by HaTeMiLe classes.
-	__version__ = 2014-07-23
 	"""
 	
 	count = 0
@@ -35,6 +32,14 @@ class CommonFunctions:
 		if not element.hasAttribute('id'):
 			element.setAttribute('id', prefix + str(CommonFunctions.count))
 			CommonFunctions.count += 1
+	
+	@staticmethod
+	def resetCount():
+		"""
+		Reset the count number of ids.
+		"""
+		
+		CommonFunctions.count = 0
 	
 	@staticmethod
 	def setListAttributes(element1, element2, attributes):
@@ -56,22 +61,40 @@ class CommonFunctions:
 	def increaseInList(listToIncrease, stringToIncrease):
 		"""
 		The list of attributes that will be copied.
-		@param listToIncrease: The HTML list.
+		@param listToIncrease: The list.
 		@type listToIncrease: str
 		@param stringToIncrease: The value of item.
 		@type stringToIncrease: str
-		@return: The HTML list with the item added, if the item not was contained
+		@return: The list with the item added, if the item not was contained
 		in list.
 		@rtype: str
 		"""
 		
 		if (bool(listToIncrease)) and (bool(stringToIncrease)):
-			elements = re.split('[ \n\t\r]+', listToIncrease)
-			for element in elements:
-				if element == stringToIncrease:
-					return listToIncrease
-			return listToIncrease + ' ' + stringToIncrease
+			if CommonFunctions.inList(listToIncrease, stringToIncrease):
+				return listToIncrease
+			else:
+				return listToIncrease + ' ' + stringToIncrease
 		elif bool(listToIncrease):
 			return listToIncrease
 		else:
 			return stringToIncrease
+	
+	@staticmethod
+	def inList(listToSearch, stringToSearch):
+		"""
+		Verify if the list contains the item.
+		@param listToSearch: The list.
+		@type listToSearch: str
+		@param stringToSearch: The value of item.
+		@type stringToSearch: str
+		@return: True if the list contains the item or false is not contains.
+		@rtype: bool
+		"""
+		
+		if (bool(listToSearch)) and (bool(stringToSearch)):
+			elements = re.split('[ \n\t\r]+', listToSearch)
+			for element in elements:
+				if element == stringToSearch:
+					return True
+		return False

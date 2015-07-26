@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -15,13 +13,12 @@
 from bs4 import BeautifulSoup
 from bs4 import PageElement
 from hatemile.util import HTMLDOMElement
-import copy
+import copy, re
 
 class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
 	"""
 	The BeautifulSoupHTMLDOMElement class is official implementation of HTMLDOMElement
 	interface for the BeautifulSoup library.
-	__version__ = 2014-07-23
 	"""
 	
 	def __init__(self, element):
@@ -50,10 +47,14 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
 	
 	def setAttribute(self, name, value):
 		self.data[name] = value
+		if bool(re.findall('^data-', name)):
+			self.data[re.sub('^data-', 'dataaaaaa', name)] = value
 	
 	def removeAttribute(self, name):
 		if self.hasAttribute(name):
 			del(self.data[name])
+			if bool(re.findall('^data-', name)):
+				del(self.data[re.sub('^data-', 'dataaaaaa', name)])
 	
 	def hasAttribute(self, name):
 		return self.data.has_attr(name)

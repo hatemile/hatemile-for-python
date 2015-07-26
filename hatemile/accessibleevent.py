@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -14,63 +12,63 @@
 
 class AccessibleEvent:
 	"""
-	The AccessibleEvent interface fix the problems of accessibility associated
-	with Javascript events in the elements.
-	__version__ = 2014-07-23
+	The AccessibleEvent interface fixes accessibility problems associated
+	with JavaScript events in elements.
 	"""
 	
-	def fixOnHover(self, element):
+	def fixDrop(self, element):
 		"""
-		Fix some problem of accessibility in the events that are called when an
-		element is hovered.
-		@param element: The element that will be fixed.
+		Provide a solution for the element that has drop events.
+		@param element: The element with drop event.
 		@type element: L{hatemile.util.HTMLDOMElement}
-		@see: U{G90: Providing keyboard-triggered event handlers<http://www.w3.org/TR/WCAG20-TECHS/G90.html>}
-		@see: U{G202: Ensuring keyboard control for all functionality<http://www.w3.org/TR/WCAG20-TECHS/G202.html>}
-		@see: U{SCR2: Using redundant keyboard and mouse event handlers<http://www.w3.org/TR/WCAG20-TECHS/SCR2.html>}
-		@see: U{SCR20: Using both keyboard and other device-specific functions<http://www.w3.org/TR/WCAG20-TECHS/SCR20.html>}
-		@see: U{SCR29: Adding keyboard-accessible actions to static HTML elements<http://www.w3.org/TR/WCAG20-TECHS/SCR29.html>}
 		"""
 		
 		pass
 	
-	def fixOnHovers(self):
+	def fixDrag(self, element):
 		"""
-		Fix some problem of accessibility in the events that are called when any
-		element of page is hovered.
-		@see: U{G90: Providing keyboard-triggered event handlers<http://www.w3.org/TR/WCAG20-TECHS/G90.html>}
-		@see: U{G202: Ensuring keyboard control for all functionality<http://www.w3.org/TR/WCAG20-TECHS/G202.html>}
-		@see: U{SCR2: Using redundant keyboard and mouse event handlers<http://www.w3.org/TR/WCAG20-TECHS/SCR2.html>}
-		@see: U{SCR20: Using both keyboard and other device-specific functions<http://www.w3.org/TR/WCAG20-TECHS/SCR20.html>}
-		@see: U{SCR29: Adding keyboard-accessible actions to static HTML elements<http://www.w3.org/TR/WCAG20-TECHS/SCR29.html>}
-		"""
-		
-		pass
-	
-	def fixOnActive(self, element):
-		"""
-		Fix some problem of accessibility in the events that are called when an
-		element is actived.
-		@param element: The element that will be fixed.
+		Provide a solution for the element that has drag events.
+		@param element: The element with drag event.
 		@type element: L{hatemile.util.HTMLDOMElement}
-		@see: U{G90: Providing keyboard-triggered event handlers<http://www.w3.org/TR/WCAG20-TECHS/G90.html>}
-		@see: U{G202: Ensuring keyboard control for all functionality<http://www.w3.org/TR/WCAG20-TECHS/G202.html>}
-		@see: U{SCR2: Using redundant keyboard and mouse event handlers<http://www.w3.org/TR/WCAG20-TECHS/SCR2.html>}
-		@see: U{SCR20: Using both keyboard and other device-specific functions<http://www.w3.org/TR/WCAG20-TECHS/SCR20.html>}
-		@see: U{SCR29: Adding keyboard-accessible actions to static HTML elements<http://www.w3.org/TR/WCAG20-TECHS/SCR29.html>}
 		"""
 		
 		pass
 	
-	def fixOnActives(self):
+	def fixDragsandDrops(self):
 		"""
-		Fix some problem of accessibility in the events that are called when any
-		element of page is actived.
-		@see: U{G90: Providing keyboard-triggered event handlers<http://www.w3.org/TR/WCAG20-TECHS/G90.html>}
-		@see: U{G202: Ensuring keyboard control for all functionality<http://www.w3.org/TR/WCAG20-TECHS/G202.html>}
-		@see: U{SCR2: Using redundant keyboard and mouse event handlers<http://www.w3.org/TR/WCAG20-TECHS/SCR2.html>}
-		@see: U{SCR20: Using both keyboard and other device-specific functions<http://www.w3.org/TR/WCAG20-TECHS/SCR20.html>}
-		@see: U{SCR29: Adding keyboard-accessible actions to static HTML elements<http://www.w3.org/TR/WCAG20-TECHS/SCR29.html>}
+		Provide a solution for elements that has Drag-and-Drop events.
+		"""
+		
+		pass
+	
+	def fixHover(self, element):
+		"""
+		Provide a solution for the element that has inaccessible hover events.
+		@param element: The element with hover event.
+		@type element: L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		pass
+	
+	def fixHovers(self):
+		"""
+		Provide a solution for elements that has inaccessible hover events.
+		"""
+		
+		pass
+	
+	def fixActive(self, element):
+		"""
+		Provide a solution for the element that has inaccessible active events.
+		@param element: The element with active event.
+		@type element: L{hatemile.util.HTMLDOMElement}
+		"""
+		
+		pass
+	
+	def fixActives(self):
+		"""
+		Provide a solution for elements that has inaccessible active events.
 		"""
 		
 		pass

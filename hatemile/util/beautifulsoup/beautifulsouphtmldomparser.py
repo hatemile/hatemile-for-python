@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -21,7 +19,6 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 	"""
 	The class BeautifulSoupHTMLDOMParser is official implementation of HTMLDOMParser
 	interface for the BeautifulSoup library.
-	__version__ = 2014-07-23
 	"""
 	
 	def __init__(self, codeOrParser):
@@ -35,7 +32,14 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 			self.document = codeOrParser
 		else:
 			self.document = BeautifulSoup(codeOrParser)
+			self._fixDataSelect()
 		self.results = []
+	
+	def _inList(self, originalList, item):
+		for itemList in originalList:
+			if item is itemList:
+				return True
+		return False
 	
 	def _sortResults(self, results):
 		"""
@@ -49,7 +53,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		parents = []
 		groups = []
 		for result in results:
-			if not result.parent in parents:
+			if not self._inList(parents, result.parent):
 				parents.append(result.parent)
 				groups.append([])
 				groups[len(groups) - 1].append(result)
@@ -58,18 +62,35 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		array = []
 		for group in groups:
 			array += sorted(group, key=lambda element: element.parent.contents.index(element))
-		return array 
+		return array
+	
+	def _fixDataSelect(self):
+		elements = self.document.select('*')
+		for element in elements:
+			attributes = element.attrs.keys()
+			for attribute in attributes:
+				if bool(re.findall('^data-', attribute)):
+					element[re.sub('data-', 'dataaaaaa', attribute)] = element[attribute]
+	
+	def _removeDataSelect(self):
+		elements = self.document.select('*')
+		for element in elements:
+			attributes = element.attrs.keys()
+			for attribute in attributes:
+				if bool(re.findall('^dataaaaaa', attribute)):
+					del(element[attribute])
 	
 	def find(self, selector):
 		if isinstance(selector, BeautifulSoupHTMLDOMElement):
 			self.results = [selector.getData()]
 		else:
+			selector = re.sub('data-', 'dataaaaaa', selector)
 			selectors = re.split(',', selector)
 			self.results = []
 			for sel in selectors:
 				results = self.document.select(sel)
 				for result in results:
-					if result not in self.results:
+					if not self._inList(self.results, result):
 						self.results.append(result)
 		return self
 	
@@ -77,17 +98,18 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		lastResults = self.results
 		if isinstance(selector, BeautifulSoupHTMLDOMElement):
 			for result in lastResults:
-				if selector in result.children:
+				if self._inList(result.children, selector): 
 					self.results[selector.getData()]
 					break
 		else:
+			selector = re.sub('data-', 'dataaaaaa', selector)
 			selectors = re.split(',', selector)
 			self.results = []
 			for sel in selectors:
 				for lastResult in lastResults:
 					results = lastResult.select(sel)
 					for result in results:
-						if (result in lastResult.children) and (result not in self.results):
+						if (self._inList(lastResult.children, result)) and (not self._inList(self.results, result)):
 							self.results.append(result)
 		return self
 	
@@ -95,17 +117,18 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		lastResults = self.results
 		if isinstance(selector, BeautifulSoupHTMLDOMElement):
 			for result in lastResults:
-				if result in selector.parents:
+				if self._inList(selector.parents, result):
 					self.results = [selector.getData()]
 					break
 		else:
+			selector = re.sub('data-', 'dataaaaaa', selector)
 			selectors = re.split(',', selector)
 			self.results = []
 			for sel in selectors:
 				for lastResult in lastResults:
 					results = lastResult.select(sel)
 					for result in results:
-						if result not in self.results:
+						if not self._inList(self.results, result):
 							self.results.append(result)
 		return self
 	
@@ -113,20 +136,22 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		lastResults = self.results
 		if isinstance(selector, BeautifulSoupHTMLDOMElement):
 			for result in lastResults:
-				if selector in result.parents:
+				if self._inList(result.parents, selector):
 					self.results = [selector.getData()]
 					break
 		else:
 			parents = []
+			self.results = []
+			selector = re.sub('data-', 'dataaaaaa', selector)
 			selectors = re.split(',', selector)
 			for sel in selectors:
 				results = self.document.select(sel)
 				for result in results:
-					if result not in parents:
+					if not self._inList(parents, result):
 						parents.append(result)
 			for result in lastResults:
 				for parent in parents:
-					if (parent in result.parents) and (parent not in self.results):
+					if (self._inList(result.parents, parent)) and (not self._inList(self.results, parent)):
 						self.results.append(parent)
 		return self
 	
@@ -140,7 +165,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 			return None
 		return BeautifulSoupHTMLDOMElement(self.results[len(self.results) - 1])
 	
-	def listResults(self, mank = False):
+	def listResults(self):
 		array = []
 		ordenedResults = self._sortResults(self.results)
 		for result in ordenedResults:
@@ -151,7 +176,10 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 		return BeautifulSoupHTMLDOMElement(self.document.new_tag(tag))
 	
 	def getHTML(self):
-		return self.document.encode(formatter=None)
+		self._removeDataSelect()
+		content = self.document.encode(formatter=None)
+		self._fixDataSelect()
+		return content
 	
 	def getParser(self):
 		return self.document

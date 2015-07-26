@@ -10,25 +10,30 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-class SelectorChange:
+import re
+
+class Skipper:
 	"""
-	The SelectorChange class store the selector that be attribute change.
+	The Skipper class store the selector that will be add a skipper.
 	"""
 	
-	def __init__(self, selector = None, attribute = None, valueForAttribute = None):
+	def __init__(self, selector = None, defaultText = None, shortcuts = None):
 		"""
 		Inicializes a new object with the values pre-defineds.
 		@param selector: The selector.
 		@type selector: str
-		@param attribute: The attribute.
-		@type attribute: str
-		@param valueForAttribute: The value of the attribute.
-		@type valueForAttribute: str
+		@param defaultText: The default text of skipper.
+		@type defaultText: str
+		@param shortcuts: The shortcuts of skipper.
+		@type shortcuts: str
 		"""
 		
 		self.selector = selector
-		self.attribute = attribute
-		self.valueForAttribute = valueForAttribute
+		self.defaultText = defaultText
+		if shortcuts == '':
+			self.shortcuts = []
+		else:
+			self.shortcuts = re.split('[ \n\t\r]+', shortcuts)
 	
 	def getSelector(self):
 		"""
@@ -39,20 +44,20 @@ class SelectorChange:
 		
 		return self.selector
 	
-	def getAttribute(self):
+	def getDefaultText(self):
 		"""
-		Returns the attribute.
-		@return: The attribute.
+		Returns the default text of skipper.
+		@return: The default text of skipper.
 		@rtype: str
 		"""
 		
-		return self.attribute
+		return self.defaultText
 	
-	def getValueForAttribute(self):
+	def getShortcuts(self):
 		"""
-		Returns the value of the attribute.
-		@return: The value of the attribute.
+		Returns the shortcuts of skipper.
+		@return: The shortcuts of skipper.
 		@rtype: str
 		"""
 		
-		return self.valueForAttribute
+		return [] + self.shortcuts

@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -15,7 +13,6 @@
 class HTMLDOMParser:
 	"""
 	The HTMLDOMParser interface contains the methods for access a native parser.
-	__version__ = 2014-07-23
 	"""
 	
 	def find(self, selector):

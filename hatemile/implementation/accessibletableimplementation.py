@@ -1,5 +1,3 @@
-#Copyright 2014 Carlson Santana Cruz
-#
 #Licensed under the Apache License, Version 2.0 (the "License");
 #you may not use this file except in compliance with the License.
 #You may obtain a copy of the License at
@@ -15,11 +13,10 @@
 from hatemile.util import CommonFunctions
 from hatemile import AccessibleTable
 
-class AccessibleTableImpl(AccessibleTable):
+class AccessibleTableImplementation(AccessibleTable):
 	"""
 	The AccessibleTableImpl class is official implementation of AccessibleTable
 	interface.
-	__version__ = 2014-07-23
 	"""
 	
 	def __init__(self, parser, configure):
@@ -34,7 +31,7 @@ class AccessibleTableImpl(AccessibleTable):
 		
 		self.parser = parser
 		self.prefixId = configure.getParameter('prefix-generated-ids')
-		self.dataIgnore = 'data-' + configure.getParameter('data-ignore')
+		self.dataIgnore = 'data-ignoreaccessibilityfix'
 	
 	def _generatePart(self, part):
 		"""
@@ -194,7 +191,7 @@ class AccessibleTableImpl(AccessibleTable):
 			
 			cell.setAttribute('scope', 'col')
 	
-	def fixTable(self, table):
+	def fixAssociationCellsTable(self, table):
 		header = self.parser.find(table).findChildren('thead').firstResult()
 		body = self.parser.find(table).findChildren('tbody').firstResult()
 		footer = self.parser.find(table).findChildren('tfoot').firstResult()
@@ -222,8 +219,8 @@ class AccessibleTableImpl(AccessibleTable):
 		if footer != None:
 			self._fixBodyOrFooter(footer)
 	
-	def fixTables(self):
+	def fixAssociationCellsTables(self):
 		tables = self.parser.find('table').listResults()
 		for table in tables:
 			if not table.hasAttribute(self.dataIgnore):
-				self.fixTable(table)
+				self.fixAssociationCellsTable(table)
