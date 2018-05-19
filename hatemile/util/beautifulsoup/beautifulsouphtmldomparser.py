@@ -15,6 +15,7 @@ from hatemile.util.htmldomparser import HTMLDOMParser
 from hatemile.util.beautifulsoup.beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
 import re
 
+
 class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     """
     The class BeautifulSoupHTMLDOMParser is official implementation of HTMLDOMParser

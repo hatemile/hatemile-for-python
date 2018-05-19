@@ -14,6 +14,7 @@ from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.accessibleevent import AccessibleEvent
 import os
 
+
 class AccessibleEventImplementation(AccessibleEvent):
     """
     The AccessibleEventImplementation class is official implementation of

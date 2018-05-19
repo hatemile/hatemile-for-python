@@ -14,6 +14,7 @@ from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.accessibleform import AccessibleForm
 import re
 
+
 class AccessibleFormImplementation(AccessibleForm):
     """
     The AccessibleFormImplementation class is official implementation of

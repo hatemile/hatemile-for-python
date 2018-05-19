@@ -12,6 +12,7 @@
 
 import re
 
+
 class Skipper:
     """
     The Skipper class store the selector that will be add a skipper.

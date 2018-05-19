@@ -10,6 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 class HTMLDOMElement:
     """
     The HTMLDOMElement interface contains the methods for access of the HTML

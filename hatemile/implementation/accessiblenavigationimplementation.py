@@ -15,6 +15,7 @@ import re
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.skipper import Skipper
 
+
 class AccessibleNavigationImplementation(AccessibleNavigation):
     """
     The AccessibleNavigationImplementation class is official implementation of

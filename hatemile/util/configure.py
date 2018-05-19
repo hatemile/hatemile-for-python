@@ -15,6 +15,7 @@ from hatemile.util.selectorchange import SelectorChange
 from hatemile.util.skipper import Skipper
 import os
 
+
 class Configure:
     """
     The Configure class contains the configuration of HaTeMiLe.

@@ -13,6 +13,7 @@
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.accessibleimage import AccessibleImage
 
+
 class AccessibleImageImplementation(AccessibleImage):
     """
     The AccessibleImageImplementation class is official implementation of

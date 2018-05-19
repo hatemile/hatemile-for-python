@@ -12,6 +12,7 @@
 
 import re
 
+
 class CommonFunctions:
     """
     The CommonFuncionts class contains the used methods by HaTeMiLe classes.

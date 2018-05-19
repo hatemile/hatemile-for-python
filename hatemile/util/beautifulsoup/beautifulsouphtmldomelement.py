@@ -15,6 +15,7 @@ from bs4 import PageElement
 from hatemile.util.htmldomelement import HTMLDOMElement
 import copy, re
 
+
 class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     """
     The BeautifulSoupHTMLDOMElement class is official implementation of HTMLDOMElement

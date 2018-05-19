@@ -12,6 +12,7 @@
 
 from hatemile.accessibleselector import AccessibleSelector
 
+
 class AccessibleSelectorImplementation(AccessibleSelector):
     """
     The AccessibleSelectorImpl class is official implementation of

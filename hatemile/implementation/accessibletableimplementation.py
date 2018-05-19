@@ -13,6 +13,7 @@
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.accessibletable import AccessibleTable
 
+
 class AccessibleTableImplementation(AccessibleTable):
     """
     The AccessibleTableImpl class is official implementation of AccessibleTable

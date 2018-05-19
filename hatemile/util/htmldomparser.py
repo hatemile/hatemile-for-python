@@ -10,6 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 class HTMLDOMParser:
     """
     The HTMLDOMParser interface contains the methods for access a native parser.
