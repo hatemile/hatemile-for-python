@@ -16,9 +16,9 @@ class CommonFunctions:
     """
     The CommonFuncionts class contains the used methods by HaTeMiLe classes.
     """
-    
+
     count = 0
-    
+
     @staticmethod
     def generateId(element, prefix):
         """
@@ -28,19 +28,19 @@ class CommonFunctions:
         @param prefix: The prefix of id.
         @type prefix: str
         """
-        
+
         if not element.hasAttribute('id'):
             element.setAttribute('id', prefix + str(CommonFunctions.count))
             CommonFunctions.count += 1
-    
+
     @staticmethod
     def resetCount():
         """
         Reset the count number of ids.
         """
-        
+
         CommonFunctions.count = 0
-    
+
     @staticmethod
     def setListAttributes(element1, element2, attributes):
         """
@@ -52,11 +52,11 @@ class CommonFunctions:
         @param attributes: The list of attributes that will be copied.
         @type attributes: array.str
         """
-        
+
         for attribute in attributes:
             if element1.hasAttribute(attribute):
                 element2.setAttribute(attribute, element1.getAttribute(attribute))
-    
+
     @staticmethod
     def increaseInList(listToIncrease, stringToIncrease):
         """
@@ -69,7 +69,7 @@ class CommonFunctions:
         in list.
         @rtype: str
         """
-        
+
         if (bool(listToIncrease)) and (bool(stringToIncrease)):
             if CommonFunctions.inList(listToIncrease, stringToIncrease):
                 return listToIncrease
@@ -79,7 +79,7 @@ class CommonFunctions:
             return listToIncrease
         else:
             return stringToIncrease
-    
+
     @staticmethod
     def inList(listToSearch, stringToSearch):
         """
@@ -91,7 +91,7 @@ class CommonFunctions:
         @return: True if the list contains the item or false is not contains.
         @rtype: bool
         """
-        
+
         if (bool(listToSearch)) and (bool(stringToSearch)):
             elements = re.split('[ \n\t\r]+', listToSearch)
             for element in elements:

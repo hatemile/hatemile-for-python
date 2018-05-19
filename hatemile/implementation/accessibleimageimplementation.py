@@ -18,7 +18,7 @@ class AccessibleImageImplementation(AccessibleImage):
     The AccessibleImageImplementation class is official implementation of
     AccessibleImage interface.
     """
-    
+
     def __init__(self, parser, configure):
         """
         Initializes a new object that manipulate the accessibility of the images
@@ -28,7 +28,7 @@ class AccessibleImageImplementation(AccessibleImage):
         @param configure: The configuration of HaTeMiLe.
         @type configure: L{hatemile.util.Configure}
         """
-        
+
         self.parser = parser
         self.prefixId = configure.getParameter('prefix-generated-ids')
         self.classLongDescriptionLink = 'longdescription-link'
@@ -36,7 +36,7 @@ class AccessibleImageImplementation(AccessibleImage):
         self.dataIgnore = 'data-ignoreaccessibilityfix'
         self.prefixLongDescriptionLink = configure.getParameter('prefix-longdescription')
         self.suffixLongDescriptionLink = configure.getParameter('suffix-longdescription')
-    
+
     def fixLongDescription(self, element):
         if element.hasAttribute('longdesc'):
             CommonFunctions.generateId(element, self.prefixId)
@@ -53,7 +53,7 @@ class AccessibleImageImplementation(AccessibleImage):
                 anchor.setAttribute('class', self.classLongDescriptionLink)
                 anchor.appendText(text.strip())
                 element.insertAfter(anchor)
-    
+
     def fixLongDescriptions(self):
         elements = self.parser.find('[longdesc]').listResults()
         for element in elements:

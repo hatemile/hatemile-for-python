@@ -15,19 +15,19 @@ class AccessibleImage:
     The AccessibleImage interface fixes accessibility problems associated
     with images.
     """
-    
+
     def fixLongDescription(self, element):
         """
         Provide an alternative way to access the long description of element.
         @param element: The element with long description.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def fixLongDescriptions(self):
         """
         Provide an alternative way to access the longs descriptions of elements.
         """
-        
+
         pass

@@ -15,16 +15,16 @@ class HTMLDOMElement:
     The HTMLDOMElement interface contains the methods for access of the HTML
     element.
     """
-    
+
     def getTagName(self):
         """
         Returns the tag name of element.
         @return: The tag name of element in uppercase letters.
         @rtype: str
         """
-        
+
         pass
-    
+
     def getAttribute(self, name):
         """
         Returns the value of a attribute.
@@ -34,9 +34,9 @@ class HTMLDOMElement:
         attribute returns None.
         @rtype: str
         """
-        
+
         pass
-    
+
     def setAttribute(self, name, value):
         """
         Create or modify a attribute.
@@ -45,18 +45,18 @@ class HTMLDOMElement:
         @param value: The value of attribute.
         @type value: str
         """
-        
+
         pass
-    
+
     def removeAttribute(self, name):
         """
         Remove a attribute of element.
         @param name: The name of attribute.
         @type name: str
         """
-        
+
         pass
-    
+
     def hasAttribute(self, name):
         """
         Returns if the element has an attribute.
@@ -66,9 +66,9 @@ class HTMLDOMElement:
         has the attribute.
         @rtype: bool
         """
-        
+
         pass
-    
+
     def hasAttributes(self):
         """
         Returns if the element has attributes.
@@ -76,18 +76,18 @@ class HTMLDOMElement:
         has attributes.
         @rtype: bool
         """
-        
+
         pass
-    
+
     def getTextContent(self):
         """
         Returns the text of element.
         @return: The text of element.
         @rtype: str
         """
-        
+
         pass
-    
+
     def insertBefore(self, newElement):
         """
         Insert a element before this element.
@@ -96,9 +96,9 @@ class HTMLDOMElement:
         @return: The element inserted.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def insertAfter(self, newElement):
         """
         Insert a element after this element.
@@ -107,18 +107,18 @@ class HTMLDOMElement:
         @return: The element inserted.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def removeElement(self):
         """
         Remove this element of the parser.
         @return: The removed element.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def replaceElement(self, newElement):
         """
         Replace this element for other element.
@@ -127,9 +127,9 @@ class HTMLDOMElement:
         @return: The element replaced.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def appendElement(self, element):
         """
         Append a element child.
@@ -138,27 +138,27 @@ class HTMLDOMElement:
         @return: The element inserted.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def getChildren(self):
         """
         Returns the children of this element.
         @return: The children of this element.
         @rtype: array.L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def appendText(self, text):
         """
         Append a text child.
         @param text: The text.
         @type text: str
         """
-        
+
         pass
-    
+
     def hasChildren(self):
         """
         Returns if the element has children.
@@ -166,86 +166,86 @@ class HTMLDOMElement:
         children.
         @rtype: bool
         """
-        
+
         pass
-    
+
     def getParentElement(self):
         """
         Returns the parent element of this element.
         @return: The parent element of this element.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def getInnerHTML(self):
         """
         Returns the inner HTML code of this element.
         @return: The inner HTML code of this element.
         @rtype: str
         """
-        
+
         pass
-    
+
     def setInnerHTML(self, html):
         """
         Modify the inner HTML code of this element.
         @param html: The HTML code.
         @type html: str
         """
-        
+
         pass
-    
+
     def getOuterHTML(self):
         """
         Returns the HTML code of this element.
         @return: The HTML code of this element.
         @rtype: str
         """
-        
+
         pass
-    
+
     def getData(self):
         """
         Returns the native object of this element.
         @return: The native object of this element.
         @rtype: object
         """
-        
+
         pass
-    
+
     def setData(self, data):
         """
         Modify the native object of this element.
         @param data: Modify the native object of this element.
         @type data: object
         """
-        
+
         pass
-    
+
     def cloneElement(self):
         """
         Clone this element.
         @return: The clone.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def getFirstElementChild(self):
         """
         Returns the first element child of this element.
         @return: The first element child of this element.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def getLastElementChild(self):
         """
         Returns the last element child of this element.
         @return: The last element child of this element.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass

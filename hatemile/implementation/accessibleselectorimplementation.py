@@ -17,7 +17,7 @@ class AccessibleSelectorImplementation(AccessibleSelector):
     The AccessibleSelectorImpl class is official implementation of
     AccessibleSelector interface.
     """
-    
+
     def __init__(self, parser, configure):
         """
         Initializes a new object that manipulate the accessibility through of the
@@ -27,11 +27,11 @@ class AccessibleSelectorImplementation(AccessibleSelector):
         @param configure: The configuration of HaTeMiLe.
         @type configure: L{hatemile.util.Configure}
         """
-        
+
         self.parser = parser
         self.changes = configure.getSelectorChanges()
         self.dataIgnore = 'data-ignoreaccessibilityfix'
-    
+
     def fixSelectors(self):
         for change in self.changes:
             elements = self.parser.find(change.getSelector()).listResults()

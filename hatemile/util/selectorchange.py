@@ -14,7 +14,7 @@ class SelectorChange:
     """
     The SelectorChange class store the selector that be attribute change.
     """
-    
+
     def __init__(self, selector = None, attribute = None, valueForAttribute = None):
         """
         Inicializes a new object with the values pre-defineds.
@@ -25,34 +25,34 @@ class SelectorChange:
         @param valueForAttribute: The value of the attribute.
         @type valueForAttribute: str
         """
-        
+
         self.selector = selector
         self.attribute = attribute
         self.valueForAttribute = valueForAttribute
-    
+
     def getSelector(self):
         """
         Returns the selector.
         @return: The selector.
         @rtype: str
         """
-        
+
         return self.selector
-    
+
     def getAttribute(self):
         """
         Returns the attribute.
         @return: The attribute.
         @rtype: str
         """
-        
+
         return self.attribute
-    
+
     def getValueForAttribute(self):
         """
         Returns the value of the attribute.
         @return: The value of the attribute.
         @rtype: str
         """
-        
+
         return self.valueForAttribute

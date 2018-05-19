@@ -18,7 +18,7 @@ class AccessibleTableImplementation(AccessibleTable):
     The AccessibleTableImpl class is official implementation of AccessibleTable
     interface.
     """
-    
+
     def __init__(self, parser, configure):
         """
         Initializes a new object that manipulate the accessibility of the tables
@@ -28,11 +28,11 @@ class AccessibleTableImplementation(AccessibleTable):
         @param configure: The configuration of HaTeMiLe.
         @type configure: L{hatemile.util.Configure}
         """
-        
+
         self.parser = parser
         self.prefixId = configure.getParameter('prefix-generated-ids')
         self.dataIgnore = 'data-ignoreaccessibilityfix'
-    
+
     def _generatePart(self, part):
         """
         Returns a list that represents the table.
@@ -41,13 +41,13 @@ class AccessibleTableImplementation(AccessibleTable):
         @return: The list that represents the table.
         @rtype: array.array.L{hatemile.util.HTMLDOMElement}
         """
-        
+
         rows = self.parser.find(part).findChildren('tr').listResults()
         table = []
         for row in rows:
             table.append(self._generateColspan(self.parser.find(row).findChildren('td,th').listResults()))
         return self._generateRowspan(table)
-    
+
     def _generateRowspan(self, rows):
         """
         Returns a list that represents the table with the rowspans.
@@ -56,7 +56,7 @@ class AccessibleTableImplementation(AccessibleTable):
         @return The list that represents the table with the rowspans.
         @rtype: array.array.L{hatemile.util.HTMLDOMElement}
         """
-        
+
         copy = [] + rows
         table = []
         if bool(rows):
@@ -92,7 +92,7 @@ class AccessibleTableImplementation(AccessibleTable):
                                     table[n].append(None)
                                 table[n].append(cell)
         return table
-    
+
     def _generateColspan(self, row):
         """
         Returns a list that represents the line of table with the colspans.
@@ -102,7 +102,7 @@ class AccessibleTableImplementation(AccessibleTable):
         @return: The list that represents the line of table with the colspans.
         @rtype: array.L{hatemile.util.HTMLDOMElement}
         """
-        
+
         copy = [] + row
         cells = [] + row
         size = len(row)
@@ -114,7 +114,7 @@ class AccessibleTableImplementation(AccessibleTable):
                     for j in range(1, colspan):
                         copy.insert(i + j, cell)
         return copy
-    
+
     def _validateHeader(self, header):
         """
         Validate the list that represents the table header.
@@ -124,7 +124,7 @@ class AccessibleTableImplementation(AccessibleTable):
         not valid.
         @rtype: bool
         """
-        
+
         if not bool(header):
             return False
         length = -1
@@ -136,7 +136,7 @@ class AccessibleTableImplementation(AccessibleTable):
             elif len(row) != length:
                 return False
         return True
-    
+
     def _returnListIdsColumns(self, header, index):
         """
         Returns a list with ids of rows of same column.
@@ -147,20 +147,20 @@ class AccessibleTableImplementation(AccessibleTable):
         @return: The list with ids of rows of same column.
         @rtype: array.str
         """
-        
+
         ids = []
         for row in header:
             if row[index].getTagName() == 'TH':
                 ids.append(row[index].getAttribute('id'))
         return ids
-    
+
     def _fixBodyOrFooter(self, element):
         """
         Fix the table body or table footer.
         @param element: The table body or table footer.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         table = self._generatePart(element)
         for cells in table:
             headersIds = []
@@ -168,7 +168,7 @@ class AccessibleTableImplementation(AccessibleTable):
                 if cell.getTagName() == 'TH':
                     CommonFunctions.generateId(cell, self.prefixId)
                     headersIds.append(cell.getAttribute('id'))
-                    
+
                     cell.setAttribute('scope', 'row')
             if bool(headersIds):
                 for cell in cells:
@@ -177,27 +177,27 @@ class AccessibleTableImplementation(AccessibleTable):
                         for headerId in headersIds:
                             headers = CommonFunctions.increaseInList(headers, headerId)
                         cell.setAttribute('headers', headers)
-    
+
     def _fixHeader(self, tableHeader):
         """
         Fix the table header.
         @param tableHeader: The table header.
         @type tableHeader: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         cells = self.parser.find(tableHeader).findChildren('tr').findChildren('th').listResults()
         for cell in cells:
             CommonFunctions.generateId(cell, self.prefixId)
-            
+
             cell.setAttribute('scope', 'col')
-    
+
     def fixAssociationCellsTable(self, table):
         header = self.parser.find(table).findChildren('thead').firstResult()
         body = self.parser.find(table).findChildren('tbody').firstResult()
         footer = self.parser.find(table).findChildren('tfoot').firstResult()
         if header != None:
             self._fixHeader(header)
-            
+
             headerCells = self._generatePart(header)
             if (body != None) and (self._validateHeader(headerCells)):
                 lengthHeader = len(headerCells[0])
@@ -218,7 +218,7 @@ class AccessibleTableImplementation(AccessibleTable):
             self._fixBodyOrFooter(body)
         if footer != None:
             self._fixBodyOrFooter(footer)
-    
+
     def fixAssociationCellsTables(self):
         tables = self.parser.find('table').listResults()
         for table in tables:

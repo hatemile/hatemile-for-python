@@ -15,23 +15,23 @@ class AccessibleNavigation:
     The AccessibleNavigation interface fixes accessibility problems associated
     with navigation.
     """
-    
+
     def fixShortcut(self, element):
         """
         Display the shortcuts of element.
         @param element: The element with shortcuts.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def fixShortcuts(self):
         """
         Display the shortcuts of elements.
         """
-        
+
         pass
-    
+
     def fixSkipper(self, element, skipper):
         """
         Provide content skipper for element.
@@ -40,28 +40,28 @@ class AccessibleNavigation:
         @param skipper: The skipper.
         @type skipper: L{hatemile.util.Skipper}
         """
-        
+
         pass
-    
+
     def fixSkippers(self):
         """
         Provide content skippers.
         """
-        
+
         pass
-    
+
     def fixHeading(self, element):
         """
         Provide a navigation by heading.
         @param element: The heading element.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
-        
+
         pass
-    
+
     def fixHeadings(self):
         """
         Provide a navigation by headings.
         """
-        
+
         pass

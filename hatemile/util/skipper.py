@@ -16,7 +16,7 @@ class Skipper:
     """
     The Skipper class store the selector that will be add a skipper.
     """
-    
+
     def __init__(self, selector = None, defaultText = None, shortcuts = None):
         """
         Inicializes a new object with the values pre-defineds.
@@ -27,37 +27,37 @@ class Skipper:
         @param shortcuts: The shortcuts of skipper.
         @type shortcuts: str
         """
-        
+
         self.selector = selector
         self.defaultText = defaultText
         if shortcuts == '':
             self.shortcuts = []
         else:
             self.shortcuts = re.split('[ \n\t\r]+', shortcuts)
-    
+
     def getSelector(self):
         """
         Returns the selector.
         @return: The selector.
         @rtype: str
         """
-        
+
         return self.selector
-    
+
     def getDefaultText(self):
         """
         Returns the default text of skipper.
         @return: The default text of skipper.
         @rtype: str
         """
-        
+
         return self.defaultText
-    
+
     def getShortcuts(self):
         """
         Returns the shortcuts of skipper.
         @return: The shortcuts of skipper.
         @rtype: str
         """
-        
+
         return [] + self.shortcuts
