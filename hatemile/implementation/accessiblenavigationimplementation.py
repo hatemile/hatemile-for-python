@@ -10,7 +10,7 @@
 #See the License for the specific language governing permissions and
 #limitations under the License.
 
-from hatemile import AccessibleNavigation
+from hatemile.accessiblenavigation import AccessibleNavigation
 import re
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.skipper import Skipper

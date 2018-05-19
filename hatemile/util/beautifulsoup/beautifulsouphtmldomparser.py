@@ -11,8 +11,8 @@
 #limitations under the License.
 
 from bs4 import BeautifulSoup
-from hatemile.util import HTMLDOMParser
-from . import BeautifulSoupHTMLDOMElement
+from hatemile.util.htmldomparser import HTMLDOMParser
+from hatemile.util.beautifulsoup.beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
 import re
 
 class BeautifulSoupHTMLDOMParser(HTMLDOMParser):

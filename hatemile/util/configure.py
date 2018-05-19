@@ -11,8 +11,8 @@
 #limitations under the License.
 
 from xml.dom import minidom
-from selectorchange import SelectorChange
-from skipper import Skipper
+from hatemile.util.selectorchange import SelectorChange
+from hatemile.util.skipper import Skipper
 import os
 
 class Configure:
