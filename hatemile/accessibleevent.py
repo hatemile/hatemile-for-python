@@ -11,64 +11,64 @@
 #limitations under the License.
 
 class AccessibleEvent:
-	"""
-	The AccessibleEvent interface fixes accessibility problems associated
-	with JavaScript events in elements.
-	"""
-	
-	def fixDrop(self, element):
-		"""
-		Provide a solution for the element that has drop events.
-		@param element: The element with drop event.
-		@type element: L{hatemile.util.HTMLDOMElement}
-		"""
-		
-		pass
-	
-	def fixDrag(self, element):
-		"""
-		Provide a solution for the element that has drag events.
-		@param element: The element with drag event.
-		@type element: L{hatemile.util.HTMLDOMElement}
-		"""
-		
-		pass
-	
-	def fixDragsandDrops(self):
-		"""
-		Provide a solution for elements that has Drag-and-Drop events.
-		"""
-		
-		pass
-	
-	def fixHover(self, element):
-		"""
-		Provide a solution for the element that has inaccessible hover events.
-		@param element: The element with hover event.
-		@type element: L{hatemile.util.HTMLDOMElement}
-		"""
-		
-		pass
-	
-	def fixHovers(self):
-		"""
-		Provide a solution for elements that has inaccessible hover events.
-		"""
-		
-		pass
-	
-	def fixActive(self, element):
-		"""
-		Provide a solution for the element that has inaccessible active events.
-		@param element: The element with active event.
-		@type element: L{hatemile.util.HTMLDOMElement}
-		"""
-		
-		pass
-	
-	def fixActives(self):
-		"""
-		Provide a solution for elements that has inaccessible active events.
-		"""
-		
-		pass
+    """
+    The AccessibleEvent interface fixes accessibility problems associated
+    with JavaScript events in elements.
+    """
+    
+    def fixDrop(self, element):
+        """
+        Provide a solution for the element that has drop events.
+        @param element: The element with drop event.
+        @type element: L{hatemile.util.HTMLDOMElement}
+        """
+        
+        pass
+    
+    def fixDrag(self, element):
+        """
+        Provide a solution for the element that has drag events.
+        @param element: The element with drag event.
+        @type element: L{hatemile.util.HTMLDOMElement}
+        """
+        
+        pass
+    
+    def fixDragsandDrops(self):
+        """
+        Provide a solution for elements that has Drag-and-Drop events.
+        """
+        
+        pass
+    
+    def fixHover(self, element):
+        """
+        Provide a solution for the element that has inaccessible hover events.
+        @param element: The element with hover event.
+        @type element: L{hatemile.util.HTMLDOMElement}
+        """
+        
+        pass
+    
+    def fixHovers(self):
+        """
+        Provide a solution for elements that has inaccessible hover events.
+        """
+        
+        pass
+    
+    def fixActive(self, element):
+        """
+        Provide a solution for the element that has inaccessible active events.
+        @param element: The element with active event.
+        @type element: L{hatemile.util.HTMLDOMElement}
+        """
+        
+        pass
+    
+    def fixActives(self):
+        """
+        Provide a solution for elements that has inaccessible active events.
+        """
+        
+        pass

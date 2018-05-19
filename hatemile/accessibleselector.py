@@ -11,13 +11,13 @@
 #limitations under the License.
 
 class AccessibleSelector:
-	"""
-	The AccessibleSelector interface perform changes in selectors.
-	"""
-	
-	def fixSelectors(self):
-		"""
-		Change the selectors.
-		"""
-		
-		pass
+    """
+    The AccessibleSelector interface perform changes in selectors.
+    """
+    
+    def fixSelectors(self):
+        """
+        Change the selectors.
+        """
+        
+        pass

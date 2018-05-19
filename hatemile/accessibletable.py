@@ -11,23 +11,23 @@
 #limitations under the License.
 
 class AccessibleTable:
-	"""
-	The AccessibleTable interface fixes accessibility problems associated
-	with tables.
-	"""
-	
-	def fixAssociationCellsTable(self, table):
-		"""
-		Associate data cells with header cells of table.
-		@param table: The table.
-		@type table: L{hatemile.util.HTMLDOMElement}
-		"""
-		
-		pass
-	
-	def fixAssociationCellsTables(self):
-		"""
-		Associate data cells with header cells of tables.
-		"""
-		
-		pass
+    """
+    The AccessibleTable interface fixes accessibility problems associated
+    with tables.
+    """
+    
+    def fixAssociationCellsTable(self, table):
+        """
+        Associate data cells with header cells of table.
+        @param table: The table.
+        @type table: L{hatemile.util.HTMLDOMElement}
+        """
+        
+        pass
+    
+    def fixAssociationCellsTables(self):
+        """
+        Associate data cells with header cells of tables.
+        """
+        
+        pass

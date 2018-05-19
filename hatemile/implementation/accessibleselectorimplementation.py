@@ -13,28 +13,28 @@
 from hatemile.accessibleselector import AccessibleSelector
 
 class AccessibleSelectorImplementation(AccessibleSelector):
-	"""
-	The AccessibleSelectorImpl class is official implementation of
-	AccessibleSelector interface.
-	"""
-	
-	def __init__(self, parser, configure):
-		"""
-		Initializes a new object that manipulate the accessibility through of the
-		selectors of the configuration file.
-		@param parser: The HTML parser.
-		@type parser: L{hatemile.util.HTMLDOMParser}
-		@param configure: The configuration of HaTeMiLe.
-		@type configure: L{hatemile.util.Configure}
-		"""
-		
-		self.parser = parser
-		self.changes = configure.getSelectorChanges()
-		self.dataIgnore = 'data-ignoreaccessibilityfix'
-	
-	def fixSelectors(self):
-		for change in self.changes:
-			elements = self.parser.find(change.getSelector()).listResults()
-			for element in elements:
-				if not element.hasAttribute(self.dataIgnore):
-					element.setAttribute(change.getAttribute(), change.getValueForAttribute())
+    """
+    The AccessibleSelectorImpl class is official implementation of
+    AccessibleSelector interface.
+    """
+    
+    def __init__(self, parser, configure):
+        """
+        Initializes a new object that manipulate the accessibility through of the
+        selectors of the configuration file.
+        @param parser: The HTML parser.
+        @type parser: L{hatemile.util.HTMLDOMParser}
+        @param configure: The configuration of HaTeMiLe.
+        @type configure: L{hatemile.util.Configure}
+        """
+        
+        self.parser = parser
+        self.changes = configure.getSelectorChanges()
+        self.dataIgnore = 'data-ignoreaccessibilityfix'
+    
+    def fixSelectors(self):
+        for change in self.changes:
+            elements = self.parser.find(change.getSelector()).listResults()
+            for element in elements:
+                if not element.hasAttribute(self.dataIgnore):
+                    element.setAttribute(change.getAttribute(), change.getValueForAttribute())
