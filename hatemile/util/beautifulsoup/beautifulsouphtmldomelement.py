@@ -38,10 +38,10 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def getAttribute(self, name):
         if not self.hasAttribute(name):
             return None
-        if type(self.data[name]) == type([]):
-            array = self.data[name]
+        if isinstance(self.data[name], list):
+            values = self.data[name]
             value = ''
-            for item in array:
+            for item in values:
                 value += item + ' '
             return value.strip()
         else:
@@ -88,11 +88,11 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         return element
 
     def getChildren(self):
-        array = []
+        children = []
         for child in self.data.children:
             if isinstance(child, PageElement):
-                array.append(BeautifulSoupHTMLDOMElement(child))
-        return array
+                children.append(BeautifulSoupHTMLDOMElement(child))
+        return children
 
     def appendText(self, text):
         self.data.append(text)
