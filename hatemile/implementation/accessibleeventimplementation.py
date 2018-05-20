@@ -69,7 +69,7 @@ class AccessibleEventImplementation(AccessibleEvent):
 
         head = self.parser.find('head').firstResult()
         if (head is not None) and (self.parser.find('#' + self.idScriptEventListener).firstResult() is None):
-            eventListenerFile = open(os.path.dirname(os.path.realpath(__file__)) + '/../../js/eventlistener.js', 'r') 
+            eventListenerFile = open(os.path.dirname(os.path.realpath(__file__)) + '/../../js/eventlistener.js', 'r')
             if self.storeScriptsContent:
                 if AccessibleEventImplementation.eventListenerScriptContent is None:
                     AccessibleEventImplementation.eventListenerScriptContent = eventListenerFile.read()

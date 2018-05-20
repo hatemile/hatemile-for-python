@@ -69,7 +69,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             windows = 'windows' in userAgent
             chrome = 'chrome' in userAgent
             firefox = re.match('.*firefox/[2-9]|minefield/3.*', userAgent) is not None
-            ie = ('msie' in userAgent) or ('trident' in userAgent) 
+            ie = ('msie' in userAgent) or ('trident' in userAgent)
 
             if opera:
                 self.prefix = 'SHIFT + ESC'

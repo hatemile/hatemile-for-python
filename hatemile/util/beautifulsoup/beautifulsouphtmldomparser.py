@@ -99,7 +99,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         lastResults = self.results
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
             for result in lastResults:
-                if self._inList(result.children, selector): 
+                if self._inList(result.children, selector):
                     self.results[selector.getData()]
                     break
         else:

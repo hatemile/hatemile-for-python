@@ -81,7 +81,7 @@ class AccessibleFormImplementation(AccessibleForm):
             label.setAttribute(dataSuffix, suffix)
             if suffix not in contentLabel:
                 contentLabel = contentLabel + ' ' + suffix
-        field.setAttribute('aria-label', contentLabel) 
+        field.setAttribute('aria-label', contentLabel)
 
     def _fixLabelRequiredField(self, label, requiredField):
         """
