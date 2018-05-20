@@ -21,7 +21,7 @@ class Configure:
     The Configure class contains the configuration of HaTeMiLe.
     """
 
-    def __init__(self, fileName = None):
+    def __init__(self, fileName=None):
         """
         Initializes a new object that contains the configuration of HaTeMiLe.
         @param fileName: The full path of file.

@@ -18,7 +18,7 @@ class Skipper:
     The Skipper class store the selector that will be add a skipper.
     """
 
-    def __init__(self, selector = None, defaultText = None, shortcuts = None):
+    def __init__(self, selector=None, defaultText=None, shortcuts=None):
         """
         Inicializes a new object with the values pre-defineds.
         @param selector: The selector.

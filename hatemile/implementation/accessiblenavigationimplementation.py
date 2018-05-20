@@ -22,7 +22,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     AccessibleNavigation interface.
     """
 
-    def __init__(self, parser, configure, userAgent = None):
+    def __init__(self, parser, configure, userAgent=None):
         """
         Initializes a new object that manipulate the accessibility of the
         navigation of parser.

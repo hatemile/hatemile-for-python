@@ -16,7 +16,7 @@ class SelectorChange:
     The SelectorChange class store the selector that be attribute change.
     """
 
-    def __init__(self, selector = None, attribute = None, valueForAttribute = None):
+    def __init__(self, selector=None, attribute=None, valueForAttribute=None):
         """
         Inicializes a new object with the values pre-defineds.
         @param selector: The selector.
