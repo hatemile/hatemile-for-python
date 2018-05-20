@@ -13,7 +13,8 @@
 from bs4 import BeautifulSoup
 from bs4 import PageElement
 from hatemile.util.htmldomelement import HTMLDOMElement
-import copy, re
+import copy
+import re
 
 
 class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
