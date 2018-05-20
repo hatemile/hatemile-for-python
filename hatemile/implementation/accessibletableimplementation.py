@@ -76,7 +76,7 @@ class AccessibleTableImplementation(AccessibleTable):
                         if len(row) <= m:
                             row.append(None)
                             break
-                        elif row[m] == None:
+                        elif row[m] is None:
                             break
                         else:
                             columnIndex += 1
@@ -196,14 +196,14 @@ class AccessibleTableImplementation(AccessibleTable):
         header = self.parser.find(table).findChildren('thead').firstResult()
         body = self.parser.find(table).findChildren('tbody').firstResult()
         footer = self.parser.find(table).findChildren('tfoot').firstResult()
-        if header != None:
+        if header is not None:
             self._fixHeader(header)
 
             headerCells = self._generatePart(header)
-            if (body != None) and (self._validateHeader(headerCells)):
+            if (body is not None) and (self._validateHeader(headerCells)):
                 lengthHeader = len(headerCells[0])
                 fakeTable = self._generatePart(body)
-                if footer != None:
+                if footer is not None:
                     fakeTable = fakeTable + self._generatePart(footer)
                 for cells in fakeTable:
                     if len(cells) == lengthHeader:
@@ -215,9 +215,9 @@ class AccessibleTableImplementation(AccessibleTable):
                                 headers = CommonFunctions.increaseInList(headers, headersId)
                             cell.setAttribute('headers', headers)
                             i += 1
-        if body != None:
+        if body is not None:
             self._fixBodyOrFooter(body)
-        if footer != None:
+        if footer is not None:
             self._fixBodyOrFooter(footer)
 
     def fixAssociationCellsTables(self):

@@ -145,6 +145,6 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         for child in self.data.children:
             if isinstance(child, PageElement):
                 lastValue = child
-        if lastValue != None:
+        if lastValue is not None:
             return BeautifulSoupHTMLDOMElement(lastValue)
         return None

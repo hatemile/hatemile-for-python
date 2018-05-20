@@ -68,10 +68,10 @@ class AccessibleEventImplementation(AccessibleEvent):
         """
 
         head = self.parser.find('head').firstResult()
-        if (head != None) and (self.parser.find('#' + self.idScriptEventListener).firstResult() == None):
+        if (head is not None) and (self.parser.find('#' + self.idScriptEventListener).firstResult() is None):
             eventListenerFile = open(os.path.dirname(os.path.realpath(__file__)) + '/../../js/eventlistener.js', 'r') 
             if self.storeScriptsContent:
-                if AccessibleEventImplementation.eventListenerScriptContent == None:
+                if AccessibleEventImplementation.eventListenerScriptContent is None:
                     AccessibleEventImplementation.eventListenerScriptContent = eventListenerFile.read()
                 localEventListenerScriptContent = AccessibleEventImplementation.eventListenerScriptContent
             else:
@@ -87,9 +87,9 @@ class AccessibleEventImplementation(AccessibleEvent):
             else:
                 head.appendElement(script)
         local = self.parser.find('body').firstResult()
-        if local != None:
+        if local is not None:
             self.scriptList = self.parser.find('#' + self.idListIdsScript).firstResult()
-            if self.scriptList == None:
+            if self.scriptList is None:
                 self.scriptList = self.parser.createElement('script')
                 self.scriptList.setAttribute('id', self.idListIdsScript)
                 self.scriptList.setAttribute('type', 'text/javascript')
@@ -98,10 +98,10 @@ class AccessibleEventImplementation(AccessibleEvent):
                 self.scriptList.appendText('var dragElements = [];')
                 self.scriptList.appendText('var dropElements = [];')
                 local.appendElement(self.scriptList)
-            if self.parser.find('#' + self.idFunctionScriptFix).firstResult() == None:
+            if self.parser.find('#' + self.idFunctionScriptFix).firstResult() is None:
                 includeFile = open(os.path.dirname(os.path.realpath(__file__)) + '/../../js/include.js', 'r')
                 if self.storeScriptsContent:
-                    if AccessibleEventImplementation.includeScriptContent == None:
+                    if AccessibleEventImplementation.includeScriptContent is None:
                         AccessibleEventImplementation.includeScriptContent = includeFile.read()
                     localIncludeScriptContent = AccessibleEventImplementation.includeScriptContent
                 else:
@@ -127,7 +127,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         if not self.mainScriptAdded:
             self._generateMainScripts()
 
-        if self.scriptList != None:
+        if self.scriptList is not None:
             CommonFunctions.generateId(element, self.prefixId)
             self.scriptList.appendText(event + "Elements.push('" + element.getAttribute('id') + "');")
 

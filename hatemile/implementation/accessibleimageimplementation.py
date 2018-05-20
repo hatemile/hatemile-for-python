@@ -42,7 +42,7 @@ class AccessibleImageImplementation(AccessibleImage):
         if element.hasAttribute('longdesc'):
             CommonFunctions.generateId(element, self.prefixId)
             idElement = element.getAttribute('id')
-            if self.parser.find('[' + self.dataLongDescriptionForImage + '="' + idElement + '"]').firstResult() == None:
+            if self.parser.find('[' + self.dataLongDescriptionForImage + '="' + idElement + '"]').firstResult() is None:
                 if element.hasAttribute('alt'):
                     text = self.prefixLongDescriptionLink + ' ' + element.getAttribute('alt') + ' ' + self.suffixLongDescriptionLink
                 else:

@@ -135,7 +135,7 @@ class AccessibleFormImplementation(AccessibleForm):
         suffixAutoCompleteFieldModified = ''
         if (autoCompleteField.hasAttribute('aria-label')) and (not label.hasAttribute(self.dataLabelPrefixAutoCompleteField)) and (not label.hasAttribute(self.dataLabelSuffixAutoCompleteField)):
             ariaAutocomplete = self._getARIAAutoComplete(autoCompleteField)
-            if ariaAutocomplete != None:
+            if ariaAutocomplete is not None:
                 if ariaAutocomplete == 'both':
                     if self.prefixAutoCompleteField != '':
                         prefixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueBoth, self.prefixAutoCompleteField)
@@ -174,13 +174,13 @@ class AccessibleFormImplementation(AccessibleForm):
                 value = field.getAttribute('autocomplete').lower()
             else:
                 form = self.parser.find(field).findAncestors('form').firstResult()
-                if (form == None) and (field.hasAttribute('form')):
+                if (form is None) and (field.hasAttribute('form')):
                     form = self.parser.find('#' + field.getAttribute('form')).firstResult()
-                if (form != None) and (form.hasAttribute('autocomplete')):
+                if (form is not None) and (form.hasAttribute('autocomplete')):
                     value = form.getAttribute('autocomplete').lower()
             if 'on' == value:
                 return 'both'
-            elif (field.hasAttribute('list')) and (self.parser.find('datalist[id="' + field.getAttribute('list') + '"]').firstResult() != None):
+            elif (field.hasAttribute('list')) and (self.parser.find('datalist[id="' + field.getAttribute('list') + '"]').firstResult() is not None):
                 return 'list'
             elif 'off' == value:
                 return 'none'
@@ -198,7 +198,7 @@ class AccessibleFormImplementation(AccessibleForm):
         labels = None
         if field.hasAttribute('id'):
             labels = self.parser.find('label[for="' + field.getAttribute('id') + '"]').listResults()
-        if (labels == None) or (len(labels) == 0):
+        if (labels is None) or (len(labels) == 0):
             labels = self.parser.find(field).findAncestors('label').listResults()
         return labels
 
@@ -233,7 +233,7 @@ class AccessibleFormImplementation(AccessibleForm):
 
     def fixAutoCompleteField(self, autoCompleteField):
         ariaAutoComplete = self._getARIAAutoComplete(autoCompleteField)
-        if ariaAutoComplete != None:
+        if ariaAutoComplete is not None:
             autoCompleteField.setAttribute('aria-autocomplete', ariaAutoComplete)
 
             labels = self._getLabels(autoCompleteField)
@@ -253,10 +253,10 @@ class AccessibleFormImplementation(AccessibleForm):
             else:
                 field = self.parser.find(label).findDescendants('input,select,textarea').firstResult()
 
-                if field != None:
+                if field is not None:
                     CommonFunctions.generateId(field, self.prefixId)
                     label.setAttribute('for', field.getAttribute('id'))
-            if field != None:
+            if field is not None:
                 if not field.hasAttribute('aria-label'):
                     field.setAttribute('aria-label', re.sub('[ \n\r\t]+', ' ', label.getTextContent().strip()))
 
