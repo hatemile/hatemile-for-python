@@ -110,17 +110,13 @@ class AccessibleFormImplementation(AccessibleForm):
                     value = rangeField.getAttribute('min')
                 else:
                     value = rangeField.getAttribute('aria-valuemin')
-                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMinField)
-                        , re.sub('{{value}}', value, self.suffixRangeMinField)
-                        , self.dataLabelPrefixRangeMinField, self.dataLabelSuffixRangeMinField)
+                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMinField), re.sub('{{value}}', value, self.suffixRangeMinField), self.dataLabelPrefixRangeMinField, self.dataLabelSuffixRangeMinField)
             if (rangeField.hasAttribute('max') or rangeField.hasAttribute('aria-valuemax')) and (not label.hasAttribute(self.dataLabelPrefixRangeMaxField)) and (not label.hasAttribute(self.dataLabelSuffixRangeMaxField)):
                 if rangeField.hasAttribute('max'):
                     value = rangeField.getAttribute('max')
                 else:
                     value = rangeField.getAttribute('aria-valuemax')
-                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMaxField)
-                        , re.sub('{{value}}', value, self.suffixRangeMaxField)
-                        , self.dataLabelPrefixRangeMaxField, self.dataLabelSuffixRangeMaxField)
+                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMaxField), re.sub('{{value}}', value, self.suffixRangeMaxField), self.dataLabelPrefixRangeMaxField, self.dataLabelSuffixRangeMaxField)
 
     def _fixLabelAutoCompleteField(self, label, autoCompleteField):
         """
@@ -151,9 +147,7 @@ class AccessibleFormImplementation(AccessibleForm):
                         prefixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueList, self.prefixAutoCompleteField)
                     if self.suffixAutoCompleteField != '':
                         suffixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueList, self.suffixAutoCompleteField)
-                self._addPrefixSuffix(label, autoCompleteField, prefixAutoCompleteFieldModified
-                        , suffixAutoCompleteFieldModified, self.dataLabelPrefixAutoCompleteField
-                        , self.dataLabelSuffixAutoCompleteField)
+                self._addPrefixSuffix(label, autoCompleteField, prefixAutoCompleteFieldModified, suffixAutoCompleteFieldModified, self.dataLabelPrefixAutoCompleteField, self.dataLabelSuffixAutoCompleteField)
 
     def _getARIAAutoComplete(self, field):
         """
