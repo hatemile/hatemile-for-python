@@ -19,8 +19,8 @@ import re
 
 class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     """
-    The BeautifulSoupHTMLDOMElement class is official implementation of HTMLDOMElement
-    interface for the BeautifulSoup library.
+    The BeautifulSoupHTMLDOMElement class is official implementation of
+    HTMLDOMElement interface for the BeautifulSoup library.
     """
 
     def __init__(self, element):

@@ -13,8 +13,8 @@
 
 class AccessibleTable:
     """
-    The AccessibleTable interface fixes accessibility problems associated
-    with tables.
+    The AccessibleTable interface fixes accessibility problems associated with
+    tables.
     """
 
     def fixAssociationCellsTable(self, table):

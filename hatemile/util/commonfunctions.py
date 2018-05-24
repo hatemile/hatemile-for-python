@@ -66,8 +66,8 @@ class CommonFunctions:
         @type listToIncrease: str
         @param stringToIncrease: The value of item.
         @type stringToIncrease: str
-        @return: The list with the item added, if the item not was contained
-        in list.
+        @return: The list with the item added, if the item not was contained in
+        list.
         @rtype: str
         """
 

@@ -13,7 +13,8 @@
 
 class HTMLDOMParser:
     """
-    The HTMLDOMParser interface contains the methods for access a native parser.
+    The HTMLDOMParser interface contains the methods for access a native
+    parser.
     """
 
     def find(self, selector):
@@ -29,7 +30,8 @@ class HTMLDOMParser:
 
     def findChildren(self, selector):
         """
-        Find all elements in the parser by selector, children of found elements.
+        Find all elements in the parser by selector, children of found
+        elements.
         @param selector: The selector.
         @type selector: str or L{hatemile.util.HTMLDOMElement}
         @return: The parser with the elements found.
@@ -52,7 +54,8 @@ class HTMLDOMParser:
 
     def findAncestors(self, selector):
         """
-        Find all elements in the parser by selector, ancestors of found elements.
+        Find all elements in the parser by selector, ancestors of found
+        elements.
         @param selector: The selector.
         @type selector: str or L{hatemile.util.HTMLDOMElement}
         @return: The parser with the elements found.

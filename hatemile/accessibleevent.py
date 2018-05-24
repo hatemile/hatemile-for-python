@@ -13,8 +13,8 @@
 
 class AccessibleEvent:
     """
-    The AccessibleEvent interface fixes accessibility problems associated
-    with JavaScript events in elements.
+    The AccessibleEvent interface fixes accessibility problems associated with
+    JavaScript events in elements.
     """
 
     def fixDrop(self, element):

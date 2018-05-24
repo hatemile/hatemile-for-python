@@ -63,8 +63,8 @@ class HTMLDOMElement:
         Returns if the element has an attribute.
         @param name: The name of attribute.
         @type name: str
-        @return: True if the element has the attribute or False if the element not
-        has the attribute.
+        @return: True if the element has the attribute or False if the element
+        not has the attribute.
         @rtype: bool
         """
 
@@ -163,8 +163,8 @@ class HTMLDOMElement:
     def hasChildren(self):
         """
         Returns if the element has children.
-        @return: True if the element has children or False if the element not has
-        children.
+        @return: True if the element has children or False if the element not
+        has children.
         @rtype: bool
         """
 

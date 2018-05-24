@@ -242,7 +242,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _isValidHeading(self):
         """
         Inform if the headings of page are sintatic correct.
-        @return: True if the headings of page are sintatic correct or false if not.
+        @return: True if the headings of page are sintatic correct or false if
+        not.
         @rtype: bool
         """
 
@@ -267,7 +268,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Generate an anchor for the element.
         @param element: The element.
         @type element: L{hatemile.util.HTMLDOMElement}
-        @param dataAttribute: The name of attribute that links the element with the anchor.
+        @param dataAttribute: The name of attribute that links the element with
+        the anchor.
         @type dataAttribute: str
         @param anchorClass: The HTML class of anchor.
         @type anchorClass: str
@@ -318,7 +320,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
     def _executeFixSkipper(self, element):
         """
-        Call fixSkipper method for element, if the page has the container of skippers.
+        Call fixSkipper method for element, if the page has the container of
+        skippers.
         @param element: The element.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
@@ -330,7 +333,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
     def _executeFixShortcut(self, element):
         """
-        Call fixShortcut method for element, if the page has the container of shortcuts.
+        Call fixShortcut method for element, if the page has the container of
+        shortcuts.
         @param element: The element.
         @type element: L{hatemile.util.HTMLDOMElement}
         """

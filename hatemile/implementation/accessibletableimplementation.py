@@ -22,8 +22,8 @@ class AccessibleTableImplementation(AccessibleTable):
 
     def __init__(self, parser, configure):
         """
-        Initializes a new object that manipulate the accessibility of the tables
-        of parser.
+        Initializes a new object that manipulate the accessibility of the
+        tables of parser.
         @param parser: The HTML parser.
         @type parser: L{hatemile.util.HTMLDOMParser}
         @param configure: The configuration of HaTeMiLe.
@@ -121,8 +121,8 @@ class AccessibleTableImplementation(AccessibleTable):
         Validate the list that represents the table header.
         @param header: The list that represents the table header.
         @type header: array.array.L{hatemile.util.HTMLDOMElement}
-        @return: True if the table header is valid or False if the table header is
-        not valid.
+        @return: True if the table header is valid or False if the table header
+        is not valid.
         @rtype: bool
         """
 

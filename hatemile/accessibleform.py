@@ -13,8 +13,8 @@
 
 class AccessibleForm:
     """
-    The AccessibleForm interface fixes accessibility problems associated
-    with forms.
+    The AccessibleForm interface fixes accessibility problems associated with
+    forms.
     """
 
     def fixRequiredField(self, requiredField):

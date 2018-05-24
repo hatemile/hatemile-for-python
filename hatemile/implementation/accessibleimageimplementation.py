@@ -22,8 +22,8 @@ class AccessibleImageImplementation(AccessibleImage):
 
     def __init__(self, parser, configure):
         """
-        Initializes a new object that manipulate the accessibility of the images
-        of parser.
+        Initializes a new object that manipulate the accessibility of the
+        images of parser.
         @param parser: The HTML parser.
         @type parser: L{hatemile.util.HTMLDOMParser}
         @param configure: The configuration of HaTeMiLe.

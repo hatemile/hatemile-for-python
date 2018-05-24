@@ -13,8 +13,8 @@
 
 class AccessibleImage:
     """
-    The AccessibleImage interface fixes accessibility problems associated
-    with images.
+    The AccessibleImage interface fixes accessibility problems associated with
+    images.
     """
 
     def fixLongDescription(self, element):
@@ -28,7 +28,8 @@ class AccessibleImage:
 
     def fixLongDescriptions(self):
         """
-        Provide an alternative way to access the longs descriptions of elements.
+        Provide an alternative way to access the longs descriptions of
+        elements.
         """
 
         pass

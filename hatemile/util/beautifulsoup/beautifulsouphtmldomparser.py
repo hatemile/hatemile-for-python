@@ -18,8 +18,8 @@ import re
 
 class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     """
-    The class BeautifulSoupHTMLDOMParser is official implementation of HTMLDOMParser
-    interface for the BeautifulSoup library.
+    The class BeautifulSoupHTMLDOMParser is official implementation of
+    HTMLDOMParser interface for the BeautifulSoup library.
     """
 
     def __init__(self, codeOrParser):
