@@ -35,22 +35,45 @@ class AccessibleImageImplementation(AccessibleImage):
         self.classLongDescriptionLink = 'longdescription-link'
         self.dataLongDescriptionForImage = 'data-longdescriptionfor'
         self.dataIgnore = 'data-ignoreaccessibilityfix'
-        self.prefixLongDescriptionLink = configure.getParameter('prefix-longdescription')
-        self.suffixLongDescriptionLink = configure.getParameter('suffix-longdescription')
+        self.prefixLongDescriptionLink = configure.getParameter(
+            'prefix-longdescription'
+        )
+        self.suffixLongDescriptionLink = configure.getParameter(
+            'suffix-longdescription'
+        )
 
     def fixLongDescription(self, element):
         if element.hasAttribute('longdesc'):
             CommonFunctions.generateId(element, self.prefixId)
             idElement = element.getAttribute('id')
-            if self.parser.find('[' + self.dataLongDescriptionForImage + '="' + idElement + '"]').firstResult() is None:
+            if self.parser.find(
+                '['
+                + self.dataLongDescriptionForImage
+                + '="'
+                + idElement
+                + '"]'
+            ).firstResult() is None:
                 if element.hasAttribute('alt'):
-                    text = self.prefixLongDescriptionLink + ' ' + element.getAttribute('alt') + ' ' + self.suffixLongDescriptionLink
+                    text = (
+                        self.prefixLongDescriptionLink
+                        + ' '
+                        + element.getAttribute('alt')
+                        + ' '
+                        + self.suffixLongDescriptionLink
+                    )
                 else:
-                    text = self.prefixLongDescriptionLink + ' ' + self.suffixLongDescriptionLink
+                    text = (
+                        self.prefixLongDescriptionLink
+                        + ' '
+                        + self.suffixLongDescriptionLink
+                    )
                 anchor = self.parser.createElement('a')
                 anchor.setAttribute('href', element.getAttribute('longdesc'))
                 anchor.setAttribute('target', '_blank')
-                anchor.setAttribute(self.dataLongDescriptionForImage, idElement)
+                anchor.setAttribute(
+                    self.dataLongDescriptionForImage,
+                    idElement
+                )
                 anchor.setAttribute('class', self.classLongDescriptionLink)
                 anchor.appendText(text.strip())
                 element.insertAfter(anchor)

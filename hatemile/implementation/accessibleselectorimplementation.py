@@ -38,4 +38,7 @@ class AccessibleSelectorImplementation(AccessibleSelector):
             elements = self.parser.find(change.getSelector()).listResults()
             for element in elements:
                 if not element.hasAttribute(self.dataIgnore):
-                    element.setAttribute(change.getAttribute(), change.getValueForAttribute())
+                    element.setAttribute(
+                        change.getAttribute(),
+                        change.getValueForAttribute()
+                    )

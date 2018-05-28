@@ -56,7 +56,10 @@ class CommonFunctions:
 
         for attribute in attributes:
             if element1.hasAttribute(attribute):
-                element2.setAttribute(attribute, element1.getAttribute(attribute))
+                element2.setAttribute(
+                    attribute,
+                    element1.getAttribute(attribute)
+                )
 
     @staticmethod
     def increaseInList(listToIncrease, stringToIncrease):

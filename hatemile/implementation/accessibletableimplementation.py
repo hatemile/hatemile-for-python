@@ -46,7 +46,9 @@ class AccessibleTableImplementation(AccessibleTable):
         rows = self.parser.find(part).findChildren('tr').listResults()
         table = []
         for row in rows:
-            table.append(self._generateColspan(self.parser.find(row).findChildren('td,th').listResults()))
+            table.append(self._generateColspan(self.parser.find(
+                row
+            ).findChildren('td,th').listResults()))
         return self._generateRowspan(table)
 
     def _generateRowspan(self, rows):
@@ -176,7 +178,10 @@ class AccessibleTableImplementation(AccessibleTable):
                     if cell.getTagName() == 'TD':
                         headers = cell.getAttribute('headers')
                         for headerId in headersIds:
-                            headers = CommonFunctions.increaseInList(headers, headerId)
+                            headers = CommonFunctions.increaseInList(
+                                headers,
+                                headerId
+                            )
                         cell.setAttribute('headers', headers)
 
     def _fixHeader(self, tableHeader):
@@ -186,7 +191,9 @@ class AccessibleTableImplementation(AccessibleTable):
         @type tableHeader: L{hatemile.util.HTMLDOMElement}
         """
 
-        cells = self.parser.find(tableHeader).findChildren('tr').findChildren('th').listResults()
+        cells = self.parser.find(tableHeader).findChildren('tr').findChildren(
+            'th'
+        ).listResults()
         for cell in cells:
             CommonFunctions.generateId(cell, self.prefixId)
 
@@ -209,10 +216,16 @@ class AccessibleTableImplementation(AccessibleTable):
                     if len(cells) == lengthHeader:
                         i = 0
                         for cell in cells:
-                            headersIds = self._returnListIdsColumns(headerCells, i)
+                            headersIds = self._returnListIdsColumns(
+                                headerCells,
+                                i
+                            )
                             headers = cell.getAttribute('headers')
                             for headersId in headersIds:
-                                headers = CommonFunctions.increaseInList(headers, headersId)
+                                headers = CommonFunctions.increaseInList(
+                                    headers,
+                                    headersId
+                                )
                             cell.setAttribute('headers', headers)
                             i += 1
         if body is not None:

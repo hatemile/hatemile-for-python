@@ -12,7 +12,7 @@
 
 from bs4 import BeautifulSoup
 from hatemile.util.htmldomparser import HTMLDOMParser
-from hatemile.util.beautifulsoup.beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
+from .beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
 import re
 
 
@@ -62,7 +62,10 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
                 groups[parents.index(result.parent)].append(result)
         array = []
         for group in groups:
-            array += sorted(group, key=lambda element: element.parent.contents.index(element))
+            array += sorted(
+                group,
+                key=lambda element: element.parent.contents.index(element)
+            )
         return array
 
     def _fixDataSelect(self):
@@ -71,7 +74,9 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
             attributes = element.attrs.keys()
             for attribute in attributes:
                 if bool(re.findall('^data-', attribute)):
-                    element[re.sub('data-', 'dataaaaaa', attribute)] = element[attribute]
+                    element[
+                        re.sub('data-', 'dataaaaaa', attribute)
+                    ] = element[attribute]
 
     def _removeDataSelect(self):
         elements = self.document.select('*')
@@ -110,7 +115,10 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
                 for lastResult in lastResults:
                     results = lastResult.select(sel)
                     for result in results:
-                        if (self._inList(lastResult.children, result)) and (not self._inList(self.results, result)):
+                        if (
+                            (self._inList(lastResult.children, result))
+                            and (not self._inList(self.results, result))
+                        ):
                             self.results.append(result)
         return self
 
@@ -152,7 +160,10 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
                         parents.append(result)
             for result in lastResults:
                 for parent in parents:
-                    if (self._inList(result.parents, parent)) and (not self._inList(self.results, parent)):
+                    if (
+                        (self._inList(result.parents, parent))
+                        and (not self._inList(self.results, parent))
+                    ):
                         self.results.append(parent)
         return self
 

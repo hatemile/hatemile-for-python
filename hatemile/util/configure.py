@@ -11,8 +11,8 @@
 # limitations under the License.
 
 from xml.dom import minidom
-from hatemile.util.selectorchange import SelectorChange
-from hatemile.util.skipper import Skipper
+from .selectorchange import SelectorChange
+from .skipper import Skipper
 import os
 
 
@@ -32,20 +32,38 @@ class Configure:
         self.selectorChanges = []
         self.skippers = []
         if fileName is None:
-            fileName = os.path.dirname(os.path.realpath(__file__)) + '/../../hatemile-configure.xml'
+            fileName = os.path.dirname(os.path.dirname(os.path.dirname(
+                os.path.realpath(__file__)
+            ))) + '/hatemile-configure.xml'
         xmldoc = minidom.parse(fileName)
-        params = xmldoc.getElementsByTagName('parameters')[0].getElementsByTagName('parameter')
+        params = xmldoc.getElementsByTagName(
+            'parameters'
+        )[0].getElementsByTagName('parameter')
         for param in params:
             if param.hasChildNodes():
-                self.parameters[param.attributes['name'].value] = param.firstChild.nodeValue
+                self.parameters[
+                    param.attributes['name'].value
+                ] = param.firstChild.nodeValue
             else:
                 self.parameters[param.attributes['name'].value] = ''
-        changes = xmldoc.getElementsByTagName('selector-changes')[0].getElementsByTagName('selector-change')
+        changes = xmldoc.getElementsByTagName(
+            'selector-changes'
+        )[0].getElementsByTagName('selector-change')
         for change in changes:
-            self.selectorChanges.append(SelectorChange(change.attributes['selector'].value, change.attributes['attribute'].value, change.attributes['value-attribute'].value))
-        skippers = xmldoc.getElementsByTagName('skippers')[0].getElementsByTagName('skipper')
+            self.selectorChanges.append(SelectorChange(
+                change.attributes['selector'].value,
+                change.attributes['attribute'].value,
+                change.attributes['value-attribute'].value
+            ))
+        skippers = xmldoc.getElementsByTagName(
+            'skippers'
+        )[0].getElementsByTagName('skipper')
         for skipper in skippers:
-            self.skippers.append(Skipper(skipper.attributes['selector'].value, skipper.attributes['default-text'].value, skipper.attributes['shortcut'].value))
+            self.skippers.append(Skipper(
+                skipper.attributes['selector'].value,
+                skipper.attributes['default-text'].value,
+                skipper.attributes['shortcut'].value
+            ))
 
     def getParameters(self):
         """

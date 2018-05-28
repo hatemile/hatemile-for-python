@@ -42,20 +42,52 @@ class AccessibleFormImplementation(AccessibleForm):
         self.dataLabelSuffixAutoCompleteField = 'data-suffixautocompletefield'
         self.dataIgnore = 'data-ignoreaccessibilityfix'
         self.prefixId = configure.getParameter('prefix-generated-ids')
-        self.prefixRequiredField = configure.getParameter('prefix-required-field')
-        self.suffixRequiredField = configure.getParameter('suffix-required-field')
-        self.prefixRangeMinField = configure.getParameter('prefix-range-min-field')
-        self.suffixRangeMinField = configure.getParameter('suffix-range-min-field')
-        self.prefixRangeMaxField = configure.getParameter('prefix-range-max-field')
-        self.suffixRangeMaxField = configure.getParameter('suffix-range-max-field')
-        self.prefixAutoCompleteField = configure.getParameter('prefix-autocomplete-field')
-        self.suffixAutoCompleteField = configure.getParameter('suffix-autocomplete-field')
-        self.textAutoCompleteValueBoth = configure.getParameter('text-autocomplete-value-both')
-        self.textAutoCompleteValueList = configure.getParameter('text-autocomplete-value-list')
-        self.textAutoCompleteValueInline = configure.getParameter('text-autocomplete-value-inline')
-        self.textAutoCompleteValueNone = configure.getParameter('text-autocomplete-value-none')
+        self.prefixRequiredField = configure.getParameter(
+            'prefix-required-field'
+        )
+        self.suffixRequiredField = configure.getParameter(
+            'suffix-required-field'
+        )
+        self.prefixRangeMinField = configure.getParameter(
+            'prefix-range-min-field'
+        )
+        self.suffixRangeMinField = configure.getParameter(
+            'suffix-range-min-field'
+        )
+        self.prefixRangeMaxField = configure.getParameter(
+            'prefix-range-max-field'
+        )
+        self.suffixRangeMaxField = configure.getParameter(
+            'suffix-range-max-field'
+        )
+        self.prefixAutoCompleteField = configure.getParameter(
+            'prefix-autocomplete-field'
+        )
+        self.suffixAutoCompleteField = configure.getParameter(
+            'suffix-autocomplete-field'
+        )
+        self.textAutoCompleteValueBoth = configure.getParameter(
+            'text-autocomplete-value-both'
+        )
+        self.textAutoCompleteValueList = configure.getParameter(
+            'text-autocomplete-value-list'
+        )
+        self.textAutoCompleteValueInline = configure.getParameter(
+            'text-autocomplete-value-inline'
+        )
+        self.textAutoCompleteValueNone = configure.getParameter(
+            'text-autocomplete-value-none'
+        )
 
-    def _addPrefixSuffix(self, label, field, prefix, suffix, dataPrefix, dataSuffix):
+    def _addPrefixSuffix(
+        self,
+        label,
+        field,
+        prefix,
+        suffix,
+        dataPrefix,
+        dataSuffix
+    ):
         """
         Display in label the information of field.
         @param label: The label.
@@ -92,8 +124,28 @@ class AccessibleFormImplementation(AccessibleForm):
         @type requiredField: L{hatemile.util.HTMLDOMElement}
         """
 
-        if ((requiredField.hasAttribute('required')) or ((requiredField.hasAttribute('aria-required')) and (requiredField.getAttribute('aria-required').lower() == 'true'))) and (requiredField.hasAttribute('aria-label')) and (not label.hasAttribute(self.dataLabelPrefixRequiredField)) and (not label.hasAttribute(self.dataLabelSuffixRequiredField)):
-            self._addPrefixSuffix(label, requiredField, self.prefixRequiredField, self.suffixRequiredField, self.dataLabelPrefixRequiredField, self.dataLabelSuffixRequiredField)
+        if (
+            (
+                (requiredField.hasAttribute('required'))
+                or (
+                    (requiredField.hasAttribute('aria-required'))
+                    and (requiredField.getAttribute(
+                        'aria-required'
+                    ).lower() == 'true')
+                )
+            )
+            and (requiredField.hasAttribute('aria-label'))
+            and (not label.hasAttribute(self.dataLabelPrefixRequiredField))
+            and (not label.hasAttribute(self.dataLabelSuffixRequiredField))
+        ):
+            self._addPrefixSuffix(
+                label,
+                requiredField,
+                self.prefixRequiredField,
+                self.suffixRequiredField,
+                self.dataLabelPrefixRequiredField,
+                self.dataLabelSuffixRequiredField
+            )
 
     def _fixLabelRangeField(self, label, rangeField):
         """
@@ -105,18 +157,62 @@ class AccessibleFormImplementation(AccessibleForm):
         """
 
         if rangeField.hasAttribute('aria-label'):
-            if (rangeField.hasAttribute('min') or rangeField.hasAttribute('aria-valuemin')) and (not label.hasAttribute(self.dataLabelPrefixRangeMinField)) and (not label.hasAttribute(self.dataLabelSuffixRangeMinField)):
+            if (
+                (
+                    rangeField.hasAttribute('min')
+                    or rangeField.hasAttribute('aria-valuemin')
+                )
+                and (not label.hasAttribute(self.dataLabelPrefixRangeMinField))
+                and (not label.hasAttribute(self.dataLabelSuffixRangeMinField))
+            ):
                 if rangeField.hasAttribute('min'):
                     value = rangeField.getAttribute('min')
                 else:
                     value = rangeField.getAttribute('aria-valuemin')
-                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMinField), re.sub('{{value}}', value, self.suffixRangeMinField), self.dataLabelPrefixRangeMinField, self.dataLabelSuffixRangeMinField)
-            if (rangeField.hasAttribute('max') or rangeField.hasAttribute('aria-valuemax')) and (not label.hasAttribute(self.dataLabelPrefixRangeMaxField)) and (not label.hasAttribute(self.dataLabelSuffixRangeMaxField)):
+                self._addPrefixSuffix(
+                    label,
+                    rangeField,
+                    re.sub(
+                        '{{value}}',
+                        value,
+                        self.prefixRangeMinField
+                    ),
+                    re.sub(
+                        '{{value}}',
+                        value,
+                        self.suffixRangeMinField
+                    ),
+                    self.dataLabelPrefixRangeMinField,
+                    self.dataLabelSuffixRangeMinField
+                )
+            if (
+                (
+                    rangeField.hasAttribute('max')
+                    or rangeField.hasAttribute('aria-valuemax')
+                )
+                and (not label.hasAttribute(self.dataLabelPrefixRangeMaxField))
+                and (not label.hasAttribute(self.dataLabelSuffixRangeMaxField))
+            ):
                 if rangeField.hasAttribute('max'):
                     value = rangeField.getAttribute('max')
                 else:
                     value = rangeField.getAttribute('aria-valuemax')
-                self._addPrefixSuffix(label, rangeField, re.sub('{{value}}', value, self.prefixRangeMaxField), re.sub('{{value}}', value, self.suffixRangeMaxField), self.dataLabelPrefixRangeMaxField, self.dataLabelSuffixRangeMaxField)
+                self._addPrefixSuffix(
+                    label,
+                    rangeField,
+                    re.sub(
+                        '{{value}}',
+                        value,
+                        self.prefixRangeMaxField
+                    ),
+                    re.sub(
+                        '{{value}}',
+                        value,
+                        self.suffixRangeMaxField
+                    ),
+                    self.dataLabelPrefixRangeMaxField,
+                    self.dataLabelSuffixRangeMaxField
+                )
 
     def _fixLabelAutoCompleteField(self, label, autoCompleteField):
         """
@@ -129,25 +225,60 @@ class AccessibleFormImplementation(AccessibleForm):
 
         prefixAutoCompleteFieldModified = ''
         suffixAutoCompleteFieldModified = ''
-        if (autoCompleteField.hasAttribute('aria-label')) and (not label.hasAttribute(self.dataLabelPrefixAutoCompleteField)) and (not label.hasAttribute(self.dataLabelSuffixAutoCompleteField)):
+        if (
+            (autoCompleteField.hasAttribute('aria-label'))
+            and (not label.hasAttribute(self.dataLabelPrefixAutoCompleteField))
+            and (not label.hasAttribute(self.dataLabelSuffixAutoCompleteField))
+        ):
             ariaAutocomplete = self._getARIAAutoComplete(autoCompleteField)
             if ariaAutocomplete is not None:
                 if ariaAutocomplete == 'both':
                     if self.prefixAutoCompleteField != '':
-                        prefixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueBoth, self.prefixAutoCompleteField)
+                        prefixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueBoth,
+                            self.prefixAutoCompleteField
+                        )
                     if self.suffixAutoCompleteField != '':
-                        suffixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueBoth, self.suffixAutoCompleteField)
+                        suffixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueBoth,
+                            self.suffixAutoCompleteField
+                        )
                 elif ariaAutocomplete == 'none':
                     if self.prefixAutoCompleteField != '':
-                        prefixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueNone, self.prefixAutoCompleteField)
+                        prefixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueNone,
+                            self.prefixAutoCompleteField
+                        )
                     if self.suffixAutoCompleteField != '':
-                        suffixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueNone, self.suffixAutoCompleteField)
+                        suffixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueNone,
+                            self.suffixAutoCompleteField
+                        )
                 elif ariaAutocomplete == 'list':
                     if self.prefixAutoCompleteField != '':
-                        prefixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueList, self.prefixAutoCompleteField)
+                        prefixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueList,
+                            self.prefixAutoCompleteField
+                        )
                     if self.suffixAutoCompleteField != '':
-                        suffixAutoCompleteFieldModified = re.sub('{{value}}', self.textAutoCompleteValueList, self.suffixAutoCompleteField)
-                self._addPrefixSuffix(label, autoCompleteField, prefixAutoCompleteFieldModified, suffixAutoCompleteFieldModified, self.dataLabelPrefixAutoCompleteField, self.dataLabelSuffixAutoCompleteField)
+                        suffixAutoCompleteFieldModified = re.sub(
+                            '{{value}}',
+                            self.textAutoCompleteValueList,
+                            self.suffixAutoCompleteField
+                        )
+                self._addPrefixSuffix(
+                    label,
+                    autoCompleteField,
+                    prefixAutoCompleteFieldModified,
+                    suffixAutoCompleteFieldModified,
+                    self.dataLabelPrefixAutoCompleteField,
+                    self.dataLabelSuffixAutoCompleteField
+                )
 
     def _getARIAAutoComplete(self, field):
         """
@@ -162,19 +293,43 @@ class AccessibleFormImplementation(AccessibleForm):
         inputType = None
         if field.hasAttribute('type'):
             inputType = field.getAttribute('type').lower()
-        if (tagName == 'TEXTAREA') or ((tagName == 'INPUT') and (not (('button' == inputType) or ('submit' == inputType) or ('reset' == inputType) or ('image' == inputType) or ('file' == inputType) or ('checkbox' == inputType) or ('radio' == inputType) or ('hidden' == inputType)))):
+        if (
+            (tagName == 'TEXTAREA')
+            or (
+                (tagName == 'INPUT')
+                and (not (
+                    ('button' == inputType)
+                    or ('submit' == inputType)
+                    or ('reset' == inputType)
+                    or ('image' == inputType)
+                    or ('file' == inputType)
+                    or ('checkbox' == inputType)
+                    or ('radio' == inputType)
+                    or ('hidden' == inputType)
+                ))
+            )
+        ):
             value = None
             if field.hasAttribute('autocomplete'):
                 value = field.getAttribute('autocomplete').lower()
             else:
-                form = self.parser.find(field).findAncestors('form').firstResult()
+                form = self.parser.find(field).findAncestors(
+                    'form'
+                ).firstResult()
                 if (form is None) and (field.hasAttribute('form')):
-                    form = self.parser.find('#' + field.getAttribute('form')).firstResult()
+                    form = self.parser.find(
+                        '#' + field.getAttribute('form')
+                    ).firstResult()
                 if (form is not None) and (form.hasAttribute('autocomplete')):
                     value = form.getAttribute('autocomplete').lower()
             if 'on' == value:
                 return 'both'
-            elif (field.hasAttribute('list')) and (self.parser.find('datalist[id="' + field.getAttribute('list') + '"]').firstResult() is not None):
+            elif (
+                (field.hasAttribute('list'))
+                and (self.parser.find(
+                    'datalist[id="' + field.getAttribute('list') + '"]'
+                ).firstResult() is not None)
+            ):
                 return 'list'
             elif 'off' == value:
                 return 'none'
@@ -191,9 +346,13 @@ class AccessibleFormImplementation(AccessibleForm):
 
         labels = None
         if field.hasAttribute('id'):
-            labels = self.parser.find('label[for="' + field.getAttribute('id') + '"]').listResults()
+            labels = self.parser.find(
+                'label[for="' + field.getAttribute('id') + '"]'
+            ).listResults()
         if (labels is None) or (len(labels) == 0):
-            labels = self.parser.find(field).findAncestors('label').listResults()
+            labels = self.parser.find(field).findAncestors(
+                'label'
+            ).listResults()
         return labels
 
     def fixRequiredField(self, requiredField):
@@ -212,9 +371,15 @@ class AccessibleFormImplementation(AccessibleForm):
 
     def fixRangeField(self, rangeField):
         if rangeField.hasAttribute('min'):
-            rangeField.setAttribute('aria-valuemin', rangeField.getAttribute('min'))
+            rangeField.setAttribute(
+                'aria-valuemin',
+                rangeField.getAttribute('min')
+            )
         if rangeField.hasAttribute('max'):
-            rangeField.setAttribute('aria-valuemax', rangeField.getAttribute('max'))
+            rangeField.setAttribute(
+                'aria-valuemax',
+                rangeField.getAttribute('max')
+            )
         labels = self._getLabels(rangeField)
         for label in labels:
             self._fixLabelRangeField(label, rangeField)
@@ -228,14 +393,21 @@ class AccessibleFormImplementation(AccessibleForm):
     def fixAutoCompleteField(self, autoCompleteField):
         ariaAutoComplete = self._getARIAAutoComplete(autoCompleteField)
         if ariaAutoComplete is not None:
-            autoCompleteField.setAttribute('aria-autocomplete', ariaAutoComplete)
+            autoCompleteField.setAttribute(
+                'aria-autocomplete',
+                ariaAutoComplete
+            )
 
             labels = self._getLabels(autoCompleteField)
             for label in labels:
                 self._fixLabelAutoCompleteField(label, autoCompleteField)
 
     def fixAutoCompleteFields(self):
-        elements = self.parser.find('input[autocomplete],textarea[autocomplete],form[autocomplete] input,form[autocomplete] textarea,[list],[form]').listResults()
+        elements = self.parser.find(
+            'input[autocomplete],textarea[autocomplete],'
+            + 'form[autocomplete] input,form[autocomplete] textarea,'
+            + '[list],[form]'
+        ).listResults()
         for element in elements:
             if not element.hasAttribute(self.dataIgnore):
                 self.fixAutoCompleteField(element)
@@ -243,23 +415,40 @@ class AccessibleFormImplementation(AccessibleForm):
     def fixLabel(self, label):
         if label.getTagName() == 'LABEL':
             if label.hasAttribute('for'):
-                field = self.parser.find('#' + label.getAttribute('for')).firstResult()
+                field = self.parser.find(
+                    '#' + label.getAttribute('for')
+                ).firstResult()
             else:
-                field = self.parser.find(label).findDescendants('input,select,textarea').firstResult()
+                field = self.parser.find(label).findDescendants(
+                    'input,select,textarea'
+                ).firstResult()
 
                 if field is not None:
                     CommonFunctions.generateId(field, self.prefixId)
                     label.setAttribute('for', field.getAttribute('id'))
             if field is not None:
                 if not field.hasAttribute('aria-label'):
-                    field.setAttribute('aria-label', re.sub('[ \n\r\t]+', ' ', label.getTextContent().strip()))
+                    field.setAttribute(
+                        'aria-label',
+                        re.sub(
+                            '[ \n\r\t]+',
+                            ' ',
+                            label.getTextContent().strip()
+                        )
+                    )
 
                 self._fixLabelRequiredField(label, field)
                 self._fixLabelRangeField(label, field)
                 self._fixLabelAutoCompleteField(label, field)
 
                 CommonFunctions.generateId(label, self.prefixId)
-                field.setAttribute('aria-labelledby', CommonFunctions.increaseInList(field.getAttribute('aria-labelledby'), label.getAttribute('id')))
+                field.setAttribute(
+                    'aria-labelledby',
+                    CommonFunctions.increaseInList(
+                        field.getAttribute('aria-labelledby'),
+                        label.getAttribute('id')
+                    )
+                )
 
     def fixLabels(self):
         labels = self.parser.find('label').listResults()
