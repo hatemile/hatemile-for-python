@@ -29,7 +29,7 @@ class Configure:
         """
 
         self.parameters = {}
-        self.selectorChanges = []
+        self.selector_changes = []
         self.skippers = []
         if file_name is None:
             file_name = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -50,7 +50,7 @@ class Configure:
             'selector-changes'
         )[0].getElementsByTagName('selector-change')
         for change in changes:
-            self.selectorChanges.append(SelectorChange(
+            self.selector_changes.append(SelectorChange(
                 change.attributes['selector'].value,
                 change.attributes['attribute'].value,
                 change.attributes['value-attribute'].value
@@ -92,7 +92,7 @@ class Configure:
         @rtype: array.L{hatemile.util.SelectorChange}
         """
 
-        return [] + self.selectorChanges
+        return [] + self.selector_changes
 
     def get_skippers(self):
         """

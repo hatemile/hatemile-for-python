@@ -34,7 +34,7 @@ class SelectorChange:
 
         self.selector = selector
         self.attribute = attribute
-        self.valueForAttribute = value_for_attribute
+        self.value_for_attribute = value_for_attribute
 
     def get_selector(self):
         """
@@ -61,4 +61,4 @@ class SelectorChange:
         @rtype: str
         """
 
-        return self.valueForAttribute
+        return self.value_for_attribute

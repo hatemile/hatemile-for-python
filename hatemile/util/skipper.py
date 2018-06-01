@@ -30,7 +30,7 @@ class Skipper:
         """
 
         self.selector = selector
-        self.defaultText = default_text
+        self.default_text = default_text
         if shortcuts == '':
             self.shortcuts = []
         else:
@@ -52,7 +52,7 @@ class Skipper:
         @rtype: str
         """
 
-        return self.defaultText
+        return self.default_text
 
     def get_shortcuts(self):
         """

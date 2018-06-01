@@ -31,13 +31,13 @@ class AccessibleSelectorImplementation(AccessibleSelector):
 
         self.parser = parser
         self.changes = configure.get_selector_changes()
-        self.dataIgnore = 'data-ignoreaccessibilityfix'
+        self.data_ignore = 'data-ignoreaccessibilityfix'
 
     def fix_selectors(self):
         for change in self.changes:
             elements = self.parser.find(change.get_selector()).list_results()
             for element in elements:
-                if not element.has_attribute(self.dataIgnore):
+                if not element.has_attribute(self.data_ignore):
                     element.set_attribute(
                         change.get_attribute(),
                         change.get_value_for_attribute()

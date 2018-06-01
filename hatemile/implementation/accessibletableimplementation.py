@@ -31,8 +31,8 @@ class AccessibleTableImplementation(AccessibleTable):
         """
 
         self.parser = parser
-        self.prefixId = configure.get_parameter('prefix-generated-ids')
-        self.dataIgnore = 'data-ignoreaccessibilityfix'
+        self.prefix_id = configure.get_parameter('prefix-generated-ids')
+        self.data_ignore = 'data-ignoreaccessibilityfix'
 
     def _generate_part(self, part):
         """
@@ -169,7 +169,7 @@ class AccessibleTableImplementation(AccessibleTable):
             headersIds = []
             for cell in cells:
                 if cell.get_tag_name() == 'TH':
-                    CommonFunctions.generate_id(cell, self.prefixId)
+                    CommonFunctions.generate_id(cell, self.prefix_id)
                     headersIds.append(cell.get_attribute('id'))
 
                     cell.set_attribute('scope', 'row')
@@ -195,7 +195,7 @@ class AccessibleTableImplementation(AccessibleTable):
             'tr'
         ).find_children('th').list_results()
         for cell in cells:
-            CommonFunctions.generate_id(cell, self.prefixId)
+            CommonFunctions.generate_id(cell, self.prefix_id)
 
             cell.set_attribute('scope', 'col')
 
@@ -236,5 +236,5 @@ class AccessibleTableImplementation(AccessibleTable):
     def fix_association_cells_tables(self):
         tables = self.parser.find('table').list_results()
         for table in tables:
-            if not table.has_attribute(self.dataIgnore):
+            if not table.has_attribute(self.data_ignore):
                 self.fix_association_cells_table(table)

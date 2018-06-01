@@ -32,50 +32,54 @@ class AccessibleFormImplementation(AccessibleForm):
         """
 
         self.parser = parser
-        self.dataLabelPrefixRequiredField = 'data-prefixrequiredfield'
-        self.dataLabelSuffixRequiredField = 'data-suffixrequiredfield'
-        self.dataLabelPrefixRangeMinField = 'data-prefixvalueminfield'
-        self.dataLabelSuffixRangeMinField = 'data-suffixvalueminfield'
-        self.dataLabelPrefixRangeMaxField = 'data-prefixvaluemaxfield'
-        self.dataLabelSuffixRangeMaxField = 'data-suffixvaluemaxfield'
-        self.dataLabelPrefixAutoCompleteField = 'data-prefixautocompletefield'
-        self.dataLabelSuffixAutoCompleteField = 'data-suffixautocompletefield'
-        self.dataIgnore = 'data-ignoreaccessibilityfix'
-        self.prefixId = configure.get_parameter('prefix-generated-ids')
-        self.prefixRequiredField = configure.get_parameter(
+        self.data_label_prefix_required_field = 'data-prefixrequiredfield'
+        self.data_label_suffix_required_field = 'data-suffixrequiredfield'
+        self.data_label_prefix_range_min_field = 'data-prefixvalueminfield'
+        self.data_label_suffix_range_min_field = 'data-suffixvalueminfield'
+        self.data_label_prefix_range_max_field = 'data-prefixvaluemaxfield'
+        self.data_label_suffix_range_max_field = 'data-suffixvaluemaxfield'
+        self.data_label_prefix_autocomplete_field = (
+            'data-prefixautocompletefield'
+        )
+        self.data_label_suffix_autocomplete_field = (
+            'data-suffixautocompletefield'
+        )
+        self.data_ignore = 'data-ignoreaccessibilityfix'
+        self.prefix_id = configure.get_parameter('prefix-generated-ids')
+        self.prefix_required_field = configure.get_parameter(
             'prefix-required-field'
         )
-        self.suffixRequiredField = configure.get_parameter(
+        self.suffix_required_field = configure.get_parameter(
             'suffix-required-field'
         )
-        self.prefixRangeMinField = configure.get_parameter(
+        self.prefix_range_min_field = configure.get_parameter(
             'prefix-range-min-field'
         )
-        self.suffixRangeMinField = configure.get_parameter(
+        self.suffix_range_min_field = configure.get_parameter(
             'suffix-range-min-field'
         )
-        self.prefixRangeMaxField = configure.get_parameter(
+        self.prefix_range_max_field = configure.get_parameter(
             'prefix-range-max-field'
         )
-        self.suffixRangeMaxField = configure.get_parameter(
+        self.suffix_range_max_field = configure.get_parameter(
             'suffix-range-max-field'
         )
-        self.prefixAutoCompleteField = configure.get_parameter(
+        self.prefix_autocomplete_field = configure.get_parameter(
             'prefix-autocomplete-field'
         )
-        self.suffixAutoCompleteField = configure.get_parameter(
+        self.suffix_autocomplete_field = configure.get_parameter(
             'suffix-autocomplete-field'
         )
-        self.textAutoCompleteValueBoth = configure.get_parameter(
+        self.text_autocomplete_value_both = configure.get_parameter(
             'text-autocomplete-value-both'
         )
-        self.textAutoCompleteValueList = configure.get_parameter(
+        self.text_autocomplete_value_list = configure.get_parameter(
             'text-autocomplete-value-list'
         )
-        self.textAutoCompleteValueInline = configure.get_parameter(
+        self.text_autocomplete_value_inline = configure.get_parameter(
             'text-autocomplete-value-inline'
         )
-        self.textAutoCompleteValueNone = configure.get_parameter(
+        self.text_autocomplete_value_none = configure.get_parameter(
             'text-autocomplete-value-none'
         )
 
@@ -135,16 +139,20 @@ class AccessibleFormImplementation(AccessibleForm):
                 )
             )
             and (required_field.has_attribute('aria-label'))
-            and (not label.has_attribute(self.dataLabelPrefixRequiredField))
-            and (not label.has_attribute(self.dataLabelSuffixRequiredField))
+            and (not label.has_attribute(
+                self.data_label_prefix_required_field
+            ))
+            and (not label.has_attribute(
+                self.data_label_suffix_required_field
+            ))
         ):
             self._add_prefix_suffix(
                 label,
                 required_field,
-                self.prefixRequiredField,
-                self.suffixRequiredField,
-                self.dataLabelPrefixRequiredField,
-                self.dataLabelSuffixRequiredField
+                self.prefix_required_field,
+                self.suffix_required_field,
+                self.data_label_prefix_required_field,
+                self.data_label_suffix_required_field
             )
 
     def _fix_label_range_field(self, label, range_field):
@@ -163,10 +171,10 @@ class AccessibleFormImplementation(AccessibleForm):
                     or range_field.has_attribute('aria-valuemin')
                 )
                 and (not label.has_attribute(
-                    self.dataLabelPrefixRangeMinField
+                    self.data_label_prefix_range_min_field
                 ))
                 and (not label.has_attribute(
-                    self.dataLabelSuffixRangeMinField
+                    self.data_label_suffix_range_min_field
                 ))
             ):
                 if range_field.has_attribute('min'):
@@ -179,15 +187,15 @@ class AccessibleFormImplementation(AccessibleForm):
                     re.sub(
                         '{{value}}',
                         value,
-                        self.prefixRangeMinField
+                        self.prefix_range_min_field
                     ),
                     re.sub(
                         '{{value}}',
                         value,
-                        self.suffixRangeMinField
+                        self.suffix_range_min_field
                     ),
-                    self.dataLabelPrefixRangeMinField,
-                    self.dataLabelSuffixRangeMinField
+                    self.data_label_prefix_range_min_field,
+                    self.data_label_suffix_range_min_field
                 )
             if (
                 (
@@ -195,10 +203,10 @@ class AccessibleFormImplementation(AccessibleForm):
                     or range_field.has_attribute('aria-valuemax')
                 )
                 and (not label.has_attribute(
-                    self.dataLabelPrefixRangeMaxField
+                    self.data_label_prefix_range_max_field
                 ))
                 and (not label.has_attribute(
-                    self.dataLabelSuffixRangeMaxField
+                    self.data_label_suffix_range_max_field
                 ))
             ):
                 if range_field.has_attribute('max'):
@@ -211,15 +219,15 @@ class AccessibleFormImplementation(AccessibleForm):
                     re.sub(
                         '{{value}}',
                         value,
-                        self.prefixRangeMaxField
+                        self.prefix_range_max_field
                     ),
                     re.sub(
                         '{{value}}',
                         value,
-                        self.suffixRangeMaxField
+                        self.suffix_range_max_field
                     ),
-                    self.dataLabelPrefixRangeMaxField,
-                    self.dataLabelSuffixRangeMaxField
+                    self.data_label_prefix_range_max_field,
+                    self.data_label_suffix_range_max_field
                 )
 
     def _fix_label_autocomplete_field(self, label, autocomplete_field):
@@ -236,60 +244,60 @@ class AccessibleFormImplementation(AccessibleForm):
         if (
             (autocomplete_field.has_attribute('aria-label'))
             and (not label.has_attribute(
-                self.dataLabelPrefixAutoCompleteField
+                self.data_label_prefix_autocomplete_field
             ))
             and (not label.has_attribute(
-                self.dataLabelSuffixAutoCompleteField
+                self.data_label_suffix_autocomplete_field
             ))
         ):
             ariaAutocomplete = self._get_aria_autocomplete(autocomplete_field)
             if ariaAutocomplete is not None:
                 if ariaAutocomplete == 'both':
-                    if self.prefixAutoCompleteField != '':
+                    if self.prefix_autocomplete_field != '':
                         prefixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueBoth,
-                            self.prefixAutoCompleteField
+                            self.text_autocomplete_value_both,
+                            self.prefix_autocomplete_field
                         )
-                    if self.suffixAutoCompleteField != '':
+                    if self.suffix_autocomplete_field != '':
                         suffixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueBoth,
-                            self.suffixAutoCompleteField
+                            self.text_autocomplete_value_both,
+                            self.suffix_autocomplete_field
                         )
                 elif ariaAutocomplete == 'none':
-                    if self.prefixAutoCompleteField != '':
+                    if self.prefix_autocomplete_field != '':
                         prefixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueNone,
-                            self.prefixAutoCompleteField
+                            self.text_autocomplete_value_none,
+                            self.prefix_autocomplete_field
                         )
-                    if self.suffixAutoCompleteField != '':
+                    if self.suffix_autocomplete_field != '':
                         suffixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueNone,
-                            self.suffixAutoCompleteField
+                            self.text_autocomplete_value_none,
+                            self.suffix_autocomplete_field
                         )
                 elif ariaAutocomplete == 'list':
-                    if self.prefixAutoCompleteField != '':
+                    if self.prefix_autocomplete_field != '':
                         prefixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueList,
-                            self.prefixAutoCompleteField
+                            self.text_autocomplete_value_list,
+                            self.prefix_autocomplete_field
                         )
-                    if self.suffixAutoCompleteField != '':
+                    if self.suffix_autocomplete_field != '':
                         suffixAutoCompleteFieldModified = re.sub(
                             '{{value}}',
-                            self.textAutoCompleteValueList,
-                            self.suffixAutoCompleteField
+                            self.text_autocomplete_value_list,
+                            self.suffix_autocomplete_field
                         )
                 self._add_prefix_suffix(
                     label,
                     autocomplete_field,
                     prefixAutoCompleteFieldModified,
                     suffixAutoCompleteFieldModified,
-                    self.dataLabelPrefixAutoCompleteField,
-                    self.dataLabelSuffixAutoCompleteField
+                    self.data_label_prefix_autocomplete_field,
+                    self.data_label_suffix_autocomplete_field
                 )
 
     def _get_aria_autocomplete(self, field):
@@ -378,7 +386,7 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_required_fields(self):
         requiredFields = self.parser.find('[required]').list_results()
         for requiredField in requiredFields:
-            if not requiredField.has_attribute(self.dataIgnore):
+            if not requiredField.has_attribute(self.data_ignore):
                 self.fix_required_field(requiredField)
 
     def fix_range_field(self, range_field):
@@ -399,7 +407,7 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_range_fields(self):
         rangeFields = self.parser.find('[min],[max]').list_results()
         for rangeField in rangeFields:
-            if not rangeField.has_attribute(self.dataIgnore):
+            if not rangeField.has_attribute(self.data_ignore):
                 self.fix_range_field(rangeField)
 
     def fix_autocomplete_field(self, autocomplete_field):
@@ -421,7 +429,7 @@ class AccessibleFormImplementation(AccessibleForm):
             + '[list],[form]'
         ).list_results()
         for element in elements:
-            if not element.has_attribute(self.dataIgnore):
+            if not element.has_attribute(self.data_ignore):
                 self.fix_autocomplete_field(element)
 
     def fix_label(self, label):
@@ -436,7 +444,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 ).first_result()
 
                 if field is not None:
-                    CommonFunctions.generate_id(field, self.prefixId)
+                    CommonFunctions.generate_id(field, self.prefix_id)
                     label.set_attribute('for', field.get_attribute('id'))
             if field is not None:
                 if not field.has_attribute('aria-label'):
@@ -453,7 +461,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 self._fix_label_range_field(label, field)
                 self._fix_label_autocomplete_field(label, field)
 
-                CommonFunctions.generate_id(label, self.prefixId)
+                CommonFunctions.generate_id(label, self.prefix_id)
                 field.set_attribute(
                     'aria-labelledby',
                     CommonFunctions.increase_in_list(
@@ -465,5 +473,5 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_labels(self):
         labels = self.parser.find('label').list_results()
         for label in labels:
-            if not label.has_attribute(self.dataIgnore):
+            if not label.has_attribute(self.data_ignore):
                 self.fix_label(label)
