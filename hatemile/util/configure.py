@@ -21,21 +21,21 @@ class Configure:
     The Configure class contains the configuration of HaTeMiLe.
     """
 
-    def __init__(self, fileName=None):
+    def __init__(self, file_name=None):
         """
         Initializes a new object that contains the configuration of HaTeMiLe.
-        @param fileName: The full path of file.
-        @type fileName: str
+        @param file_name: The full path of file.
+        @type file_name: str
         """
 
         self.parameters = {}
         self.selectorChanges = []
         self.skippers = []
-        if fileName is None:
-            fileName = os.path.dirname(os.path.dirname(os.path.dirname(
+        if file_name is None:
+            file_name = os.path.dirname(os.path.dirname(os.path.dirname(
                 os.path.realpath(__file__)
             ))) + '/hatemile-configure.xml'
-        xmldoc = minidom.parse(fileName)
+        xmldoc = minidom.parse(file_name)
         params = xmldoc.getElementsByTagName(
             'parameters'
         )[0].getElementsByTagName('parameter')

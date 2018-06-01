@@ -22,7 +22,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     AccessibleNavigation interface.
     """
 
-    def __init__(self, parser, configure, userAgent=None):
+    def __init__(self, parser, configure, user_agent=None):
         """
         Initializes a new object that manipulate the accessibility of the
         navigation of parser.
@@ -30,8 +30,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         @type parser: L{hatemile.util.HTMLDOMParser}
         @param configure: The configuration of HaTeMiLe.
         @type configure: L{hatemile.util.Configure}
-        @param userAgent: The user agent of the user.
-        @type userAgent: str
+        @param user_agent: The user agent of the user.
+        @type user_agent: str
         """
 
         self.parser = parser
@@ -61,20 +61,20 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.listSkippers = None
         self.listShortcuts = None
 
-        if userAgent is not None:
-            userAgent = userAgent.lower()
-            opera = 'opera' in userAgent
-            mac = 'mac' in userAgent
-            konqueror = 'konqueror' in userAgent
-            spoofer = 'spoofer' in userAgent
-            safari = 'applewebkit' in userAgent
-            windows = 'windows' in userAgent
-            chrome = 'chrome' in userAgent
+        if user_agent is not None:
+            user_agent = user_agent.lower()
+            opera = 'opera' in user_agent
+            mac = 'mac' in user_agent
+            konqueror = 'konqueror' in user_agent
+            spoofer = 'spoofer' in user_agent
+            safari = 'applewebkit' in user_agent
+            windows = 'windows' in user_agent
+            chrome = 'chrome' in user_agent
             firefox = re.match(
                 '.*firefox/[2-9]|minefield/3.*',
-                userAgent
+                user_agent
             ) is not None
-            ie = ('msie' in userAgent) or ('trident' in userAgent)
+            ie = ('msie' in user_agent) or ('trident' in user_agent)
 
             if opera:
                 self.prefix = 'SHIFT + ESC'
@@ -301,34 +301,34 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             lastLevel = level
         return True
 
-    def _generate_anchor_for(self, element, dataAttribute, anchorClass):
+    def _generate_anchor_for(self, element, data_attribute, anchor_class):
         """
         Generate an anchor for the element.
         @param element: The element.
         @type element: L{hatemile.util.HTMLDOMElement}
-        @param dataAttribute: The name of attribute that links the element with
-        the anchor.
-        @type dataAttribute: str
-        @param anchorClass: The HTML class of anchor.
-        @type anchorClass: str
+        @param data_attribute: The name of attribute that links the element
+        with the anchor.
+        @type data_attribute: str
+        @param anchor_class: The HTML class of anchor.
+        @type anchor_class: str
         @return: The anchor.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
 
         CommonFunctions.generate_id(element, self.prefixId)
         if self.parser.find(
-            '[' + dataAttribute + '="' + element.get_attribute('id') + '"]'
+            '[' + data_attribute + '="' + element.get_attribute('id') + '"]'
         ).first_result() is None:
             if element.get_tag_name() == 'A':
                 anchor = element
             else:
                 anchor = self.parser.create_element('a')
                 CommonFunctions.generate_id(anchor, self.prefixId)
-                anchor.set_attribute('class', anchorClass)
+                anchor.set_attribute('class', anchor_class)
                 element.insert_before(anchor)
             if not anchor.has_attribute('name'):
                 anchor.set_attribute('name', anchor.get_attribute('id'))
-            anchor.set_attribute(dataAttribute, element.get_attribute('id'))
+            anchor.set_attribute(data_attribute, element.get_attribute('id'))
         return anchor
 
     def _free_shortcut(self, shortcut):

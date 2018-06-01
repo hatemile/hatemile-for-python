@@ -25,7 +25,7 @@ class AccessibleEventImplementation(AccessibleEvent):
 
     includeScriptContent = None
 
-    def __init__(self, parser, configure, storeScriptsContent):
+    def __init__(self, parser, configure, store_scripts_content):
         """
         Initializes a new object that manipulate the accessibility of the
         Javascript events of elements of parser.
@@ -33,13 +33,13 @@ class AccessibleEventImplementation(AccessibleEvent):
         @type parser: L{hatemile.util.HTMLDOMParser}
         @param configure: The configuration of HaTeMiLe.
         @type configure: L{hatemile.util.Configure}
-        @param storeScriptsContent: The state that indicates if the scripts
+        @param store_scripts_content: The state that indicates if the scripts
         used are stored or deleted, after use.
-        @type storeScriptsContent: bool
+        @type store_scripts_content: bool
         """
 
         self.parser = parser
-        self.storeScriptsContent = storeScriptsContent
+        self.storeScriptsContent = store_scripts_content
         self.prefixId = configure.get_parameter('prefix-generated-ids')
         self.idScriptEventListener = 'script-eventlistener'
         self.idListIdsScript = 'list-ids-script'

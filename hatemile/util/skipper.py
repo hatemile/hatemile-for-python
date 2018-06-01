@@ -18,19 +18,19 @@ class Skipper:
     The Skipper class store the selector that will be add a skipper.
     """
 
-    def __init__(self, selector=None, defaultText=None, shortcuts=None):
+    def __init__(self, selector=None, default_text=None, shortcuts=None):
         """
         Inicializes a new object with the values pre-defineds.
         @param selector: The selector.
         @type selector: str
-        @param defaultText: The default text of skipper.
-        @type defaultText: str
+        @param default_text: The default text of skipper.
+        @type default_text: str
         @param shortcuts: The shortcuts of skipper.
         @type shortcuts: str
         """
 
         self.selector = selector
-        self.defaultText = defaultText
+        self.defaultText = default_text
         if shortcuts == '':
             self.shortcuts = []
         else:

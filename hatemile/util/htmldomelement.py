@@ -89,22 +89,22 @@ class HTMLDOMElement:
 
         pass
 
-    def insert_before(self, newElement):
+    def insert_before(self, new_element):
         """
         Insert a element before this element.
-        @param newElement: The element that be inserted.
-        @type newElement: L{hatemile.util.HTMLDOMElement}
+        @param new_element: The element that be inserted.
+        @type new_element: L{hatemile.util.HTMLDOMElement}
         @return: The element inserted.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
 
         pass
 
-    def insert_after(self, newElement):
+    def insert_after(self, new_element):
         """
         Insert a element after this element.
-        @param newElement: The element that be inserted.
-        @type newElement: L{hatemile.util.HTMLDOMElement}
+        @param new_element: The element that be inserted.
+        @type new_element: L{hatemile.util.HTMLDOMElement}
         @return: The element inserted.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
@@ -120,11 +120,11 @@ class HTMLDOMElement:
 
         pass
 
-    def replace_element(self, newElement):
+    def replace_element(self, new_element):
         """
         Replace this element for other element.
-        @param newElement: The element that replace this element.
-        @type newElement: L{hatemile.util.HTMLDOMElement}
+        @param new_element: The element that replace this element.
+        @type new_element: L{hatemile.util.HTMLDOMElement}
         @return: The element replaced.
         @rtype: L{hatemile.util.HTMLDOMElement}
         """

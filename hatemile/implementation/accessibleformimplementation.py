@@ -85,8 +85,8 @@ class AccessibleFormImplementation(AccessibleForm):
         field,
         prefix,
         suffix,
-        dataPrefix,
-        dataSuffix
+        data_prefix,
+        data_suffix
     ):
         """
         Display in label the information of field.
@@ -98,69 +98,69 @@ class AccessibleFormImplementation(AccessibleForm):
         @type prefix: str
         @param suffix: The suffix.
         @type suffix: str
-        @param dataPrefix: The name of prefix attribute.
-        @type dataPrefix: str
-        @param dataSuffix: The name of suffix attribute.
-        @type dataSuffix: str
+        @param data_prefix: The name of prefix attribute.
+        @type data_prefix: str
+        @param data_suffix: The name of suffix attribute.
+        @type data_suffix: str
         """
 
         contentLabel = field.get_attribute('aria-label')
         if prefix != '':
-            label.set_attribute(dataPrefix, prefix)
+            label.set_attribute(data_prefix, prefix)
             if prefix not in contentLabel:
                 contentLabel = prefix + ' ' + contentLabel
         if suffix != '':
-            label.set_attribute(dataSuffix, suffix)
+            label.set_attribute(data_suffix, suffix)
             if suffix not in contentLabel:
                 contentLabel = contentLabel + ' ' + suffix
         field.set_attribute('aria-label', contentLabel)
 
-    def _fix_label_required_field(self, label, requiredField):
+    def _fix_label_required_field(self, label, required_field):
         """
         Display in label the information if the field is required.
         @param label: The label.
         @type label: L{hatemile.util.HTMLDOMElement}
-        @param requiredField: The required field.
-        @type requiredField: L{hatemile.util.HTMLDOMElement}
+        @param required_field: The required field.
+        @type required_field: L{hatemile.util.HTMLDOMElement}
         """
 
         if (
             (
-                (requiredField.has_attribute('required'))
+                (required_field.has_attribute('required'))
                 or (
-                    (requiredField.has_attribute('aria-required'))
-                    and (requiredField.get_attribute(
+                    (required_field.has_attribute('aria-required'))
+                    and (required_field.get_attribute(
                         'aria-required'
                     ).lower() == 'true')
                 )
             )
-            and (requiredField.has_attribute('aria-label'))
+            and (required_field.has_attribute('aria-label'))
             and (not label.has_attribute(self.dataLabelPrefixRequiredField))
             and (not label.has_attribute(self.dataLabelSuffixRequiredField))
         ):
             self._add_prefix_suffix(
                 label,
-                requiredField,
+                required_field,
                 self.prefixRequiredField,
                 self.suffixRequiredField,
                 self.dataLabelPrefixRequiredField,
                 self.dataLabelSuffixRequiredField
             )
 
-    def _fix_label_range_field(self, label, rangeField):
+    def _fix_label_range_field(self, label, range_field):
         """
         Display in label the information of range of field.
         @param label: The label.
         @type label: L{hatemile.util.HTMLDOMElement}
-        @param rangeField: The range field.
-        @type rangeField: L{hatemile.util.HTMLDOMElement}
+        @param range_field: The range field.
+        @type range_field: L{hatemile.util.HTMLDOMElement}
         """
 
-        if rangeField.has_attribute('aria-label'):
+        if range_field.has_attribute('aria-label'):
             if (
                 (
-                    rangeField.has_attribute('min')
-                    or rangeField.has_attribute('aria-valuemin')
+                    range_field.has_attribute('min')
+                    or range_field.has_attribute('aria-valuemin')
                 )
                 and (not label.has_attribute(
                     self.dataLabelPrefixRangeMinField
@@ -169,13 +169,13 @@ class AccessibleFormImplementation(AccessibleForm):
                     self.dataLabelSuffixRangeMinField
                 ))
             ):
-                if rangeField.has_attribute('min'):
-                    value = rangeField.get_attribute('min')
+                if range_field.has_attribute('min'):
+                    value = range_field.get_attribute('min')
                 else:
-                    value = rangeField.get_attribute('aria-valuemin')
+                    value = range_field.get_attribute('aria-valuemin')
                 self._add_prefix_suffix(
                     label,
-                    rangeField,
+                    range_field,
                     re.sub(
                         '{{value}}',
                         value,
@@ -191,8 +191,8 @@ class AccessibleFormImplementation(AccessibleForm):
                 )
             if (
                 (
-                    rangeField.has_attribute('max')
-                    or rangeField.has_attribute('aria-valuemax')
+                    range_field.has_attribute('max')
+                    or range_field.has_attribute('aria-valuemax')
                 )
                 and (not label.has_attribute(
                     self.dataLabelPrefixRangeMaxField
@@ -201,13 +201,13 @@ class AccessibleFormImplementation(AccessibleForm):
                     self.dataLabelSuffixRangeMaxField
                 ))
             ):
-                if rangeField.has_attribute('max'):
-                    value = rangeField.get_attribute('max')
+                if range_field.has_attribute('max'):
+                    value = range_field.get_attribute('max')
                 else:
-                    value = rangeField.get_attribute('aria-valuemax')
+                    value = range_field.get_attribute('aria-valuemax')
                 self._add_prefix_suffix(
                     label,
-                    rangeField,
+                    range_field,
                     re.sub(
                         '{{value}}',
                         value,
@@ -222,19 +222,19 @@ class AccessibleFormImplementation(AccessibleForm):
                     self.dataLabelSuffixRangeMaxField
                 )
 
-    def _fix_label_autocomplete_field(self, label, autoCompleteField):
+    def _fix_label_autocomplete_field(self, label, autocomplete_field):
         """
         Display in label the information if the field has autocomplete.
         @param label: The label.
         @type label: L{hatemile.util.HTMLDOMElement}
-        @param autoCompleteField: The autocomplete field.
-        @type autoCompleteField: L{hatemile.util.HTMLDOMElement}
+        @param autocomplete_field: The autocomplete field.
+        @type autocomplete_field: L{hatemile.util.HTMLDOMElement}
         """
 
         prefixAutoCompleteFieldModified = ''
         suffixAutoCompleteFieldModified = ''
         if (
-            (autoCompleteField.has_attribute('aria-label'))
+            (autocomplete_field.has_attribute('aria-label'))
             and (not label.has_attribute(
                 self.dataLabelPrefixAutoCompleteField
             ))
@@ -242,7 +242,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 self.dataLabelSuffixAutoCompleteField
             ))
         ):
-            ariaAutocomplete = self._get_aria_autocomplete(autoCompleteField)
+            ariaAutocomplete = self._get_aria_autocomplete(autocomplete_field)
             if ariaAutocomplete is not None:
                 if ariaAutocomplete == 'both':
                     if self.prefixAutoCompleteField != '':
@@ -285,7 +285,7 @@ class AccessibleFormImplementation(AccessibleForm):
                         )
                 self._add_prefix_suffix(
                     label,
-                    autoCompleteField,
+                    autocomplete_field,
                     prefixAutoCompleteFieldModified,
                     suffixAutoCompleteFieldModified,
                     self.dataLabelPrefixAutoCompleteField,
@@ -367,13 +367,13 @@ class AccessibleFormImplementation(AccessibleForm):
             ).list_results()
         return labels
 
-    def fix_required_field(self, requiredField):
-        if requiredField.has_attribute('required'):
-            requiredField.set_attribute('aria-required', 'true')
+    def fix_required_field(self, required_field):
+        if required_field.has_attribute('required'):
+            required_field.set_attribute('aria-required', 'true')
 
-            labels = self._get_labels(requiredField)
+            labels = self._get_labels(required_field)
             for label in labels:
-                self._fix_label_required_field(label, requiredField)
+                self._fix_label_required_field(label, required_field)
 
     def fix_required_fields(self):
         requiredFields = self.parser.find('[required]').list_results()
@@ -381,20 +381,20 @@ class AccessibleFormImplementation(AccessibleForm):
             if not requiredField.has_attribute(self.dataIgnore):
                 self.fix_required_field(requiredField)
 
-    def fix_range_field(self, rangeField):
-        if rangeField.has_attribute('min'):
-            rangeField.set_attribute(
+    def fix_range_field(self, range_field):
+        if range_field.has_attribute('min'):
+            range_field.set_attribute(
                 'aria-valuemin',
-                rangeField.get_attribute('min')
+                range_field.get_attribute('min')
             )
-        if rangeField.has_attribute('max'):
-            rangeField.set_attribute(
+        if range_field.has_attribute('max'):
+            range_field.set_attribute(
                 'aria-valuemax',
-                rangeField.get_attribute('max')
+                range_field.get_attribute('max')
             )
-        labels = self._get_labels(rangeField)
+        labels = self._get_labels(range_field)
         for label in labels:
-            self._fix_label_range_field(label, rangeField)
+            self._fix_label_range_field(label, range_field)
 
     def fix_range_fields(self):
         rangeFields = self.parser.find('[min],[max]').list_results()
@@ -402,17 +402,17 @@ class AccessibleFormImplementation(AccessibleForm):
             if not rangeField.has_attribute(self.dataIgnore):
                 self.fix_range_field(rangeField)
 
-    def fix_autocomplete_field(self, autoCompleteField):
-        ariaAutoComplete = self._get_aria_autocomplete(autoCompleteField)
+    def fix_autocomplete_field(self, autocomplete_field):
+        ariaAutoComplete = self._get_aria_autocomplete(autocomplete_field)
         if ariaAutoComplete is not None:
-            autoCompleteField.set_attribute(
+            autocomplete_field.set_attribute(
                 'aria-autocomplete',
                 ariaAutoComplete
             )
 
-            labels = self._get_labels(autoCompleteField)
+            labels = self._get_labels(autocomplete_field)
             for label in labels:
-                self._fix_label_autocomplete_field(label, autoCompleteField)
+                self._fix_label_autocomplete_field(label, autocomplete_field)
 
     def fix_autocomplete_fields(self):
         elements = self.parser.find(

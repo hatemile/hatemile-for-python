@@ -67,21 +67,21 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def get_text_content(self):
         return self.data.get_text()
 
-    def insert_before(self, newElement):
-        self.data.insert_before(newElement.get_data())
-        return newElement
+    def insert_before(self, new_element):
+        self.data.insert_before(new_element.get_data())
+        return new_element
 
-    def insert_after(self, newElement):
-        self.data.insert_after(newElement.get_data())
-        return newElement
+    def insert_after(self, new_element):
+        self.data.insert_after(new_element.get_data())
+        return new_element
 
     def remove_element(self):
         self.data.extract()
         return self
 
-    def replace_element(self, newElement):
-        self.data.replace_with(newElement.get_data())
-        return newElement
+    def replace_element(self, new_element):
+        self.data.replace_with(new_element.get_data())
+        return new_element
 
     def append_element(self, element):
         self.data.append(element.get_data())

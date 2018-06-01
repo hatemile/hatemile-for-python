@@ -184,14 +184,14 @@ class AccessibleTableImplementation(AccessibleTable):
                             )
                         cell.set_attribute('headers', headers)
 
-    def _fix_header(self, tableHeader):
+    def _fix_header(self, table_header):
         """
         Fix the table header.
-        @param tableHeader: The table header.
-        @type tableHeader: L{hatemile.util.HTMLDOMElement}
+        @param table_header: The table header.
+        @type table_header: L{hatemile.util.HTMLDOMElement}
         """
 
-        cells = self.parser.find(tableHeader).find_children(
+        cells = self.parser.find(table_header).find_children(
             'tr'
         ).find_children('th').list_results()
         for cell in cells:

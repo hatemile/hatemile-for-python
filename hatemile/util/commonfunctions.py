@@ -62,43 +62,43 @@ class CommonFunctions:
                 )
 
     @staticmethod
-    def increase_in_list(listToIncrease, stringToIncrease):
+    def increase_in_list(list_to_increase, string_to_increase):
         """
         The list of attributes that will be copied.
-        @param listToIncrease: The list.
-        @type listToIncrease: str
-        @param stringToIncrease: The value of item.
-        @type stringToIncrease: str
+        @param list_to_increase: The list.
+        @type list_to_increase: str
+        @param string_to_increase: The value of item.
+        @type string_to_increase: str
         @return: The list with the item added, if the item not was contained in
         list.
         @rtype: str
         """
 
-        if (bool(listToIncrease)) and (bool(stringToIncrease)):
-            if CommonFunctions.in_list(listToIncrease, stringToIncrease):
-                return listToIncrease
+        if (bool(list_to_increase)) and (bool(string_to_increase)):
+            if CommonFunctions.in_list(list_to_increase, string_to_increase):
+                return list_to_increase
             else:
-                return listToIncrease + ' ' + stringToIncrease
-        elif bool(listToIncrease):
-            return listToIncrease
+                return list_to_increase + ' ' + string_to_increase
+        elif bool(list_to_increase):
+            return list_to_increase
         else:
-            return stringToIncrease
+            return string_to_increase
 
     @staticmethod
-    def in_list(listToSearch, stringToSearch):
+    def in_list(list_to_search, string_to_search):
         """
         Verify if the list contains the item.
-        @param listToSearch: The list.
-        @type listToSearch: str
-        @param stringToSearch: The value of item.
-        @type stringToSearch: str
+        @param list_to_search: The list.
+        @type list_to_search: str
+        @param string_to_search: The value of item.
+        @type string_to_search: str
         @return: True if the list contains the item or false is not contains.
         @rtype: bool
         """
 
-        if (bool(listToSearch)) and (bool(stringToSearch)):
-            elements = re.split('[ \n\t\r]+', listToSearch)
+        if (bool(list_to_search)) and (bool(string_to_search)):
+            elements = re.split('[ \n\t\r]+', list_to_search)
             for element in elements:
-                if element == stringToSearch:
+                if element == string_to_search:
                     return True
         return False

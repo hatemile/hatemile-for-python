@@ -17,11 +17,11 @@ class AccessibleForm:
     forms.
     """
 
-    def fix_required_field(self, requiredField):
+    def fix_required_field(self, required_field):
         """
         Display that the field is required.
-        @param requiredField: The required field.
-        @type requiredField: L{hatemile.util.HTMLDOMElement}
+        @param required_field: The required field.
+        @type required_field: L{hatemile.util.HTMLDOMElement}
         """
 
         pass
@@ -33,11 +33,11 @@ class AccessibleForm:
 
         pass
 
-    def fix_range_field(self, rangeField):
+    def fix_range_field(self, range_field):
         """
         Display that the field have range.
-        @param rangeField: The range field.
-        @type rangeField: L{hatemile.util.HTMLDOMElement}
+        @param range_field: The range field.
+        @type range_field: L{hatemile.util.HTMLDOMElement}
         """
 
         pass
@@ -49,11 +49,11 @@ class AccessibleForm:
 
         pass
 
-    def fix_autocomplete_field(self, autoCompleteField):
+    def fix_autocomplete_field(self, autocomplete_field):
         """
         Display that the field have autocomplete.
-        @param autoCompleteField: The field with autocomplete.
-        @type autoCompleteField: L{hatemile.util.HTMLDOMElement}
+        @param autocomplete_field: The field with autocomplete.
+        @type autocomplete_field: L{hatemile.util.HTMLDOMElement}
         """
 
         pass

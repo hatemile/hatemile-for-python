@@ -22,22 +22,22 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     HTMLDOMParser interface for the BeautifulSoup library.
     """
 
-    def __init__(self, codeOrParser):
+    def __init__(self, code_or_parser):
         """
         Initializes a new object that encapsulate the parser of BeautifulSoup.
-        @param codeOrParser: The root element of the parser or the HTML code.
-        @type codeOrParser: str or bs4.element.Tag
+        @param code_or_parser: The root element of the parser or the HTML code.
+        @type code_or_parser: str or bs4.element.Tag
         """
 
-        if isinstance(codeOrParser, BeautifulSoup):
-            self.document = codeOrParser
+        if isinstance(code_or_parser, BeautifulSoup):
+            self.document = code_or_parser
         else:
-            self.document = BeautifulSoup(codeOrParser)
+            self.document = BeautifulSoup(code_or_parser)
             self._fix_data_select()
         self.results = []
 
-    def _in_list(self, originalList, item):
-        for itemList in originalList:
+    def _in_list(self, original_list, item):
+        for itemList in original_list:
             if item is itemList:
                 return True
         return False
