@@ -17,7 +17,7 @@ class AccessibleForm:
     forms.
     """
 
-    def fixRequiredField(self, requiredField):
+    def fix_required_field(self, requiredField):
         """
         Display that the field is required.
         @param requiredField: The required field.
@@ -26,14 +26,14 @@ class AccessibleForm:
 
         pass
 
-    def fixRequiredFields(self):
+    def fix_required_fields(self):
         """
         Display that the fields is required.
         """
 
         pass
 
-    def fixRangeField(self, rangeField):
+    def fix_range_field(self, rangeField):
         """
         Display that the field have range.
         @param rangeField: The range field.
@@ -42,14 +42,14 @@ class AccessibleForm:
 
         pass
 
-    def fixRangeFields(self):
+    def fix_range_fields(self):
         """
         Display that the fields have range.
         """
 
         pass
 
-    def fixAutoCompleteField(self, autoCompleteField):
+    def fix_autocomplete_field(self, autoCompleteField):
         """
         Display that the field have autocomplete.
         @param autoCompleteField: The field with autocomplete.
@@ -58,14 +58,14 @@ class AccessibleForm:
 
         pass
 
-    def fixAutoCompleteFields(self):
+    def fix_autocomplete_fields(self):
         """
         Display that the fields have autocomplete.
         """
 
         pass
 
-    def fixLabel(self, label):
+    def fix_label(self, label):
         """
         Associate label with field.
         @param label: The label.
@@ -74,7 +74,7 @@ class AccessibleForm:
 
         pass
 
-    def fixLabels(self):
+    def fix_labels(self):
         """
         Associate labels with fields.
         """

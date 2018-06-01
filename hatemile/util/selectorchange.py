@@ -31,7 +31,7 @@ class SelectorChange:
         self.attribute = attribute
         self.valueForAttribute = valueForAttribute
 
-    def getSelector(self):
+    def get_selector(self):
         """
         Returns the selector.
         @return: The selector.
@@ -40,7 +40,7 @@ class SelectorChange:
 
         return self.selector
 
-    def getAttribute(self):
+    def get_attribute(self):
         """
         Returns the attribute.
         @return: The attribute.
@@ -49,7 +49,7 @@ class SelectorChange:
 
         return self.attribute
 
-    def getValueForAttribute(self):
+    def get_value_for_attribute(self):
         """
         Returns the value of the attribute.
         @return: The value of the attribute.

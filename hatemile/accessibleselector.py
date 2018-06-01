@@ -16,7 +16,7 @@ class AccessibleSelector:
     The AccessibleSelector interface perform changes in selectors.
     """
 
-    def fixSelectors(self):
+    def fix_selectors(self):
         """
         Change the selectors.
         """

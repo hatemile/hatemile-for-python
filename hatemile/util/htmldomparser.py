@@ -28,7 +28,7 @@ class HTMLDOMParser:
 
         pass
 
-    def findChildren(self, selector):
+    def find_children(self, selector):
         """
         Find all elements in the parser by selector, children of found
         elements.
@@ -40,7 +40,7 @@ class HTMLDOMParser:
 
         pass
 
-    def findDescendants(self, selector):
+    def find_descendants(self, selector):
         """
         Find all elements in the parser by selector, descendants of found
         elements.
@@ -52,7 +52,7 @@ class HTMLDOMParser:
 
         pass
 
-    def findAncestors(self, selector):
+    def find_ancestors(self, selector):
         """
         Find all elements in the parser by selector, ancestors of found
         elements.
@@ -64,7 +64,7 @@ class HTMLDOMParser:
 
         pass
 
-    def firstResult(self):
+    def first_result(self):
         """
         Returns the first element found.
         @return: The first element found or None if not have elements found.
@@ -73,7 +73,7 @@ class HTMLDOMParser:
 
         pass
 
-    def lastResult(self):
+    def last_result(self):
         """
         Returns the last element found.
         @return: The last element found or None if not have elements found.
@@ -82,7 +82,7 @@ class HTMLDOMParser:
 
         pass
 
-    def listResults(self):
+    def list_results(self):
         """
         Returns a list with all elements found.
         @return: The list with all elements found.
@@ -91,7 +91,7 @@ class HTMLDOMParser:
 
         pass
 
-    def createElement(self, tag):
+    def create_element(self, tag):
         """
         Create a element.
         @param tag: The tag of element.
@@ -102,7 +102,7 @@ class HTMLDOMParser:
 
         pass
 
-    def getHTML(self):
+    def get_html(self):
         """
         Returns the HTML code of parser.
         @return: The HTML code of parser.
@@ -111,7 +111,7 @@ class HTMLDOMParser:
 
         pass
 
-    def getParser(self):
+    def get_parser(self):
         """
         Returns the parser.
         @return: The parser or root element of the parser.
@@ -120,7 +120,7 @@ class HTMLDOMParser:
 
         pass
 
-    def clearParser(self):
+    def clear_parser(self):
         """
         Clear the memory of this object.
         """

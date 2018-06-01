@@ -17,7 +17,7 @@ class AccessibleTable:
     tables.
     """
 
-    def fixAssociationCellsTable(self, table):
+    def fix_association_cells_table(self, table):
         """
         Associate data cells with header cells of table.
         @param table: The table.
@@ -26,7 +26,7 @@ class AccessibleTable:
 
         pass
 
-    def fixAssociationCellsTables(self):
+    def fix_association_cells_tables(self):
         """
         Associate data cells with header cells of tables.
         """

@@ -36,7 +36,7 @@ class Skipper:
         else:
             self.shortcuts = re.split('[ \n\t\r]+', shortcuts)
 
-    def getSelector(self):
+    def get_selector(self):
         """
         Returns the selector.
         @return: The selector.
@@ -45,7 +45,7 @@ class Skipper:
 
         return self.selector
 
-    def getDefaultText(self):
+    def get_default_text(self):
         """
         Returns the default text of skipper.
         @return: The default text of skipper.
@@ -54,7 +54,7 @@ class Skipper:
 
         return self.defaultText
 
-    def getShortcuts(self):
+    def get_shortcuts(self):
         """
         Returns the shortcuts of skipper.
         @return: The shortcuts of skipper.

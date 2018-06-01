@@ -65,7 +65,7 @@ class Configure:
                 skipper.attributes['shortcut'].value
             ))
 
-    def getParameters(self):
+    def get_parameters(self):
         """
         Returns the parameters of configuration.
         @return: The parameters of configuration.
@@ -74,7 +74,7 @@ class Configure:
 
         return self.parameters.copy()
 
-    def getParameter(self, name):
+    def get_parameter(self, name):
         """
         Returns the value of a parameter of configuration.
         @param name: The parameter.
@@ -85,7 +85,7 @@ class Configure:
 
         return self.parameters[name]
 
-    def getSelectorChanges(self):
+    def get_selector_changes(self):
         """
         Returns the changes that will be done in selectors.
         @return: The changes that will be done in selectors.
@@ -94,7 +94,7 @@ class Configure:
 
         return [] + self.selectorChanges
 
-    def getSkippers(self):
+    def get_skippers(self):
         """
         Returns the skippers.
         @return: The skippers.

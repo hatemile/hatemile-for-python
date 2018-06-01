@@ -21,7 +21,7 @@ class CommonFunctions:
     count = 0
 
     @staticmethod
-    def generateId(element, prefix):
+    def generate_id(element, prefix):
         """
         Generate a id for a element.
         @param element: The element.
@@ -30,12 +30,12 @@ class CommonFunctions:
         @type prefix: str
         """
 
-        if not element.hasAttribute('id'):
-            element.setAttribute('id', prefix + str(CommonFunctions.count))
+        if not element.has_attribute('id'):
+            element.set_attribute('id', prefix + str(CommonFunctions.count))
             CommonFunctions.count += 1
 
     @staticmethod
-    def resetCount():
+    def reset_count():
         """
         Reset the count number of ids.
         """
@@ -43,7 +43,7 @@ class CommonFunctions:
         CommonFunctions.count = 0
 
     @staticmethod
-    def setListAttributes(element1, element2, attributes):
+    def set_list_attributes(element1, element2, attributes):
         """
         Copy a list of attributes of a element for other element.
         @param element1: The element that have attributes copied.
@@ -55,14 +55,14 @@ class CommonFunctions:
         """
 
         for attribute in attributes:
-            if element1.hasAttribute(attribute):
-                element2.setAttribute(
+            if element1.has_attribute(attribute):
+                element2.set_attribute(
                     attribute,
-                    element1.getAttribute(attribute)
+                    element1.get_attribute(attribute)
                 )
 
     @staticmethod
-    def increaseInList(listToIncrease, stringToIncrease):
+    def increase_in_list(listToIncrease, stringToIncrease):
         """
         The list of attributes that will be copied.
         @param listToIncrease: The list.
@@ -75,7 +75,7 @@ class CommonFunctions:
         """
 
         if (bool(listToIncrease)) and (bool(stringToIncrease)):
-            if CommonFunctions.inList(listToIncrease, stringToIncrease):
+            if CommonFunctions.in_list(listToIncrease, stringToIncrease):
                 return listToIncrease
             else:
                 return listToIncrease + ' ' + stringToIncrease
@@ -85,7 +85,7 @@ class CommonFunctions:
             return stringToIncrease
 
     @staticmethod
-    def inList(listToSearch, stringToSearch):
+    def in_list(listToSearch, stringToSearch):
         """
         Verify if the list contains the item.
         @param listToSearch: The list.

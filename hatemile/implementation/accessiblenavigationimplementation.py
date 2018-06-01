@@ -47,13 +47,13 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.dataAnchorFor = 'data-anchorfor'
         self.dataHeadingAnchorFor = 'data-headinganchorfor'
         self.dataHeadingLevel = 'data-headinglevel'
-        self.prefixId = configure.getParameter('prefix-generated-ids')
-        self.textShortcuts = configure.getParameter('text-shortcuts')
-        self.textHeading = configure.getParameter('text-heading')
-        self.standartPrefix = configure.getParameter(
+        self.prefixId = configure.get_parameter('prefix-generated-ids')
+        self.textShortcuts = configure.get_parameter('text-shortcuts')
+        self.textHeading = configure.get_parameter('text-heading')
+        self.standartPrefix = configure.get_parameter(
             'text-standart-shortcut-prefix'
         )
-        self.skippers = configure.getSkippers()
+        self.skippers = configure.get_skippers()
         self.listShortcutsAdded = False
         self.listSkippersAdded = False
         self.validateHeading = False
@@ -93,7 +93,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         else:
             self.prefix = self.standartPrefix
 
-    def _getDescription(self, element):
+    def _get_description(self, element):
         """
         Returns the description of element.
         @param element: The element with description.
@@ -103,54 +103,54 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         description = None
-        if element.hasAttribute('title'):
-            description = element.getAttribute('title')
-        elif element.hasAttribute('aria-label'):
-            description = element.getAttribute('aria-label')
-        elif element.hasAttribute('alt'):
-            description = element.getAttribute('alt')
-        elif element.hasAttribute('label'):
-            description = element.getAttribute('label')
+        if element.has_attribute('title'):
+            description = element.get_attribute('title')
+        elif element.has_attribute('aria-label'):
+            description = element.get_attribute('aria-label')
+        elif element.has_attribute('alt'):
+            description = element.get_attribute('alt')
+        elif element.has_attribute('label'):
+            description = element.get_attribute('label')
         elif (
-            (element.hasAttribute('aria-labelledby'))
-            or (element.hasAttribute('aria-describedby'))
+            (element.has_attribute('aria-labelledby'))
+            or (element.has_attribute('aria-describedby'))
         ):
-            if element.hasAttribute('aria-labelledby'):
+            if element.has_attribute('aria-labelledby'):
                 descriptionIds = re.split(
                     '[ \n\r\t]+',
-                    element.getAttribute('aria-labelledby').strip()
+                    element.get_attribute('aria-labelledby').strip()
                 )
             else:
                 descriptionIds = re.split(
                     '[ \n\r\t]+',
-                    element.getAttribute('aria-describedby').strip()
+                    element.get_attribute('aria-describedby').strip()
                 )
             for descriptionId in descriptionIds:
                 elementDescription = self.parser.find(
                     '#' + descriptionId
-                ).firstResult()
+                ).first_result()
                 if elementDescription is not None:
-                    description = elementDescription.getTextContent()
+                    description = elementDescription.get_text_content()
                     break
         elif (
-            (element.getTagName() == 'INPUT')
-            and (element.hasAttribute('type'))
+            (element.get_tag_name() == 'INPUT')
+            and (element.has_attribute('type'))
         ):
-            typeAttribute = element.getAttribute('type').lower()
+            typeAttribute = element.get_attribute('type').lower()
             if (
                 (
                     (typeAttribute == 'button')
                     or (typeAttribute == 'submit')
                     or (typeAttribute == 'reset')
                 )
-                and (element.hasAttribute('value'))
+                and (element.has_attribute('value'))
             ):
-                description = element.getAttribute('value')
+                description = element.get_attribute('value')
         if not bool(description):
-            description = element.getTextContent()
+            description = element.get_text_content()
         return re.sub('[ \n\r\t]+', ' ', description.strip())
 
-    def _generateListShortcuts(self):
+    def _generate_list_shortcuts(self):
         """
         Generate the list of shortcuts of page.
         @return: The list of shortcuts of page.
@@ -159,36 +159,36 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
         container = self.parser.find(
             '#' + self.idContainerShortcuts
-        ).firstResult()
+        ).first_result()
         htmlList = None
         if container is None:
-            local = self.parser.find('body').firstResult()
+            local = self.parser.find('body').first_result()
             if local is not None:
-                container = self.parser.createElement('div')
-                container.setAttribute('id', self.idContainerShortcuts)
+                container = self.parser.create_element('div')
+                container.set_attribute('id', self.idContainerShortcuts)
 
-                textContainer = self.parser.createElement('span')
-                textContainer.setAttribute('id', self.idTextShortcuts)
-                textContainer.appendText(self.textShortcuts)
+                textContainer = self.parser.create_element('span')
+                textContainer.set_attribute('id', self.idTextShortcuts)
+                textContainer.append_text(self.textShortcuts)
 
-                container.appendElement(textContainer)
-                local.appendElement(container)
+                container.append_element(textContainer)
+                local.append_element(container)
 
-                self._executeFixSkipper(container)
-                self._executeFixSkipper(textContainer)
+                self._execute_fix_skipper(container)
+                self._execute_fix_skipper(textContainer)
         if container is not None:
-            htmlList = self.parser.find(container).findChildren(
+            htmlList = self.parser.find(container).find_children(
                 'ul'
-            ).firstResult()
+            ).first_result()
             if htmlList is None:
-                htmlList = self.parser.createElement('ul')
-                container.appendElement(htmlList)
-            self._executeFixSkipper(htmlList)
+                htmlList = self.parser.create_element('ul')
+                container.append_element(htmlList)
+            self._execute_fix_skipper(htmlList)
         self.listShortcutsAdded = True
 
         return htmlList
 
-    def _generateListSkippers(self):
+    def _generate_list_skippers(self):
         """
         Generate the list of skippers of page.
         @return: The list of skippers of page.
@@ -197,26 +197,26 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
         container = self.parser.find(
             '#' + self.idContainerSkippers
-        ).firstResult()
+        ).first_result()
         htmlList = None
         if container is None:
-            local = self.parser.find('body').firstResult()
+            local = self.parser.find('body').first_result()
             if local is not None:
-                container = self.parser.createElement('div')
-                container.setAttribute('id', self.idContainerSkippers)
-                local.getFirstElementChild().insertBefore(container)
+                container = self.parser.create_element('div')
+                container.set_attribute('id', self.idContainerSkippers)
+                local.get_first_element_child().insert_before(container)
         if container is not None:
-            htmlList = self.parser.find(container).findChildren(
+            htmlList = self.parser.find(container).find_children(
                 'ul'
-            ).firstResult()
+            ).first_result()
             if htmlList is None:
-                htmlList = self.parser.createElement('ul')
-                container.appendElement(htmlList)
+                htmlList = self.parser.create_element('ul')
+                container.append_element(htmlList)
         self.listSkippersAdded = True
 
         return htmlList
 
-    def _generateListHeading(self):
+    def _generate_list_heading(self):
         """
         Generate the list of heading links of page.
         @return: The list of heading links of page.
@@ -225,34 +225,34 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
         container = self.parser.find(
             '#' + self.idContainerHeading
-        ).firstResult()
+        ).first_result()
         htmlList = None
         if container is None:
-            local = self.parser.find('body').firstResult()
+            local = self.parser.find('body').first_result()
             if local is not None:
-                container = self.parser.createElement('div')
-                container.setAttribute('id', self.idContainerHeading)
+                container = self.parser.create_element('div')
+                container.set_attribute('id', self.idContainerHeading)
 
-                textContainer = self.parser.createElement('span')
-                textContainer.setAttribute('id', self.idTextHeading)
-                textContainer.appendText(self.textHeading)
+                textContainer = self.parser.create_element('span')
+                textContainer.set_attribute('id', self.idTextHeading)
+                textContainer.append_text(self.textHeading)
 
-                container.appendElement(textContainer)
-                local.appendElement(container)
+                container.append_element(textContainer)
+                local.append_element(container)
 
-                self._executeFixSkipper(container)
-                self._executeFixSkipper(textContainer)
+                self._execute_fix_skipper(container)
+                self._execute_fix_skipper(textContainer)
         if container is not None:
-            htmlList = self.parser.find(container).findChildren(
+            htmlList = self.parser.find(container).find_children(
                 'ol'
-            ).firstResult()
+            ).first_result()
             if htmlList is None:
-                htmlList = self.parser.createElement('ol')
-                container.appendElement(htmlList)
-            self._executeFixSkipper(htmlList)
+                htmlList = self.parser.create_element('ol')
+                container.append_element(htmlList)
+            self._execute_fix_skipper(htmlList)
         return htmlList
 
-    def _getHeadingLevel(self, element):
+    def _get_heading_level(self, element):
         """
         Returns the level of heading.
         @param element: The heading.
@@ -261,7 +261,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
 
-        tag = element.getTagName()
+        tag = element.get_tag_name()
         if tag == 'H1':
             return 1
         elif tag == 'H2':
@@ -277,7 +277,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         else:
             return -1
 
-    def _isValidHeading(self):
+    def _is_valid_heading(self):
         """
         Inform if the headings of page are sintatic correct.
         @return: True if the headings of page are sintatic correct or false if
@@ -285,12 +285,12 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         @rtype: bool
         """
 
-        elements = self.parser.find('h1,h2,h3,h4,h5,h6').listResults()
+        elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
         lastLevel = 0
         countMainHeading = 0
         self.validateHeading = True
         for element in elements:
-            level = self._getHeadingLevel(element)
+            level = self._get_heading_level(element)
             if level == 1:
                 if countMainHeading == 1:
                     return False
@@ -301,7 +301,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             lastLevel = level
         return True
 
-    def _generateAnchorFor(self, element, dataAttribute, anchorClass):
+    def _generate_anchor_for(self, element, dataAttribute, anchorClass):
         """
         Generate an anchor for the element.
         @param element: The element.
@@ -315,23 +315,23 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         @rtype: L{hatemile.util.HTMLDOMElement}
         """
 
-        CommonFunctions.generateId(element, self.prefixId)
+        CommonFunctions.generate_id(element, self.prefixId)
         if self.parser.find(
-            '[' + dataAttribute + '="' + element.getAttribute('id') + '"]'
-        ).firstResult() is None:
-            if element.getTagName() == 'A':
+            '[' + dataAttribute + '="' + element.get_attribute('id') + '"]'
+        ).first_result() is None:
+            if element.get_tag_name() == 'A':
                 anchor = element
             else:
-                anchor = self.parser.createElement('a')
-                CommonFunctions.generateId(anchor, self.prefixId)
-                anchor.setAttribute('class', anchorClass)
-                element.insertBefore(anchor)
-            if not anchor.hasAttribute('name'):
-                anchor.setAttribute('name', anchor.getAttribute('id'))
-            anchor.setAttribute(dataAttribute, element.getAttribute('id'))
+                anchor = self.parser.create_element('a')
+                CommonFunctions.generate_id(anchor, self.prefixId)
+                anchor.set_attribute('class', anchorClass)
+                element.insert_before(anchor)
+            if not anchor.has_attribute('name'):
+                anchor.set_attribute('name', anchor.get_attribute('id'))
+            anchor.set_attribute(dataAttribute, element.get_attribute('id'))
         return anchor
 
-    def _freeShortcut(self, shortcut):
+    def _free_shortcut(self, shortcut):
         """
         Replace the shortcut of elements, that has the shortcut passed.
         @param shortcut: The shortcut.
@@ -339,28 +339,28 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         alphaNumbers = '1234567890abcdefghijklmnopqrstuvwxyz'
-        elements = self.parser.find('[accesskey]').listResults()
+        elements = self.parser.find('[accesskey]').list_results()
         found = False
         for element in elements:
-            shortcuts = element.getAttribute('accesskey').lower()
-            if CommonFunctions.inList(shortcuts, shortcut):
+            shortcuts = element.get_attribute('accesskey').lower()
+            if CommonFunctions.in_list(shortcuts, shortcut):
                 for i in range(0, alphaNumbers.length()):
                     key = alphaNumbers[i]
                     found = True
                     for elementWithShortcuts in elements:
-                        shortcuts = elementWithShortcuts.getAttribute(
+                        shortcuts = elementWithShortcuts.get_attribute(
                             'accesskey'
                         ).lower()
-                        if CommonFunctions.inList(shortcuts, key):
+                        if CommonFunctions.in_list(shortcuts, key):
                             found = False
                             break
                     if found:
-                        element.setAttribute('accesskey', key)
+                        element.set_attribute('accesskey', key)
                         break
                 if found:
                     break
 
-    def _executeFixSkipper(self, element):
+    def _execute_fix_skipper(self, element):
         """
         Call fixSkipper method for element, if the page has the container of
         skippers.
@@ -371,11 +371,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         if self.listSkippers is not None:
             for skipper in self.skippers:
                 if element in self.parser.find(
-                    skipper.getSelector()
-                ).listResults():
-                    self.fixSkipper(element, skipper)
+                    skipper.get_selector()
+                ).list_results():
+                    self.fix_skipper(element, skipper)
 
-    def _executeFixShortcut(self, element):
+    def _execute_fix_shortcut(self, element):
         """
         Call fixShortcut method for element, if the page has the container of
         shortcuts.
@@ -384,154 +384,154 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         if self.listShortcuts is not None:
-            self.fixShortcut(element)
+            self.fix_shortcut(element)
 
-    def fixShortcut(self, element):
-        if element.hasAttribute('accesskey'):
-            description = self._getDescription(element)
-            if not element.hasAttribute('title'):
-                element.setAttribute('title', description)
+    def fix_shortcut(self, element):
+        if element.has_attribute('accesskey'):
+            description = self._get_description(element)
+            if not element.has_attribute('title'):
+                element.set_attribute('title', description)
 
             if not self.listShortcutsAdded:
-                self.listShortcuts = self._generateListShortcuts()
+                self.listShortcuts = self._generate_list_shortcuts()
 
             if self.listShortcuts is not None:
                 keys = re.split(
                     '[ \n\t\r]+',
-                    element.getAttribute('accesskey')
+                    element.get_attribute('accesskey')
                 )
                 for key in keys:
                     key = key.upper()
-                    if self.parser.find(self.listShortcuts).findChildren(
+                    if self.parser.find(self.listShortcuts).find_children(
                         '[' + self.dataAccessKey + '="' + key + '"]'
-                    ).firstResult() is None:
-                        item = self.parser.createElement('li')
-                        item.setAttribute(self.dataAccessKey, key)
-                        item.appendText(
+                    ).first_result() is None:
+                        item = self.parser.create_element('li')
+                        item.set_attribute(self.dataAccessKey, key)
+                        item.append_text(
                             self.prefix
                             + ' + '
                             + key
                             + ': '
                             + description
                         )
-                        self.listShortcuts.appendElement(item)
+                        self.listShortcuts.append_element(item)
 
-    def fixShortcuts(self):
-        elements = self.parser.find('[accesskey]').listResults()
+    def fix_shortcuts(self):
+        elements = self.parser.find('[accesskey]').list_results()
         for element in elements:
-            if not element.hasAttribute(self.dataIgnore):
-                self.fixShortcut(element)
+            if not element.has_attribute(self.dataIgnore):
+                self.fix_shortcut(element)
 
-    def fixSkipper(self, element, skipper):
+    def fix_skipper(self, element, skipper):
         if not self.listSkippersAdded:
-            self.listSkippers = self._generateListSkippers()
+            self.listSkippers = self._generate_list_skippers()
         if self.listSkippers is not None:
-            anchor = self._generateAnchorFor(
+            anchor = self._generate_anchor_for(
                 element,
                 self.dataAnchorFor,
                 self.classSkipperAnchor
             )
             if anchor is not None:
-                itemLink = self.parser.createElement('li')
-                link = self.parser.createElement('a')
-                link.setAttribute('href', '#' + anchor.getAttribute('name'))
-                link.appendText(skipper.getDefaultText())
+                itemLink = self.parser.create_element('li')
+                link = self.parser.create_element('a')
+                link.set_attribute('href', '#' + anchor.get_attribute('name'))
+                link.append_text(skipper.get_default_text())
 
-                shortcuts = skipper.getShortcuts()
+                shortcuts = skipper.get_shortcuts()
                 if (len(shortcuts) != 0):
                     shortcut = shortcuts[0]
                     if shortcut != '':
-                        self._freeShortcut(shortcut)
-                        link.setAttribute('accesskey', shortcut)
-                CommonFunctions.generateId(link, self.prefixId)
+                        self._free_shortcut(shortcut)
+                        link.set_attribute('accesskey', shortcut)
+                CommonFunctions.generate_id(link, self.prefixId)
 
-                itemLink.appendElement(link)
-                self.listSkippers.appendElement(itemLink)
+                itemLink.append_element(link)
+                self.listSkippers.append_element(itemLink)
 
-                self._executeFixShortcut(link)
+                self._execute_fix_shortcut(link)
 
-    def fixSkippers(self):
+    def fix_skippers(self):
         i = 0
         for skipper in self.skippers:
-            elements = self.parser.find(skipper.getSelector()).listResults()
+            elements = self.parser.find(skipper.get_selector()).list_results()
             count = len(elements) > 1
             if count:
                 i = 1
-            shortcuts = skipper.getShortcuts()
+            shortcuts = skipper.get_shortcuts()
             for element in elements:
-                if not element.hasAttribute(self.dataIgnore):
+                if not element.has_attribute(self.dataIgnore):
                     if count:
-                        defaultText = skipper.getDefaultText() + " " + str(i)
+                        defaultText = skipper.get_default_text() + " " + str(i)
                         i = i + 1
                     else:
-                        defaultText = skipper.getDefaultText()
+                        defaultText = skipper.get_default_text()
                     if len(shortcuts) > 0:
-                        self.fixSkipper(
+                        self.fix_skipper(
                             element,
                             Skipper(
-                                skipper.getSelector(),
+                                skipper.get_selector(),
                                 defaultText,
                                 shortcuts.pop()
                             )
                         )
                     else:
-                        self.fixSkipper(
+                        self.fix_skipper(
                             element,
                             Skipper(
-                                skipper.getSelector(),
+                                skipper.get_selector(),
                                 defaultText,
                                 ''
                             )
                         )
 
-    def fixHeading(self, element):
+    def fix_heading(self, element):
         if not self.validateHeading:
-            self.validHeading = self._isValidHeading()
+            self.validHeading = self._is_valid_heading()
         if self.validHeading:
-            anchor = self._generateAnchorFor(
+            anchor = self._generate_anchor_for(
                 element,
                 self.dataHeadingAnchorFor,
                 self.classHeadingAnchor
             )
             if anchor is not None:
                 listElement = None
-                level = self._getHeadingLevel(element)
+                level = self._get_heading_level(element)
                 if level == 1:
-                    listElement = self._generateListHeading()
+                    listElement = self._generate_list_heading()
                 else:
                     superItem = self.parser.find(
                         '#'
                         + self.idContainerHeading
-                    ).findDescendants(
+                    ).find_descendants(
                         '['
                         + self.dataHeadingLevel
                         + '="'
                         + str(level - 1)
                         + '"]'
-                    ).lastResult()
+                    ).last_result()
                     if superItem is not None:
-                        listElement = self.parser.find(superItem).findChildren(
-                            'ol'
-                        ).firstResult()
+                        listElement = self.parser.find(
+                            superItem
+                        ).find_children('ol').first_result()
                         if listElement is None:
-                            listElement = self.parser.createElement('ol')
-                            superItem.appendElement(listElement)
+                            listElement = self.parser.create_element('ol')
+                            superItem.append_element(listElement)
                 if listElement is not None:
-                    item = self.parser.createElement('li')
-                    item.setAttribute(self.dataHeadingLevel, str(level))
+                    item = self.parser.create_element('li')
+                    item.set_attribute(self.dataHeadingLevel, str(level))
 
-                    link = self.parser.createElement('a')
-                    link.setAttribute(
+                    link = self.parser.create_element('a')
+                    link.set_attribute(
                         'href',
-                        '#' + anchor.getAttribute('name')
+                        '#' + anchor.get_attribute('name')
                     )
-                    link.appendText(element.getTextContent())
+                    link.append_text(element.get_text_content())
 
-                    item.appendElement(link)
-                    listElement.appendElement(item)
+                    item.append_element(link)
+                    listElement.append_element(item)
 
-    def fixHeadings(self):
-        elements = self.parser.find('h1,h2,h3,h4,h5,h6').listResults()
+    def fix_headings(self):
+        elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
         for element in elements:
-            if not element.hasAttribute(self.dataIgnore):
-                self.fixHeading(element)
+            if not element.has_attribute(self.dataIgnore):
+                self.fix_heading(element)

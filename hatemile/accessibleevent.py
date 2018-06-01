@@ -17,7 +17,7 @@ class AccessibleEvent:
     JavaScript events in elements.
     """
 
-    def fixDrop(self, element):
+    def fix_drop(self, element):
         """
         Provide a solution for the element that has drop events.
         @param element: The element with drop event.
@@ -26,7 +26,7 @@ class AccessibleEvent:
 
         pass
 
-    def fixDrag(self, element):
+    def fix_drag(self, element):
         """
         Provide a solution for the element that has drag events.
         @param element: The element with drag event.
@@ -35,14 +35,14 @@ class AccessibleEvent:
 
         pass
 
-    def fixDragsandDrops(self):
+    def fix_drags_and_drops(self):
         """
         Provide a solution for elements that has Drag-and-Drop events.
         """
 
         pass
 
-    def fixHover(self, element):
+    def fix_hover(self, element):
         """
         Provide a solution for the element that has inaccessible hover events.
         @param element: The element with hover event.
@@ -51,14 +51,14 @@ class AccessibleEvent:
 
         pass
 
-    def fixHovers(self):
+    def fix_hovers(self):
         """
         Provide a solution for elements that has inaccessible hover events.
         """
 
         pass
 
-    def fixActive(self, element):
+    def fix_active(self, element):
         """
         Provide a solution for the element that has inaccessible active events.
         @param element: The element with active event.
@@ -67,7 +67,7 @@ class AccessibleEvent:
 
         pass
 
-    def fixActives(self):
+    def fix_actives(self):
         """
         Provide a solution for elements that has inaccessible active events.
         """

@@ -31,33 +31,33 @@ class AccessibleImageImplementation(AccessibleImage):
         """
 
         self.parser = parser
-        self.prefixId = configure.getParameter('prefix-generated-ids')
+        self.prefixId = configure.get_parameter('prefix-generated-ids')
         self.classLongDescriptionLink = 'longdescription-link'
         self.dataLongDescriptionForImage = 'data-longdescriptionfor'
         self.dataIgnore = 'data-ignoreaccessibilityfix'
-        self.prefixLongDescriptionLink = configure.getParameter(
+        self.prefixLongDescriptionLink = configure.get_parameter(
             'prefix-longdescription'
         )
-        self.suffixLongDescriptionLink = configure.getParameter(
+        self.suffixLongDescriptionLink = configure.get_parameter(
             'suffix-longdescription'
         )
 
-    def fixLongDescription(self, element):
-        if element.hasAttribute('longdesc'):
-            CommonFunctions.generateId(element, self.prefixId)
-            idElement = element.getAttribute('id')
+    def fix_long_description(self, element):
+        if element.has_attribute('longdesc'):
+            CommonFunctions.generate_id(element, self.prefixId)
+            idElement = element.get_attribute('id')
             if self.parser.find(
                 '['
                 + self.dataLongDescriptionForImage
                 + '="'
                 + idElement
                 + '"]'
-            ).firstResult() is None:
-                if element.hasAttribute('alt'):
+            ).first_result() is None:
+                if element.has_attribute('alt'):
                     text = (
                         self.prefixLongDescriptionLink
                         + ' '
-                        + element.getAttribute('alt')
+                        + element.get_attribute('alt')
                         + ' '
                         + self.suffixLongDescriptionLink
                     )
@@ -67,19 +67,19 @@ class AccessibleImageImplementation(AccessibleImage):
                         + ' '
                         + self.suffixLongDescriptionLink
                     )
-                anchor = self.parser.createElement('a')
-                anchor.setAttribute('href', element.getAttribute('longdesc'))
-                anchor.setAttribute('target', '_blank')
-                anchor.setAttribute(
+                anchor = self.parser.create_element('a')
+                anchor.set_attribute('href', element.get_attribute('longdesc'))
+                anchor.set_attribute('target', '_blank')
+                anchor.set_attribute(
                     self.dataLongDescriptionForImage,
                     idElement
                 )
-                anchor.setAttribute('class', self.classLongDescriptionLink)
-                anchor.appendText(text.strip())
-                element.insertAfter(anchor)
+                anchor.set_attribute('class', self.classLongDescriptionLink)
+                anchor.append_text(text.strip())
+                element.insert_after(anchor)
 
-    def fixLongDescriptions(self):
-        elements = self.parser.find('[longdesc]').listResults()
+    def fix_long_descriptions(self):
+        elements = self.parser.find('[longdesc]').list_results()
         for element in elements:
-            if not element.hasAttribute(self.dataIgnore):
-                self.fixLongDescription(element)
+            if not element.has_attribute(self.dataIgnore):
+                self.fix_long_description(element)

@@ -17,7 +17,7 @@ class AccessibleImage:
     images.
     """
 
-    def fixLongDescription(self, element):
+    def fix_long_description(self, element):
         """
         Provide an alternative way to access the long description of element.
         @param element: The element with long description.
@@ -26,7 +26,7 @@ class AccessibleImage:
 
         pass
 
-    def fixLongDescriptions(self):
+    def fix_long_descriptions(self):
         """
         Provide an alternative way to access the longs descriptions of
         elements.

@@ -17,7 +17,7 @@ class HTMLDOMElement:
     element.
     """
 
-    def getTagName(self):
+    def get_tag_name(self):
         """
         Returns the tag name of element.
         @return: The tag name of element in uppercase letters.
@@ -26,7 +26,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getAttribute(self, name):
+    def get_attribute(self, name):
         """
         Returns the value of a attribute.
         @param name: The name of attribute.
@@ -38,7 +38,7 @@ class HTMLDOMElement:
 
         pass
 
-    def setAttribute(self, name, value):
+    def set_attribute(self, name, value):
         """
         Create or modify a attribute.
         @param name: The name of attribute.
@@ -49,7 +49,7 @@ class HTMLDOMElement:
 
         pass
 
-    def removeAttribute(self, name):
+    def remove_attribute(self, name):
         """
         Remove a attribute of element.
         @param name: The name of attribute.
@@ -58,7 +58,7 @@ class HTMLDOMElement:
 
         pass
 
-    def hasAttribute(self, name):
+    def has_attribute(self, name):
         """
         Returns if the element has an attribute.
         @param name: The name of attribute.
@@ -70,7 +70,7 @@ class HTMLDOMElement:
 
         pass
 
-    def hasAttributes(self):
+    def has_attributes(self):
         """
         Returns if the element has attributes.
         @return: True if the element has attributes or False if the element not
@@ -80,7 +80,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getTextContent(self):
+    def get_text_content(self):
         """
         Returns the text of element.
         @return: The text of element.
@@ -89,7 +89,7 @@ class HTMLDOMElement:
 
         pass
 
-    def insertBefore(self, newElement):
+    def insert_before(self, newElement):
         """
         Insert a element before this element.
         @param newElement: The element that be inserted.
@@ -100,7 +100,7 @@ class HTMLDOMElement:
 
         pass
 
-    def insertAfter(self, newElement):
+    def insert_after(self, newElement):
         """
         Insert a element after this element.
         @param newElement: The element that be inserted.
@@ -111,7 +111,7 @@ class HTMLDOMElement:
 
         pass
 
-    def removeElement(self):
+    def remove_element(self):
         """
         Remove this element of the parser.
         @return: The removed element.
@@ -120,7 +120,7 @@ class HTMLDOMElement:
 
         pass
 
-    def replaceElement(self, newElement):
+    def replace_element(self, newElement):
         """
         Replace this element for other element.
         @param newElement: The element that replace this element.
@@ -131,7 +131,7 @@ class HTMLDOMElement:
 
         pass
 
-    def appendElement(self, element):
+    def append_element(self, element):
         """
         Append a element child.
         @param element: The element that be inserted.
@@ -142,7 +142,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getChildren(self):
+    def get_children(self):
         """
         Returns the children of this element.
         @return: The children of this element.
@@ -151,7 +151,7 @@ class HTMLDOMElement:
 
         pass
 
-    def appendText(self, text):
+    def append_text(self, text):
         """
         Append a text child.
         @param text: The text.
@@ -160,7 +160,7 @@ class HTMLDOMElement:
 
         pass
 
-    def hasChildren(self):
+    def has_children(self):
         """
         Returns if the element has children.
         @return: True if the element has children or False if the element not
@@ -170,7 +170,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getParentElement(self):
+    def get_parent_element(self):
         """
         Returns the parent element of this element.
         @return: The parent element of this element.
@@ -179,7 +179,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getInnerHTML(self):
+    def get_inner_html(self):
         """
         Returns the inner HTML code of this element.
         @return: The inner HTML code of this element.
@@ -188,7 +188,7 @@ class HTMLDOMElement:
 
         pass
 
-    def setInnerHTML(self, html):
+    def set_inner_html(self, html):
         """
         Modify the inner HTML code of this element.
         @param html: The HTML code.
@@ -197,7 +197,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getOuterHTML(self):
+    def get_outer_html(self):
         """
         Returns the HTML code of this element.
         @return: The HTML code of this element.
@@ -206,7 +206,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getData(self):
+    def get_data(self):
         """
         Returns the native object of this element.
         @return: The native object of this element.
@@ -215,7 +215,7 @@ class HTMLDOMElement:
 
         pass
 
-    def setData(self, data):
+    def set_data(self, data):
         """
         Modify the native object of this element.
         @param data: Modify the native object of this element.
@@ -224,7 +224,7 @@ class HTMLDOMElement:
 
         pass
 
-    def cloneElement(self):
+    def clone_element(self):
         """
         Clone this element.
         @return: The clone.
@@ -233,7 +233,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getFirstElementChild(self):
+    def get_first_element_child(self):
         """
         Returns the first element child of this element.
         @return: The first element child of this element.
@@ -242,7 +242,7 @@ class HTMLDOMElement:
 
         pass
 
-    def getLastElementChild(self):
+    def get_last_element_child(self):
         """
         Returns the last element child of this element.
         @return: The last element child of this element.

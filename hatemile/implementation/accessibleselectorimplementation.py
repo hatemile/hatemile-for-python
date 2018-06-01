@@ -30,15 +30,15 @@ class AccessibleSelectorImplementation(AccessibleSelector):
         """
 
         self.parser = parser
-        self.changes = configure.getSelectorChanges()
+        self.changes = configure.get_selector_changes()
         self.dataIgnore = 'data-ignoreaccessibilityfix'
 
-    def fixSelectors(self):
+    def fix_selectors(self):
         for change in self.changes:
-            elements = self.parser.find(change.getSelector()).listResults()
+            elements = self.parser.find(change.get_selector()).list_results()
             for element in elements:
-                if not element.hasAttribute(self.dataIgnore):
-                    element.setAttribute(
-                        change.getAttribute(),
-                        change.getValueForAttribute()
+                if not element.has_attribute(self.dataIgnore):
+                    element.set_attribute(
+                        change.get_attribute(),
+                        change.get_value_for_attribute()
                     )

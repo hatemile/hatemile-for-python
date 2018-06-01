@@ -40,7 +40,7 @@ class AccessibleEventImplementation(AccessibleEvent):
 
         self.parser = parser
         self.storeScriptsContent = storeScriptsContent
-        self.prefixId = configure.getParameter('prefix-generated-ids')
+        self.prefixId = configure.get_parameter('prefix-generated-ids')
         self.idScriptEventListener = 'script-eventlistener'
         self.idListIdsScript = 'list-ids-script'
         self.idFunctionScriptFix = 'id-function-script-fix'
@@ -48,17 +48,17 @@ class AccessibleEventImplementation(AccessibleEvent):
         self.mainScriptAdded = False
         self.scriptList = None
 
-    def _keyboardAccess(self, element):
+    def _keyboard_access(self, element):
         """
         Provide keyboard access for element, if it not has.
         @param element: The element.
         @type element: L{hatemile.util.HTMLDOMElement}
         """
 
-        if not element.hasAttribute('tabindex'):
-            tag = element.getTagName()
-            if (tag == 'A') and (not element.hasAttribute('href')):
-                element.setAttribute('tabindex', '0')
+        if not element.has_attribute('tabindex'):
+            tag = element.get_tag_name()
+            if (tag == 'A') and (not element.has_attribute('href')):
+                element.set_attribute('tabindex', '0')
             elif (
                 (tag != 'A')
                 and (tag != 'INPUT')
@@ -66,19 +66,19 @@ class AccessibleEventImplementation(AccessibleEvent):
                 and (tag != 'SELECT')
                 and (tag != 'TEXTAREA')
             ):
-                element.setAttribute('tabindex', '0')
+                element.set_attribute('tabindex', '0')
 
-    def _generateMainScripts(self):
+    def _generate_main_scripts(self):
         """
         Include the scripts used by solutions.
         """
 
-        head = self.parser.find('head').firstResult()
+        head = self.parser.find('head').first_result()
         if (
             (head is not None)
             and (self.parser.find(
                 '#' + self.idScriptEventListener
-            ).firstResult() is None)
+            ).first_result() is None)
         ):
             eventListenerFile = open(os.path.dirname(os.path.dirname(
                 os.path.dirname(os.path.realpath(__file__))
@@ -96,31 +96,31 @@ class AccessibleEventImplementation(AccessibleEvent):
                 localEventListenerScriptContent = eventListenerFile.read()
             eventListenerFile.close()
 
-            script = self.parser.createElement('script')
-            script.setAttribute('id', self.idScriptEventListener)
-            script.setAttribute('type', 'text/javascript')
-            script.appendText(localEventListenerScriptContent)
-            if head.hasChildren():
-                head.getFirstElementChild().insertBefore(script)
+            script = self.parser.create_element('script')
+            script.set_attribute('id', self.idScriptEventListener)
+            script.set_attribute('type', 'text/javascript')
+            script.append_text(localEventListenerScriptContent)
+            if head.has_children():
+                head.get_first_element_child().insert_before(script)
             else:
-                head.appendElement(script)
-        local = self.parser.find('body').firstResult()
+                head.append_element(script)
+        local = self.parser.find('body').first_result()
         if local is not None:
             self.scriptList = self.parser.find(
                 '#' + self.idListIdsScript
-            ).firstResult()
+            ).first_result()
             if self.scriptList is None:
-                self.scriptList = self.parser.createElement('script')
-                self.scriptList.setAttribute('id', self.idListIdsScript)
-                self.scriptList.setAttribute('type', 'text/javascript')
-                self.scriptList.appendText('var activeElements = [];')
-                self.scriptList.appendText('var hoverElements = [];')
-                self.scriptList.appendText('var dragElements = [];')
-                self.scriptList.appendText('var dropElements = [];')
-                local.appendElement(self.scriptList)
+                self.scriptList = self.parser.create_element('script')
+                self.scriptList.set_attribute('id', self.idListIdsScript)
+                self.scriptList.set_attribute('type', 'text/javascript')
+                self.scriptList.append_text('var activeElements = [];')
+                self.scriptList.append_text('var hoverElements = [];')
+                self.scriptList.append_text('var dragElements = [];')
+                self.scriptList.append_text('var dropElements = [];')
+                local.append_element(self.scriptList)
             if self.parser.find(
                     '#' + self.idFunctionScriptFix
-            ).firstResult() is None:
+            ).first_result() is None:
                 includeFile = open(os.path.dirname(os.path.dirname(
                     os.path.dirname(os.path.realpath(__file__))
                 )) + '/js/include.js', 'r')
@@ -138,14 +138,14 @@ class AccessibleEventImplementation(AccessibleEvent):
                     localIncludeScriptContent = includeFile.read()
                 includeFile.close()
 
-                scriptFunction = self.parser.createElement('script')
-                scriptFunction.setAttribute('id', self.idFunctionScriptFix)
-                scriptFunction.setAttribute('type', 'text/javascript')
-                scriptFunction.appendText(localIncludeScriptContent)
-                local.appendElement(scriptFunction)
+                scriptFunction = self.parser.create_element('script')
+                scriptFunction.set_attribute('id', self.idFunctionScriptFix)
+                scriptFunction.set_attribute('type', 'text/javascript')
+                scriptFunction.append_text(localIncludeScriptContent)
+                local.append_element(scriptFunction)
         self.mainScriptAdded = True
 
-    def _addEventInElement(self, element, event):
+    def _add_event_in_element(self, element, event):
         """
         Add a type of event in element.
         @param element: The element.
@@ -155,64 +155,66 @@ class AccessibleEventImplementation(AccessibleEvent):
         """
 
         if not self.mainScriptAdded:
-            self._generateMainScripts()
+            self._generate_main_scripts()
 
         if self.scriptList is not None:
-            CommonFunctions.generateId(element, self.prefixId)
-            self.scriptList.appendText(
+            CommonFunctions.generate_id(element, self.prefixId)
+            self.scriptList.append_text(
                 event
                 + "Elements.push('"
-                + element.getAttribute('id')
+                + element.get_attribute('id')
                 + "');"
             )
 
-    def fixDrop(self, element):
-        element.setAttribute('aria-dropeffect', 'none')
+    def fix_drop(self, element):
+        element.set_attribute('aria-dropeffect', 'none')
 
-        self._addEventInElement(element, 'drop')
+        self._add_event_in_element(element, 'drop')
 
-    def fixDrag(self, element):
-        self._keyboardAccess(element)
+    def fix_drag(self, element):
+        self._keyboard_access(element)
 
-        element.setAttribute('aria-grabbed', 'false')
+        element.set_attribute('aria-grabbed', 'false')
 
-        self._addEventInElement(element, 'drag')
+        self._add_event_in_element(element, 'drag')
 
-    def fixDragsandDrops(self):
+    def fix_drags_and_drops(self):
         draggableElements = self.parser.find(
             '[ondrag],[ondragstart],[ondragend]'
-        ).listResults()
+        ).list_results()
         for draggableElement in draggableElements:
-            if not draggableElement.hasAttribute(self.dataIgnore):
-                self.fixDrag(draggableElement)
+            if not draggableElement.has_attribute(self.dataIgnore):
+                self.fix_drag(draggableElement)
 
         droppableElements = self.parser.find(
             '[ondrop],[ondragenter],[ondragleave],[ondragover]'
-        ).listResults()
+        ).list_results()
         for droppableElement in droppableElements:
-            if not droppableElement.hasAttribute(self.dataIgnore):
-                self.fixDrop(droppableElement)
+            if not droppableElement.has_attribute(self.dataIgnore):
+                self.fix_drop(droppableElement)
 
-    def fixHover(self, element):
-        self._keyboardAccess(element)
+    def fix_hover(self, element):
+        self._keyboard_access(element)
 
-        self._addEventInElement(element, 'hover')
+        self._add_event_in_element(element, 'hover')
 
-    def fixHovers(self):
-        elements = self.parser.find('[onmouseover],[onmouseout]').listResults()
+    def fix_hovers(self):
+        elements = self.parser.find(
+            '[onmouseover],[onmouseout]'
+        ).list_results()
         for element in elements:
-            if not element.hasAttribute(self.dataIgnore):
-                self.fixHover(element)
+            if not element.has_attribute(self.dataIgnore):
+                self.fix_hover(element)
 
-    def fixActive(self, element):
-        self._keyboardAccess(element)
+    def fix_active(self, element):
+        self._keyboard_access(element)
 
-        self._addEventInElement(element, 'active')
+        self._add_event_in_element(element, 'active')
 
-    def fixActives(self):
+    def fix_actives(self):
         elements = self.parser.find(
             '[onclick],[onmousedown],[onmouseup],[ondblclick]'
-        ).listResults()
+        ).list_results()
         for element in elements:
-            if not element.hasAttribute(self.dataIgnore):
-                self.fixActive(element)
+            if not element.has_attribute(self.dataIgnore):
+                self.fix_active(element)
