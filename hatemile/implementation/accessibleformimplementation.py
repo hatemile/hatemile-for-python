@@ -318,14 +318,14 @@ class AccessibleFormImplementation(AccessibleForm):
             or (
                 (tag_name == 'INPUT')
                 and (not (
-                    ('button' == input_type)
-                    or ('submit' == input_type)
-                    or ('reset' == input_type)
-                    or ('image' == input_type)
-                    or ('file' == input_type)
-                    or ('checkbox' == input_type)
-                    or ('radio' == input_type)
-                    or ('hidden' == input_type)
+                    (input_type == 'button')
+                    or (input_type == 'submit')
+                    or (input_type == 'reset')
+                    or (input_type == 'image')
+                    or (input_type == 'file')
+                    or (input_type == 'checkbox')
+                    or (input_type == 'radio')
+                    or (input_type == 'hidden')
                 ))
             )
         ):
@@ -342,7 +342,7 @@ class AccessibleFormImplementation(AccessibleForm):
                     ).first_result()
                 if (form is not None) and (form.has_attribute('autocomplete')):
                     value = form.get_attribute('autocomplete').lower()
-            if 'on' == value:
+            if value == 'on':
                 return 'both'
             elif (
                 (field.has_attribute('list'))
@@ -351,7 +351,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 ).first_result() is not None)
             ):
                 return 'list'
-            elif 'off' == value:
+            elif value == 'off':
                 return 'none'
         return None
 
