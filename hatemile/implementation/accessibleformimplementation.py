@@ -369,7 +369,7 @@ class AccessibleFormImplementation(AccessibleForm):
             labels = self.parser.find(
                 'label[for="' + field.get_attribute('id') + '"]'
             ).list_results()
-        if (labels is None) or (len(labels) == 0):
+        if (labels is None) or (not labels):
             labels = self.parser.find(field).find_ancestors(
                 'label'
             ).list_results()

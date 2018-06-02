@@ -437,7 +437,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 link.append_text(skipper.get_default_text())
 
                 shortcuts = skipper.get_shortcuts()
-                if len(shortcuts) != 0:
+                if shortcuts:
                     shortcut = shortcuts[0]
                     if shortcut != '':
                         self._free_shortcut(shortcut)
@@ -468,7 +468,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         i = i + 1
                     else:
                         default_text = skipper.get_default_text()
-                    if len(shortcuts) > 0:
+                    if shortcuts:
                         self.fix_skipper(
                             element,
                             Skipper(
