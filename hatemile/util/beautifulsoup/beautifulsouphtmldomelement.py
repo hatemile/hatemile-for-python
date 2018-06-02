@@ -110,13 +110,13 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         return string
 
     def set_inner_html(self, html):
-        documentAuxiliar = BeautifulSoup(html, 'html.parser')
+        document_auxiliar = BeautifulSoup(html, 'html.parser')
         children = []
         for child in self.data.children:
             children.append(child)
         for child in children:
             child.extract()
-        for child in documentAuxiliar.children:
+        for child in document_auxiliar.children:
             self.data.append(child)
 
     def get_outer_html(self):
@@ -142,10 +142,10 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def get_last_element_child(self):
         if not self.has_children():
             return None
-        lastValue = None
+        last_value = None
         for child in self.data.children:
             if isinstance(child, PageElement):
-                lastValue = child
-        if lastValue is not None:
-            return BeautifulSoupHTMLDOMElement(lastValue)
+                last_value = child
+        if last_value is not None:
+            return BeautifulSoupHTMLDOMElement(last_value)
         return None

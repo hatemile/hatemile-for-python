@@ -116,32 +116,32 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             or (element.has_attribute('aria-describedby'))
         ):
             if element.has_attribute('aria-labelledby'):
-                descriptionIds = re.split(
+                description_ids = re.split(
                     '[ \n\r\t]+',
                     element.get_attribute('aria-labelledby').strip()
                 )
             else:
-                descriptionIds = re.split(
+                description_ids = re.split(
                     '[ \n\r\t]+',
                     element.get_attribute('aria-describedby').strip()
                 )
-            for descriptionId in descriptionIds:
-                elementDescription = self.parser.find(
-                    '#' + descriptionId
+            for description_id in description_ids:
+                element_description = self.parser.find(
+                    '#' + description_id
                 ).first_result()
-                if elementDescription is not None:
-                    description = elementDescription.get_text_content()
+                if element_description is not None:
+                    description = element_description.get_text_content()
                     break
         elif (
             (element.get_tag_name() == 'INPUT')
             and (element.has_attribute('type'))
         ):
-            typeAttribute = element.get_attribute('type').lower()
+            type_attribute = element.get_attribute('type').lower()
             if (
                 (
-                    (typeAttribute == 'button')
-                    or (typeAttribute == 'submit')
-                    or (typeAttribute == 'reset')
+                    (type_attribute == 'button')
+                    or (type_attribute == 'submit')
+                    or (type_attribute == 'reset')
                 )
                 and (element.has_attribute('value'))
             ):
@@ -160,33 +160,33 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         container = self.parser.find(
             '#' + self.id_container_shortcuts
         ).first_result()
-        htmlList = None
+        html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
                 container = self.parser.create_element('div')
                 container.set_attribute('id', self.id_container_shortcuts)
 
-                textContainer = self.parser.create_element('span')
-                textContainer.set_attribute('id', self.id_text_shortcuts)
-                textContainer.append_text(self.text_shortcuts)
+                text_container = self.parser.create_element('span')
+                text_container.set_attribute('id', self.id_text_shortcuts)
+                text_container.append_text(self.text_shortcuts)
 
-                container.append_element(textContainer)
+                container.append_element(text_container)
                 local.append_element(container)
 
                 self._execute_fix_skipper(container)
-                self._execute_fix_skipper(textContainer)
+                self._execute_fix_skipper(text_container)
         if container is not None:
-            htmlList = self.parser.find(container).find_children(
+            html_list = self.parser.find(container).find_children(
                 'ul'
             ).first_result()
-            if htmlList is None:
-                htmlList = self.parser.create_element('ul')
-                container.append_element(htmlList)
-            self._execute_fix_skipper(htmlList)
+            if html_list is None:
+                html_list = self.parser.create_element('ul')
+                container.append_element(html_list)
+            self._execute_fix_skipper(html_list)
         self.list_shortcuts_added = True
 
-        return htmlList
+        return html_list
 
     def _generate_list_skippers(self):
         """
@@ -198,7 +198,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         container = self.parser.find(
             '#' + self.id_container_skippers
         ).first_result()
-        htmlList = None
+        html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
@@ -206,15 +206,15 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 container.set_attribute('id', self.id_container_skippers)
                 local.get_first_element_child().insert_before(container)
         if container is not None:
-            htmlList = self.parser.find(container).find_children(
+            html_list = self.parser.find(container).find_children(
                 'ul'
             ).first_result()
-            if htmlList is None:
-                htmlList = self.parser.create_element('ul')
-                container.append_element(htmlList)
+            if html_list is None:
+                html_list = self.parser.create_element('ul')
+                container.append_element(html_list)
         self.list_skippers_added = True
 
-        return htmlList
+        return html_list
 
     def _generate_list_heading(self):
         """
@@ -226,31 +226,31 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         container = self.parser.find(
             '#' + self.id_container_heading
         ).first_result()
-        htmlList = None
+        html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
                 container = self.parser.create_element('div')
                 container.set_attribute('id', self.id_container_heading)
 
-                textContainer = self.parser.create_element('span')
-                textContainer.set_attribute('id', self.id_text_heading)
-                textContainer.append_text(self.text_heading)
+                text_container = self.parser.create_element('span')
+                text_container.set_attribute('id', self.id_text_heading)
+                text_container.append_text(self.text_heading)
 
-                container.append_element(textContainer)
+                container.append_element(text_container)
                 local.append_element(container)
 
                 self._execute_fix_skipper(container)
-                self._execute_fix_skipper(textContainer)
+                self._execute_fix_skipper(text_container)
         if container is not None:
-            htmlList = self.parser.find(container).find_children(
+            html_list = self.parser.find(container).find_children(
                 'ol'
             ).first_result()
-            if htmlList is None:
-                htmlList = self.parser.create_element('ol')
-                container.append_element(htmlList)
-            self._execute_fix_skipper(htmlList)
-        return htmlList
+            if html_list is None:
+                html_list = self.parser.create_element('ol')
+                container.append_element(html_list)
+            self._execute_fix_skipper(html_list)
+        return html_list
 
     def _get_heading_level(self, element):
         """
@@ -286,19 +286,19 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
-        lastLevel = 0
-        countMainHeading = 0
+        last_level = 0
+        count_main_heading = 0
         self.validate_heading = True
         for element in elements:
             level = self._get_heading_level(element)
             if level == 1:
-                if countMainHeading == 1:
+                if count_main_heading == 1:
                     return False
                 else:
-                    countMainHeading = 1
-            if (level - lastLevel) > 1:
+                    count_main_heading = 1
+            if (level - last_level) > 1:
                 return False
-            lastLevel = level
+            last_level = level
         return True
 
     def _generate_anchor_for(self, element, data_attribute, anchor_class):
@@ -338,17 +338,17 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         @type shortcut: str
         """
 
-        alphaNumbers = '1234567890abcdefghijklmnopqrstuvwxyz'
+        alpha_numbers = '1234567890abcdefghijklmnopqrstuvwxyz'
         elements = self.parser.find('[accesskey]').list_results()
         found = False
         for element in elements:
             shortcuts = element.get_attribute('accesskey').lower()
             if CommonFunctions.in_list(shortcuts, shortcut):
-                for i in range(0, alphaNumbers.length()):
-                    key = alphaNumbers[i]
+                for i in range(0, alpha_numbers.length()):
+                    key = alpha_numbers[i]
                     found = True
-                    for elementWithShortcuts in elements:
-                        shortcuts = elementWithShortcuts.get_attribute(
+                    for element_with_shortcuts in elements:
+                        shortcuts = element_with_shortcuts.get_attribute(
                             'accesskey'
                         ).lower()
                         if CommonFunctions.in_list(shortcuts, key):
@@ -432,7 +432,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.class_skipper_anchor
             )
             if anchor is not None:
-                itemLink = self.parser.create_element('li')
+                item_link = self.parser.create_element('li')
                 link = self.parser.create_element('a')
                 link.set_attribute('href', '#' + anchor.get_attribute('name'))
                 link.append_text(skipper.get_default_text())
@@ -445,8 +445,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         link.set_attribute('accesskey', shortcut)
                 CommonFunctions.generate_id(link, self.prefix_id)
 
-                itemLink.append_element(link)
-                self.list_skippers.append_element(itemLink)
+                item_link.append_element(link)
+                self.list_skippers.append_element(item_link)
 
                 self._execute_fix_shortcut(link)
 
@@ -461,16 +461,20 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             for element in elements:
                 if not element.has_attribute(self.data_ignore):
                     if count:
-                        defaultText = skipper.get_default_text() + " " + str(i)
+                        default_text = (
+                            skipper.get_default_text()
+                            + " "
+                            + str(i)
+                        )
                         i = i + 1
                     else:
-                        defaultText = skipper.get_default_text()
+                        default_text = skipper.get_default_text()
                     if len(shortcuts) > 0:
                         self.fix_skipper(
                             element,
                             Skipper(
                                 skipper.get_selector(),
-                                defaultText,
+                                default_text,
                                 shortcuts.pop()
                             )
                         )
@@ -479,7 +483,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                             element,
                             Skipper(
                                 skipper.get_selector(),
-                                defaultText,
+                                default_text,
                                 ''
                             )
                         )
@@ -494,12 +498,12 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.class_heading_anchor
             )
             if anchor is not None:
-                listElement = None
+                list_element = None
                 level = self._get_heading_level(element)
                 if level == 1:
-                    listElement = self._generate_list_heading()
+                    list_element = self._generate_list_heading()
                 else:
-                    superItem = self.parser.find(
+                    super_item = self.parser.find(
                         '#'
                         + self.id_container_heading
                     ).find_descendants(
@@ -509,14 +513,14 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         + str(level - 1)
                         + '"]'
                     ).last_result()
-                    if superItem is not None:
-                        listElement = self.parser.find(
-                            superItem
+                    if super_item is not None:
+                        list_element = self.parser.find(
+                            super_item
                         ).find_children('ol').first_result()
-                        if listElement is None:
-                            listElement = self.parser.create_element('ol')
-                            superItem.append_element(listElement)
-                if listElement is not None:
+                        if list_element is None:
+                            list_element = self.parser.create_element('ol')
+                            super_item.append_element(list_element)
+                if list_element is not None:
                     item = self.parser.create_element('li')
                     item.set_attribute(self.data_heading_level, str(level))
 
@@ -528,7 +532,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     link.append_text(element.get_text_content())
 
                     item.append_element(link)
-                    listElement.append_element(item)
+                    list_element.append_element(item)
 
     def fix_headings(self):
         elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()

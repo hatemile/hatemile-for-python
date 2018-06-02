@@ -63,16 +63,16 @@ class AccessibleTableImplementation(AccessibleTable):
         copy = [] + rows
         table = []
         if bool(rows):
-            lengthRows = len(rows)
-            for i in range(0, lengthRows):
-                columnIndex = 0
+            length_rows = len(rows)
+            for i in range(0, length_rows):
+                column_index = 0
                 cells = [] + copy[i]
                 if len(table) <= i:
                     table.append([])
-                lengthCells = len(cells)
-                for j in range(0, lengthCells):
+                length_cells = len(cells)
+                for j in range(0, length_cells):
                     cell = cells[j]
-                    m = j + columnIndex
+                    m = j + column_index
                     row = table[i]
                     while True:
                         if len(row) <= m:
@@ -81,8 +81,8 @@ class AccessibleTableImplementation(AccessibleTable):
                         elif row[m] is None:
                             break
                         else:
-                            columnIndex += 1
-                            m = j + columnIndex
+                            column_index += 1
+                            m = j + column_index
                     row[m] = cell
                     if cell.has_attribute('rowspan'):
                         rowspan = int(cell.get_attribute('rowspan'))
@@ -166,21 +166,21 @@ class AccessibleTableImplementation(AccessibleTable):
 
         table = self._generate_part(element)
         for cells in table:
-            headersIds = []
+            headers_ids = []
             for cell in cells:
                 if cell.get_tag_name() == 'TH':
                     CommonFunctions.generate_id(cell, self.prefix_id)
-                    headersIds.append(cell.get_attribute('id'))
+                    headers_ids.append(cell.get_attribute('id'))
 
                     cell.set_attribute('scope', 'row')
-            if bool(headersIds):
+            if bool(headers_ids):
                 for cell in cells:
                     if cell.get_tag_name() == 'TD':
                         headers = cell.get_attribute('headers')
-                        for headerId in headersIds:
+                        for header_id in headers_ids:
                             headers = CommonFunctions.increase_in_list(
                                 headers,
-                                headerId
+                                header_id
                             )
                         cell.set_attribute('headers', headers)
 
@@ -206,25 +206,25 @@ class AccessibleTableImplementation(AccessibleTable):
         if header is not None:
             self._fix_header(header)
 
-            headerCells = self._generate_part(header)
-            if (body is not None) and (self._validate_header(headerCells)):
-                lengthHeader = len(headerCells[0])
-                fakeTable = self._generate_part(body)
+            header_cells = self._generate_part(header)
+            if (body is not None) and (self._validate_header(header_cells)):
+                length_header = len(header_cells[0])
+                fake_table = self._generate_part(body)
                 if footer is not None:
-                    fakeTable = fakeTable + self._generate_part(footer)
-                for cells in fakeTable:
-                    if len(cells) == lengthHeader:
+                    fake_table = fake_table + self._generate_part(footer)
+                for cells in fake_table:
+                    if len(cells) == length_header:
                         i = 0
                         for cell in cells:
-                            headersIds = self._return_list_ids_columns(
-                                headerCells,
+                            headers_ids = self._return_list_ids_columns(
+                                header_cells,
                                 i
                             )
                             headers = cell.get_attribute('headers')
-                            for headersId in headersIds:
+                            for headers_id in headers_ids:
                                 headers = CommonFunctions.increase_in_list(
                                     headers,
-                                    headersId
+                                    headers_id
                                 )
                             cell.set_attribute('headers', headers)
                             i += 1

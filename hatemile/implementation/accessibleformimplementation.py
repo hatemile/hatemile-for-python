@@ -108,16 +108,16 @@ class AccessibleFormImplementation(AccessibleForm):
         @type data_suffix: str
         """
 
-        contentLabel = field.get_attribute('aria-label')
+        content_label = field.get_attribute('aria-label')
         if prefix != '':
             label.set_attribute(data_prefix, prefix)
-            if prefix not in contentLabel:
-                contentLabel = prefix + ' ' + contentLabel
+            if prefix not in content_label:
+                content_label = prefix + ' ' + content_label
         if suffix != '':
             label.set_attribute(data_suffix, suffix)
-            if suffix not in contentLabel:
-                contentLabel = contentLabel + ' ' + suffix
-        field.set_attribute('aria-label', contentLabel)
+            if suffix not in content_label:
+                content_label = content_label + ' ' + suffix
+        field.set_attribute('aria-label', content_label)
 
     def _fix_label_required_field(self, label, required_field):
         """
@@ -239,8 +239,8 @@ class AccessibleFormImplementation(AccessibleForm):
         @type autocomplete_field: L{hatemile.util.HTMLDOMElement}
         """
 
-        prefixAutoCompleteFieldModified = ''
-        suffixAutoCompleteFieldModified = ''
+        prefix_autocomplete_field_modified = ''
+        suffix_autocomplete_field_modified = ''
         if (
             (autocomplete_field.has_attribute('aria-label'))
             and (not label.has_attribute(
@@ -250,43 +250,43 @@ class AccessibleFormImplementation(AccessibleForm):
                 self.data_label_suffix_autocomplete_field
             ))
         ):
-            ariaAutocomplete = self._get_aria_autocomplete(autocomplete_field)
-            if ariaAutocomplete is not None:
-                if ariaAutocomplete == 'both':
+            aria_autocomplete = self._get_aria_autocomplete(autocomplete_field)
+            if aria_autocomplete is not None:
+                if aria_autocomplete == 'both':
                     if self.prefix_autocomplete_field != '':
-                        prefixAutoCompleteFieldModified = re.sub(
+                        prefix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_both,
                             self.prefix_autocomplete_field
                         )
                     if self.suffix_autocomplete_field != '':
-                        suffixAutoCompleteFieldModified = re.sub(
+                        suffix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_both,
                             self.suffix_autocomplete_field
                         )
-                elif ariaAutocomplete == 'none':
+                elif aria_autocomplete == 'none':
                     if self.prefix_autocomplete_field != '':
-                        prefixAutoCompleteFieldModified = re.sub(
+                        prefix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_none,
                             self.prefix_autocomplete_field
                         )
                     if self.suffix_autocomplete_field != '':
-                        suffixAutoCompleteFieldModified = re.sub(
+                        suffix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_none,
                             self.suffix_autocomplete_field
                         )
-                elif ariaAutocomplete == 'list':
+                elif aria_autocomplete == 'list':
                     if self.prefix_autocomplete_field != '':
-                        prefixAutoCompleteFieldModified = re.sub(
+                        prefix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_list,
                             self.prefix_autocomplete_field
                         )
                     if self.suffix_autocomplete_field != '':
-                        suffixAutoCompleteFieldModified = re.sub(
+                        suffix_autocomplete_field_modified = re.sub(
                             '{{value}}',
                             self.text_autocomplete_value_list,
                             self.suffix_autocomplete_field
@@ -294,8 +294,8 @@ class AccessibleFormImplementation(AccessibleForm):
                 self._add_prefix_suffix(
                     label,
                     autocomplete_field,
-                    prefixAutoCompleteFieldModified,
-                    suffixAutoCompleteFieldModified,
+                    prefix_autocomplete_field_modified,
+                    suffix_autocomplete_field_modified,
                     self.data_label_prefix_autocomplete_field,
                     self.data_label_suffix_autocomplete_field
                 )
@@ -309,23 +309,23 @@ class AccessibleFormImplementation(AccessibleForm):
         @rtype: str
         """
 
-        tagName = field.get_tag_name()
-        inputType = None
+        tag_name = field.get_tag_name()
+        input_type = None
         if field.has_attribute('type'):
-            inputType = field.get_attribute('type').lower()
+            input_type = field.get_attribute('type').lower()
         if (
-            (tagName == 'TEXTAREA')
+            (tag_name == 'TEXTAREA')
             or (
-                (tagName == 'INPUT')
+                (tag_name == 'INPUT')
                 and (not (
-                    ('button' == inputType)
-                    or ('submit' == inputType)
-                    or ('reset' == inputType)
-                    or ('image' == inputType)
-                    or ('file' == inputType)
-                    or ('checkbox' == inputType)
-                    or ('radio' == inputType)
-                    or ('hidden' == inputType)
+                    ('button' == input_type)
+                    or ('submit' == input_type)
+                    or ('reset' == input_type)
+                    or ('image' == input_type)
+                    or ('file' == input_type)
+                    or ('checkbox' == input_type)
+                    or ('radio' == input_type)
+                    or ('hidden' == input_type)
                 ))
             )
         ):
@@ -384,10 +384,10 @@ class AccessibleFormImplementation(AccessibleForm):
                 self._fix_label_required_field(label, required_field)
 
     def fix_required_fields(self):
-        requiredFields = self.parser.find('[required]').list_results()
-        for requiredField in requiredFields:
-            if not requiredField.has_attribute(self.data_ignore):
-                self.fix_required_field(requiredField)
+        required_fields = self.parser.find('[required]').list_results()
+        for required_field in required_fields:
+            if not required_field.has_attribute(self.data_ignore):
+                self.fix_required_field(required_field)
 
     def fix_range_field(self, range_field):
         if range_field.has_attribute('min'):
@@ -405,17 +405,17 @@ class AccessibleFormImplementation(AccessibleForm):
             self._fix_label_range_field(label, range_field)
 
     def fix_range_fields(self):
-        rangeFields = self.parser.find('[min],[max]').list_results()
-        for rangeField in rangeFields:
-            if not rangeField.has_attribute(self.data_ignore):
-                self.fix_range_field(rangeField)
+        range_fields = self.parser.find('[min],[max]').list_results()
+        for range_field in range_fields:
+            if not range_field.has_attribute(self.data_ignore):
+                self.fix_range_field(range_field)
 
     def fix_autocomplete_field(self, autocomplete_field):
-        ariaAutoComplete = self._get_aria_autocomplete(autocomplete_field)
-        if ariaAutoComplete is not None:
+        aria_autocomplete = self._get_aria_autocomplete(autocomplete_field)
+        if aria_autocomplete is not None:
             autocomplete_field.set_attribute(
                 'aria-autocomplete',
-                ariaAutoComplete
+                aria_autocomplete
             )
 
             labels = self._get_labels(autocomplete_field)

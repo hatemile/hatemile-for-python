@@ -45,12 +45,12 @@ class AccessibleImageImplementation(AccessibleImage):
     def fix_long_description(self, element):
         if element.has_attribute('longdesc'):
             CommonFunctions.generate_id(element, self.prefix_id)
-            idElement = element.get_attribute('id')
+            id_element = element.get_attribute('id')
             if self.parser.find(
                 '['
                 + self.data_long_description_for_image
                 + '="'
-                + idElement
+                + id_element
                 + '"]'
             ).first_result() is None:
                 if element.has_attribute('alt'):
@@ -72,7 +72,7 @@ class AccessibleImageImplementation(AccessibleImage):
                 anchor.set_attribute('target', '_blank')
                 anchor.set_attribute(
                     self.data_long_description_for_image,
-                    idElement
+                    id_element
                 )
                 anchor.set_attribute('class', self.class_long_description_link)
                 anchor.append_text(text.strip())

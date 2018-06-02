@@ -21,9 +21,9 @@ class AccessibleEventImplementation(AccessibleEvent):
     AccessibleEvent interface.
     """
 
-    eventListenerScriptContent = None
+    event_listener_script_content = None
 
-    includeScriptContent = None
+    include_script_content = None
 
     def __init__(self, parser, configure, store_scripts_content):
         """
@@ -80,26 +80,32 @@ class AccessibleEventImplementation(AccessibleEvent):
                 '#' + self.id_script_event_listener
             ).first_result() is None)
         ):
-            eventListenerFile = open(os.path.dirname(os.path.dirname(
+            event_listener_file = open(os.path.dirname(os.path.dirname(
                 os.path.dirname(os.path.realpath(__file__))
             )) + '/js/eventlistener.js', 'r')
             if self.store_scripts_content:
-                if AccessibleEventImplementation.eventListenerScriptContent \
-                        is None:
-                    AccessibleEventImplementation.eventListenerScriptContent \
-                            = eventListenerFile.read()
-                localEventListenerScriptContent = (
+                if (
                     AccessibleEventImplementation
-                    .eventListenerScriptContent
+                    .event_listener_script_content
+                ) is None:
+                    AccessibleEventImplementation\
+                        .event_listener_script_content = (
+                            event_listener_file.read()
+                        )
+                local_event_listener_script_content = (
+                    AccessibleEventImplementation
+                    .event_listener_script_content
                 )
             else:
-                localEventListenerScriptContent = eventListenerFile.read()
-            eventListenerFile.close()
+                local_event_listener_script_content = (
+                    event_listener_file.read()
+                )
+            event_listener_file.close()
 
             script = self.parser.create_element('script')
             script.set_attribute('id', self.id_script_event_listener)
             script.set_attribute('type', 'text/javascript')
-            script.append_text(localEventListenerScriptContent)
+            script.append_text(local_event_listener_script_content)
             if head.has_children():
                 head.get_first_element_child().insert_before(script)
             else:
@@ -121,28 +127,30 @@ class AccessibleEventImplementation(AccessibleEvent):
             if self.parser.find(
                     '#' + self.id_function_script_fix
             ).first_result() is None:
-                includeFile = open(os.path.dirname(os.path.dirname(
+                include_file = open(os.path.dirname(os.path.dirname(
                     os.path.dirname(os.path.realpath(__file__))
                 )) + '/js/include.js', 'r')
                 if self.store_scripts_content:
-                    if AccessibleEventImplementation.includeScriptContent \
+                    if AccessibleEventImplementation.include_script_content \
                             is None:
-                        AccessibleEventImplementation.includeScriptContent = (
-                            includeFile.read()
-                        )
-                    localIncludeScriptContent = (
+                        AccessibleEventImplementation \
+                            .include_script_content = include_file.read()
+                    local_include_script_content = (
                         AccessibleEventImplementation
-                        .includeScriptContent
+                        .include_script_content
                     )
                 else:
-                    localIncludeScriptContent = includeFile.read()
-                includeFile.close()
+                    local_include_script_content = include_file.read()
+                include_file.close()
 
-                scriptFunction = self.parser.create_element('script')
-                scriptFunction.set_attribute('id', self.id_function_script_fix)
-                scriptFunction.set_attribute('type', 'text/javascript')
-                scriptFunction.append_text(localIncludeScriptContent)
-                local.append_element(scriptFunction)
+                script_function = self.parser.create_element('script')
+                script_function.set_attribute(
+                    'id',
+                    self.id_function_script_fix
+                )
+                script_function.set_attribute('type', 'text/javascript')
+                script_function.append_text(local_include_script_content)
+                local.append_element(script_function)
         self.main_script_added = True
 
     def _add_event_in_element(self, element, event):
@@ -179,19 +187,19 @@ class AccessibleEventImplementation(AccessibleEvent):
         self._add_event_in_element(element, 'drag')
 
     def fix_drags_and_drops(self):
-        draggableElements = self.parser.find(
+        draggable_elements = self.parser.find(
             '[ondrag],[ondragstart],[ondragend]'
         ).list_results()
-        for draggableElement in draggableElements:
-            if not draggableElement.has_attribute(self.data_ignore):
-                self.fix_drag(draggableElement)
+        for draggable_element in draggable_elements:
+            if not draggable_element.has_attribute(self.data_ignore):
+                self.fix_drag(draggable_element)
 
-        droppableElements = self.parser.find(
+        droppable_elements = self.parser.find(
             '[ondrop],[ondragenter],[ondragleave],[ondragover]'
         ).list_results()
-        for droppableElement in droppableElements:
-            if not droppableElement.has_attribute(self.data_ignore):
-                self.fix_drop(droppableElement)
+        for droppable_element in droppable_elements:
+            if not droppable_element.has_attribute(self.data_ignore):
+                self.fix_drop(droppable_element)
 
     def fix_hover(self, element):
         self._keyboard_access(element)

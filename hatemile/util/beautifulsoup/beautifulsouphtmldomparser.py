@@ -37,8 +37,8 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         self.results = []
 
     def _in_list(self, original_list, item):
-        for itemList in original_list:
-            if item is itemList:
+        for item_list in original_list:
+            if item is item_list:
                 return True
         return False
 
@@ -101,9 +101,9 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         return self
 
     def find_children(self, selector):
-        lastResults = self.results
+        last_results = self.results
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
-            for result in lastResults:
+            for result in last_results:
                 if self._in_list(result.children, selector):
                     self.results[selector.get_data()]
                     break
@@ -112,20 +112,20 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
             selectors = re.split(',', selector)
             self.results = []
             for sel in selectors:
-                for lastResult in lastResults:
-                    results = lastResult.select(sel)
+                for last_result in last_results:
+                    results = last_result.select(sel)
                     for result in results:
                         if (
-                            (self._in_list(lastResult.children, result))
+                            (self._in_list(last_result.children, result))
                             and (not self._in_list(self.results, result))
                         ):
                             self.results.append(result)
         return self
 
     def find_descendants(self, selector):
-        lastResults = self.results
+        last_results = self.results
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
-            for result in lastResults:
+            for result in last_results:
                 if self._in_list(selector.parents, result):
                     self.results = [selector.get_data()]
                     break
@@ -134,17 +134,17 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
             selectors = re.split(',', selector)
             self.results = []
             for sel in selectors:
-                for lastResult in lastResults:
-                    results = lastResult.select(sel)
+                for last_result in last_results:
+                    results = last_result.select(sel)
                     for result in results:
                         if not self._in_list(self.results, result):
                             self.results.append(result)
         return self
 
     def find_ancestors(self, selector):
-        lastResults = self.results
+        last_results = self.results
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
-            for result in lastResults:
+            for result in last_results:
                 if self._in_list(result.parents, selector):
                     self.results = [selector.get_data()]
                     break
@@ -158,7 +158,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
                 for result in results:
                     if not self._in_list(parents, result):
                         parents.append(result)
-            for result in lastResults:
+            for result in last_results:
                 for parent in parents:
                     if (
                         (self._in_list(result.parents, parent))
@@ -179,8 +179,8 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 
     def list_results(self):
         array = []
-        ordenedResults = self._sort_results(self.results)
-        for result in ordenedResults:
+        ordened_results = self._sort_results(self.results)
+        for result in ordened_results:
             array.append(BeautifulSoupHTMLDOMElement(result))
         return array
 
