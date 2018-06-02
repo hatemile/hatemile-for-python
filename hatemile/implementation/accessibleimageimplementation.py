@@ -10,8 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.accessibleimage import AccessibleImage
+from hatemile.util.commonfunctions import CommonFunctions
 
 
 class AccessibleImageImplementation(AccessibleImage):

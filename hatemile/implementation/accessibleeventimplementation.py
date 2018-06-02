@@ -10,9 +10,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from hatemile.util.commonfunctions import CommonFunctions
-from hatemile.accessibleevent import AccessibleEvent
 import os
+from hatemile.accessibleevent import AccessibleEvent
+from hatemile.util.commonfunctions import CommonFunctions
 
 
 class AccessibleEventImplementation(AccessibleEvent):

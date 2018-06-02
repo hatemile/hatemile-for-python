@@ -10,10 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from xml.dom import minidom
 from .selectorchange import SelectorChange
 from .skipper import Skipper
-import os
 
 
 class Configure:

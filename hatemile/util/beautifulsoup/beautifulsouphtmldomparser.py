@@ -10,10 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 from bs4 import BeautifulSoup
 from hatemile.util.htmldomparser import HTMLDOMParser
 from .beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
-import re
 
 
 class BeautifulSoupHTMLDOMParser(HTMLDOMParser):

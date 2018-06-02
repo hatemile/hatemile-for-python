@@ -10,11 +10,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
+import re
 from bs4 import BeautifulSoup
 from bs4 import PageElement
 from hatemile.util.htmldomelement import HTMLDOMElement
-import copy
-import re
 
 
 class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
