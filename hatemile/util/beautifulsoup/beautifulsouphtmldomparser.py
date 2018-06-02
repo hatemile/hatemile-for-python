@@ -101,16 +101,16 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         return self
 
     def find_children(self, selector):
+        self.results = []
         last_results = self.results
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
             for result in last_results:
                 if self._in_list(result.children, selector):
-                    self.results[selector.get_data()]
+                    self.results.append(selector.get_data())
                     break
         else:
             selector = re.sub('data-', 'dataaaaaa', selector)
             selectors = re.split(',', selector)
-            self.results = []
             for sel in selectors:
                 for last_result in last_results:
                     results = last_result.select(sel)
