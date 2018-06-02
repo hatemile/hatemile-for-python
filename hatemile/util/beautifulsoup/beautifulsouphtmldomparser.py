@@ -32,7 +32,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         if isinstance(code_or_parser, BeautifulSoup):
             self.document = code_or_parser
         else:
-            self.document = BeautifulSoup(code_or_parser)
+            self.document = BeautifulSoup(code_or_parser, 'html.parser')
             self._fix_data_select()
         self.results = []
 
