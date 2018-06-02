@@ -54,9 +54,9 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
 
     def remove_attribute(self, name):
         if self.has_attribute(name):
-            del(self.data[name])
+            del self.data[name]
             if bool(re.findall('^data-', name)):
-                del(self.data[re.sub('^data-', 'dataaaaaa', name)])
+                del self.data[re.sub('^data-', 'dataaaaaa', name)]
 
     def has_attribute(self, name):
         return self.data.has_attr(name)

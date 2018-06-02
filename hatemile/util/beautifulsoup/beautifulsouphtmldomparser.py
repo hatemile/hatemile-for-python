@@ -84,7 +84,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
             attributes = element.attrs.keys()
             for attribute in attributes:
                 if bool(re.findall('^dataaaaaa', attribute)):
-                    del(element[attribute])
+                    del element[attribute]
 
     def find(self, selector):
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
@@ -197,6 +197,6 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         return self.document
 
     def clear_parser(self):
-        del(self.results[:])
+        del self.results[:]
         self.results = None
         self.document = None

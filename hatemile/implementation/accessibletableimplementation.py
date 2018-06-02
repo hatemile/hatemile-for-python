@@ -86,7 +86,7 @@ class AccessibleTableImplementation(AccessibleTable):
                     row[m] = cell
                     if cell.has_attribute('rowspan'):
                         rowspan = int(cell.get_attribute('rowspan'))
-                        if (rowspan > 1):
+                        if rowspan > 1:
                             for k in range(1, rowspan):
                                 n = i + k
                                 if len(table) <= n:
