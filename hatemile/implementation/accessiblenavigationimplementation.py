@@ -343,8 +343,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         for element in elements:
             shortcuts = element.get_attribute('accesskey').lower()
             if CommonFunctions.in_list(shortcuts, shortcut):
-                for i in range(0, alpha_numbers.length()):
-                    key = alpha_numbers[i]
+                for key in alpha_numbers:
                     found = True
                     for element_with_shortcuts in elements:
                         shortcuts = element_with_shortcuts.get_attribute(
