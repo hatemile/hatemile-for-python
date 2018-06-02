@@ -274,8 +274,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             return 5
         elif tag == 'H6':
             return 6
-        else:
-            return -1
+        return -1
 
     def _is_valid_heading(self):
         """

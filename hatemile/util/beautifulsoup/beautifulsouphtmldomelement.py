@@ -44,8 +44,7 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
             for item in values:
                 value += item + ' '
             return value.strip()
-        else:
-            return self.data[name]
+        return self.data[name]
 
     def set_attribute(self, name, value):
         self.data[name] = value

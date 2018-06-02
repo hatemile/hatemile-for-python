@@ -77,12 +77,10 @@ class CommonFunctions:
         if (bool(list_to_increase)) and (bool(string_to_increase)):
             if CommonFunctions.in_list(list_to_increase, string_to_increase):
                 return list_to_increase
-            else:
-                return list_to_increase + ' ' + string_to_increase
+            return list_to_increase + ' ' + string_to_increase
         elif bool(list_to_increase):
             return list_to_increase
-        else:
-            return string_to_increase
+        return string_to_increase
 
     @staticmethod
     def in_list(list_to_search, string_to_search):
