@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of AccessibleNavigationImplementation class.
+"""
+
 import re
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions

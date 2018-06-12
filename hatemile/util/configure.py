@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of Configure class.
+"""
+
 import os
 from xml.dom import minidom
 from .selectorchange import SelectorChange

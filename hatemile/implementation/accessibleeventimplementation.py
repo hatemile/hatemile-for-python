@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of AccessibleEventImplementation class.
+"""
+
 import os
 from hatemile.accessibleevent import AccessibleEvent
 from hatemile.util.commonfunctions import CommonFunctions

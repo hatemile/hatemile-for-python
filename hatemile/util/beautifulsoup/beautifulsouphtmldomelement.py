@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of BeautifulSoupHTMLDOMElement class.
+"""
+
 import copy
 import re
 from bs4 import BeautifulSoup

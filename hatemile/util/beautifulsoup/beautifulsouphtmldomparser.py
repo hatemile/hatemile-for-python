@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of BeautifulSoupHTMLDOMParser class.
+"""
+
 import re
 from bs4 import BeautifulSoup
 from hatemile.util.htmldomparser import HTMLDOMParser

@@ -10,6 +10,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Module of AccessibleTableImplementation class.
+"""
+
 from hatemile.accessibletable import AccessibleTable
 from hatemile.util.commonfunctions import CommonFunctions
 
