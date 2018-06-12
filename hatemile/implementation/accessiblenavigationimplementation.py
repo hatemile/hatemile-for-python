@@ -287,7 +287,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Inform if the headings of page are sintatic correct.
 
         :return: True if the headings of page are sintatic correct or false if
-        not.
+                 not.
         :rtype: bool
         """
 
@@ -314,7 +314,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :param element: The element.
         :type element: hatemile.util.htmldomelement.HTMLDOMElement
         :param data_attribute: The name of attribute that links the element
-        with the anchor.
+                               with the anchor.
         :type data_attribute: str
         :param anchor_class: The HTML class of anchor.
         :type anchor_class: str

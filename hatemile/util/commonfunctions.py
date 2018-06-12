@@ -73,7 +73,7 @@ class CommonFunctions:
         :param string_to_increase: The value of item.
         :type string_to_increase: str
         :return: The list with the item added, if the item not was contained in
-        list.
+                 list.
         :rtype: str
         """
 

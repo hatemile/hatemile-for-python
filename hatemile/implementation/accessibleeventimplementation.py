@@ -35,7 +35,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
         :param store_scripts_content: The state that indicates if the scripts
-        used are stored or deleted, after use.
+                                      used are stored or deleted, after use.
         :type store_scripts_content: bool
         """
 

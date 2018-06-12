@@ -104,7 +104,7 @@ class AccessibleTableImplementation(AccessibleTable):
         Returns a list that represents the line of table with the colspans.
 
         :param row: The list that represents the line of table without the
-        colspans.
+                    colspans.
         :type row: list(hatemile.util.htmldomelement.HTMLDOMElement)
         :return: The list that represents the line of table with the colspans.
         :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
@@ -129,7 +129,7 @@ class AccessibleTableImplementation(AccessibleTable):
         :param header: The list that represents the table header.
         :type header: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
         :return: True if the table header is valid or False if the table header
-        is not valid.
+                 is not valid.
         :rtype: bool
         """
 

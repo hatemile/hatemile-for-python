@@ -34,7 +34,7 @@ class HTMLDOMElement:
         :param name: The name of attribute.
         :type name: str
         :return: The value of the attribute, if the element not contains the
-        attribute returns None.
+                 attribute returns None.
         :rtype: str
         """
 
@@ -69,7 +69,7 @@ class HTMLDOMElement:
         :param name: The name of attribute.
         :type name: str
         :return: True if the element has the attribute or False if the element
-        not has the attribute.
+                 not has the attribute.
         :rtype: bool
         """
 
@@ -80,7 +80,7 @@ class HTMLDOMElement:
         Returns if the element has attributes.
 
         :return: True if the element has attributes or False if the element not
-        has attributes.
+                 has attributes.
         :rtype: bool
         """
 
@@ -179,7 +179,7 @@ class HTMLDOMElement:
         Returns if the element has children.
 
         :return: True if the element has children or False if the element not
-        has children.
+                 has children.
         :rtype: bool
         """
 
