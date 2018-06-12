@@ -79,28 +79,31 @@ class AccessibleTableImplementation(AccessibleTable):
                 length_cells = len(cells)
                 for j in range(0, length_cells):
                     cell = cells[j]
-                    m = j + column_index
+                    new_column_index = j + column_index
                     row = table[i]
                     while True:
-                        if len(row) <= m:
+                        if len(row) <= new_column_index:
                             row.append(None)
                             break
-                        elif row[m] is None:
+                        elif row[new_column_index] is None:
                             break
                         else:
                             column_index += 1
-                            m = j + column_index
-                    row[m] = cell
+                            new_column_index = j + column_index
+                    row[new_column_index] = cell
                     if cell.has_attribute('rowspan'):
                         rowspan = int(cell.get_attribute('rowspan'))
                         if rowspan > 1:
                             for k in range(1, rowspan):
-                                n = i + k
-                                if len(table) <= n:
+                                new_row_index = i + k
+                                if len(table) <= new_row_index:
                                     table.append([])
-                                while len(table[n]) < m:
-                                    table[n].append(None)
-                                table[n].append(cell)
+                                while (
+                                    len(table[new_row_index])
+                                    < new_column_index
+                                ):
+                                    table[new_row_index].append(None)
+                                table[new_row_index].append(cell)
         return table
 
     def _generate_colspan(self, row):

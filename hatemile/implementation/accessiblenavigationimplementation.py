@@ -79,7 +79,10 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 '.*firefox/[2-9]|minefield/3.*',
                 user_agent
             ) is not None
-            ie = ('msie' in user_agent) or ('trident' in user_agent)
+            internet_explorer = (
+                ('msie' in user_agent)
+                or ('trident' in user_agent)
+            )
 
             if opera:
                 self.prefix = 'SHIFT + ESC'
@@ -91,7 +94,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.prefix = 'CTRL'
             elif firefox:
                 self.prefix = 'ALT + SHIFT'
-            elif chrome or ie:
+            elif chrome or internet_explorer:
                 self.prefix = 'ALT'
             else:
                 self.prefix = self.standart_prefix
