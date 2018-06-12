@@ -54,6 +54,7 @@ extensions = [
 
 autodoc_member_order = 'bysource'
 autodoc_default_flags = ['members', 'show-inheritance']
+autoclass_content = 'both'
 autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
