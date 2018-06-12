@@ -23,10 +23,11 @@ class AccessibleSelectorImplementation(AccessibleSelector):
         """
         Initializes a new object that manipulate the accessibility through of
         the selectors of the configuration file.
-        @param parser: The HTML parser.
-        @type parser: L{hatemile.util.HTMLDOMParser}
-        @param configure: The configuration of HaTeMiLe.
-        @type configure: L{hatemile.util.Configure}
+
+        :param parser: The HTML parser.
+        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :param configure: The configuration of HaTeMiLe.
+        :type configure: hatemile.util.configure.Configure
         """
 
         self.parser = parser

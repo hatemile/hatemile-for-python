@@ -24,10 +24,11 @@ class CommonFunctions:
     def generate_id(element, prefix):
         """
         Generate a id for a element.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @param prefix: The prefix of id.
-        @type prefix: str
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :param prefix: The prefix of id.
+        :type prefix: str
         """
 
         if not element.has_attribute('id'):
@@ -46,12 +47,13 @@ class CommonFunctions:
     def set_list_attributes(element1, element2, attributes):
         """
         Copy a list of attributes of a element for other element.
-        @param element1: The element that have attributes copied.
-        @type element1: L{hatemile.util.HTMLDOMElement}
-        @param element2: The element that copy the attributes.
-        @type element2: L{hatemile.util.HTMLDOMElement}
-        @param attributes: The list of attributes that will be copied.
-        @type attributes: array.str
+
+        :param element1: The element that have attributes copied.
+        :type element1: hatemile.util.htmldomelement.HTMLDOMElement
+        :param element2: The element that copy the attributes.
+        :type element2: hatemile.util.htmldomelement.HTMLDOMElement
+        :param attributes: The list of attributes that will be copied.
+        :type attributes: list(str)
         """
 
         for attribute in attributes:
@@ -65,13 +67,14 @@ class CommonFunctions:
     def increase_in_list(list_to_increase, string_to_increase):
         """
         The list of attributes that will be copied.
-        @param list_to_increase: The list.
-        @type list_to_increase: str
-        @param string_to_increase: The value of item.
-        @type string_to_increase: str
-        @return: The list with the item added, if the item not was contained in
+
+        :param list_to_increase: The list.
+        :type list_to_increase: str
+        :param string_to_increase: The value of item.
+        :type string_to_increase: str
+        :return: The list with the item added, if the item not was contained in
         list.
-        @rtype: str
+        :rtype: str
         """
 
         if (bool(list_to_increase)) and (bool(string_to_increase)):
@@ -86,12 +89,13 @@ class CommonFunctions:
     def in_list(list_to_search, string_to_search):
         """
         Verify if the list contains the item.
-        @param list_to_search: The list.
-        @type list_to_search: str
-        @param string_to_search: The value of item.
-        @type string_to_search: str
-        @return: True if the list contains the item or false is not contains.
-        @rtype: bool
+
+        :param list_to_search: The list.
+        :type list_to_search: str
+        :param string_to_search: The value of item.
+        :type string_to_search: str
+        :return: True if the list contains the item or false is not contains.
+        :rtype: bool
         """
 
         if (bool(list_to_search)) and (bool(string_to_search)):

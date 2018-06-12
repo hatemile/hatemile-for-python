@@ -25,10 +25,11 @@ class AccessibleFormImplementation(AccessibleForm):
         """
         Initializes a new object that manipulate the accessibility of the forms
         of parser.
-        @param parser: The HTML parser.
-        @type parser: L{hatemile.util.HTMLDOMParser}
-        @param configure: The configuration of HaTeMiLe.
-        @type configure: L{hatemile.util.Configure}
+
+        :param parser: The HTML parser.
+        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :param configure: The configuration of HaTeMiLe.
+        :type configure: hatemile.util.configure.Configure
         """
 
         self.parser = parser
@@ -94,18 +95,19 @@ class AccessibleFormImplementation(AccessibleForm):
     ):
         """
         Display in label the information of field.
-        @param label: The label.
-        @type label: L{hatemile.util.HTMLDOMElement}
-        @param field: The field.
-        @type field: L{hatemile.util.HTMLDOMElement}
-        @param prefix: The prefix.
-        @type prefix: str
-        @param suffix: The suffix.
-        @type suffix: str
-        @param data_prefix: The name of prefix attribute.
-        @type data_prefix: str
-        @param data_suffix: The name of suffix attribute.
-        @type data_suffix: str
+
+        :param label: The label.
+        :type label: hatemile.util.htmldomelement.HTMLDOMElement
+        :param field: The field.
+        :type field: hatemile.util.htmldomelement.HTMLDOMElement
+        :param prefix: The prefix.
+        :type prefix: str
+        :param suffix: The suffix.
+        :type suffix: str
+        :param data_prefix: The name of prefix attribute.
+        :type data_prefix: str
+        :param data_suffix: The name of suffix attribute.
+        :type data_suffix: str
         """
 
         content_label = field.get_attribute('aria-label')
@@ -122,10 +124,11 @@ class AccessibleFormImplementation(AccessibleForm):
     def _fix_label_required_field(self, label, required_field):
         """
         Display in label the information if the field is required.
-        @param label: The label.
-        @type label: L{hatemile.util.HTMLDOMElement}
-        @param required_field: The required field.
-        @type required_field: L{hatemile.util.HTMLDOMElement}
+
+        :param label: The label.
+        :type label: hatemile.util.htmldomelement.HTMLDOMElement
+        :param required_field: The required field.
+        :type required_field: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         if (
@@ -158,10 +161,11 @@ class AccessibleFormImplementation(AccessibleForm):
     def _fix_label_range_field(self, label, range_field):
         """
         Display in label the information of range of field.
-        @param label: The label.
-        @type label: L{hatemile.util.HTMLDOMElement}
-        @param range_field: The range field.
-        @type range_field: L{hatemile.util.HTMLDOMElement}
+
+        :param label: The label.
+        :type label: hatemile.util.htmldomelement.HTMLDOMElement
+        :param range_field: The range field.
+        :type range_field: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         if range_field.has_attribute('aria-label'):
@@ -233,10 +237,11 @@ class AccessibleFormImplementation(AccessibleForm):
     def _fix_label_autocomplete_field(self, label, autocomplete_field):
         """
         Display in label the information if the field has autocomplete.
-        @param label: The label.
-        @type label: L{hatemile.util.HTMLDOMElement}
-        @param autocomplete_field: The autocomplete field.
-        @type autocomplete_field: L{hatemile.util.HTMLDOMElement}
+
+        :param label: The label.
+        :type label: hatemile.util.htmldomelement.HTMLDOMElement
+        :param autocomplete_field: The autocomplete field.
+        :type autocomplete_field: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         prefix_autocomplete_field_modified = ''
@@ -303,10 +308,11 @@ class AccessibleFormImplementation(AccessibleForm):
     def _get_aria_autocomplete(self, field):
         """
         Returns the appropriate value for attribute aria-autocomplete of field.
-        @param field: The field.
-        @type field: L{hatemile.util.HTMLDOMElement}
-        @return: The ARIA value of field.
-        @rtype: str
+
+        :param field: The field.
+        :type field: hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The ARIA value of field.
+        :rtype: str
         """
 
         tag_name = field.get_tag_name()
@@ -358,10 +364,11 @@ class AccessibleFormImplementation(AccessibleForm):
     def _get_labels(self, field):
         """
         Returns the labels of field.
-        @param field: The field.
-        @type field: L{hatemile.util.HTMLDOMElement}
-        @return: The labels of field.
-        @rtype: array.L{hatemile.util.HTMLDOMElement}
+
+        :param field: The field.
+        :type field: hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The labels of field.
+        :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
         """
 
         labels = None

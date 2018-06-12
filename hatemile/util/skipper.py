@@ -21,12 +21,13 @@ class Skipper:
     def __init__(self, selector=None, default_text=None, shortcuts=None):
         """
         Inicializes a new object with the values pre-defineds.
-        @param selector: The selector.
-        @type selector: str
-        @param default_text: The default text of skipper.
-        @type default_text: str
-        @param shortcuts: The shortcuts of skipper.
-        @type shortcuts: str
+
+        :param selector: The selector.
+        :type selector: str
+        :param default_text: The default text of skipper.
+        :type default_text: str
+        :param shortcuts: The shortcuts of skipper.
+        :type shortcuts: str
         """
 
         self.selector = selector
@@ -39,8 +40,9 @@ class Skipper:
     def get_selector(self):
         """
         Returns the selector.
-        @return: The selector.
-        @rtype: str
+
+        :return: The selector.
+        :rtype: str
         """
 
         return self.selector
@@ -48,8 +50,9 @@ class Skipper:
     def get_default_text(self):
         """
         Returns the default text of skipper.
-        @return: The default text of skipper.
-        @rtype: str
+
+        :return: The default text of skipper.
+        :rtype: str
         """
 
         return self.default_text
@@ -57,8 +60,9 @@ class Skipper:
     def get_shortcuts(self):
         """
         Returns the shortcuts of skipper.
-        @return: The shortcuts of skipper.
-        @rtype: str
+
+        :return: The shortcuts of skipper.
+        :rtype: str
         """
 
         return [] + self.shortcuts

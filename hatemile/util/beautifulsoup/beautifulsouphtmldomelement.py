@@ -26,8 +26,9 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def __init__(self, element):
         """
         Initializes a new object that encapsulate the BeautifulSoup Tag.
-        @param element: The BeautifulSoup Tag.
-        @type element: bs4.element.Tag
+
+        :param element: The BeautifulSoup Tag.
+        :type element: bs4.element.Tag
         """
 
         self.data = element

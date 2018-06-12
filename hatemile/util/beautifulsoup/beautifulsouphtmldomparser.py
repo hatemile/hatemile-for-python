@@ -25,8 +25,9 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     def __init__(self, code_or_parser):
         """
         Initializes a new object that encapsulate the parser of BeautifulSoup.
-        @param code_or_parser: The root element of the parser or the HTML code.
-        @type code_or_parser: str or bs4.element.Tag
+
+        :param code_or_parser: The root element of the parser or the HTML code.
+        :type code_or_parser: str or bs4.element.Tag
         """
 
         if isinstance(code_or_parser, BeautifulSoup):
@@ -45,10 +46,11 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     def _sort_results(self, results):
         """
         Order the results.
-        @param results: The disordened results.
-        @type results: array.bs4.element.Tag
-        @return: The ordened results.
-        @rtype: array.bs4.element.Tag
+
+        :param results: The disordened results.
+        :type results: array.bs4.element.Tag
+        :return: The ordened results.
+        :rtype: array.bs4.element.Tag
         """
 
         parents = []

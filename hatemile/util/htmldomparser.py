@@ -20,10 +20,11 @@ class HTMLDOMParser:
     def find(self, selector):
         """
         Find all elements in the parser by selector.
-        @param selector: The selector.
-        @type selector: str or L{hatemile.util.HTMLDOMElement}
-        @return: The parser with the elements found.
-        @rtype: L{hatemile.util.HTMLDOMParser}
+
+        :param selector: The selector.
+        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The parser with the elements found.
+        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -32,10 +33,11 @@ class HTMLDOMParser:
         """
         Find all elements in the parser by selector, children of found
         elements.
-        @param selector: The selector.
-        @type selector: str or L{hatemile.util.HTMLDOMElement}
-        @return: The parser with the elements found.
-        @rtype: L{hatemile.util.HTMLDOMParser}
+
+        :param selector: The selector.
+        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The parser with the elements found.
+        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -44,10 +46,11 @@ class HTMLDOMParser:
         """
         Find all elements in the parser by selector, descendants of found
         elements.
-        @param selector: The selector.
-        @type selector: str or L{hatemile.util.HTMLDOMElement}
-        @return: The parser with the elements found.
-        @rtype: L{hatemile.util.HTMLDOMParser}
+
+        :param selector: The selector.
+        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The parser with the elements found.
+        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -56,10 +59,11 @@ class HTMLDOMParser:
         """
         Find all elements in the parser by selector, ancestors of found
         elements.
-        @param selector: The selector.
-        @type selector: str or L{hatemile.util.HTMLDOMElement}
-        @return: The parser with the elements found.
-        @rtype: L{hatemile.util.HTMLDOMParser}
+
+        :param selector: The selector.
+        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The parser with the elements found.
+        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -67,8 +71,9 @@ class HTMLDOMParser:
     def first_result(self):
         """
         Returns the first element found.
-        @return: The first element found or None if not have elements found.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :return: The first element found or None if not have elements found.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -76,8 +81,9 @@ class HTMLDOMParser:
     def last_result(self):
         """
         Returns the last element found.
-        @return: The last element found or None if not have elements found.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :return: The last element found or None if not have elements found.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -85,8 +91,9 @@ class HTMLDOMParser:
     def list_results(self):
         """
         Returns a list with all elements found.
-        @return: The list with all elements found.
-        @rtype: array.L{hatemile.util.HTMLDOMElement}
+
+        :return: The list with all elements found.
+        :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
         """
 
         pass
@@ -94,10 +101,11 @@ class HTMLDOMParser:
     def create_element(self, tag):
         """
         Create a element.
-        @param tag: The tag of element.
-        @type tag: str
-        @return: The element created.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :param tag: The tag of element.
+        :type tag: str
+        :return: The element created.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -105,8 +113,9 @@ class HTMLDOMParser:
     def get_html(self):
         """
         Returns the HTML code of parser.
-        @return: The HTML code of parser.
-        @rtype: str
+
+        :return: The HTML code of parser.
+        :rtype: str
         """
 
         pass
@@ -114,8 +123,9 @@ class HTMLDOMParser:
     def get_parser(self):
         """
         Returns the parser.
-        @return: The parser or root element of the parser.
-        @rtype: object
+
+        :return: The parser or root element of the parser.
+        :rtype: object
         """
 
         pass

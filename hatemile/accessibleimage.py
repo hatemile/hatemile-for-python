@@ -20,8 +20,9 @@ class AccessibleImage:
     def fix_long_description(self, element):
         """
         Provide an alternative way to access the long description of element.
-        @param element: The element with long description.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with long description.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass

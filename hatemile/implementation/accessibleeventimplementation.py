@@ -29,13 +29,14 @@ class AccessibleEventImplementation(AccessibleEvent):
         """
         Initializes a new object that manipulate the accessibility of the
         Javascript events of elements of parser.
-        @param parser: The HTML parser.
-        @type parser: L{hatemile.util.HTMLDOMParser}
-        @param configure: The configuration of HaTeMiLe.
-        @type configure: L{hatemile.util.Configure}
-        @param store_scripts_content: The state that indicates if the scripts
+
+        :param parser: The HTML parser.
+        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :param configure: The configuration of HaTeMiLe.
+        :type configure: hatemile.util.configure.Configure
+        :param store_scripts_content: The state that indicates if the scripts
         used are stored or deleted, after use.
-        @type store_scripts_content: bool
+        :type store_scripts_content: bool
         """
 
         self.parser = parser
@@ -51,8 +52,9 @@ class AccessibleEventImplementation(AccessibleEvent):
     def _keyboard_access(self, element):
         """
         Provide keyboard access for element, if it not has.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         if not element.has_attribute('tabindex'):
@@ -156,10 +158,11 @@ class AccessibleEventImplementation(AccessibleEvent):
     def _add_event_in_element(self, element, event):
         """
         Add a type of event in element.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @param event: The type of event.
-        @type event: str
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :param event: The type of event.
+        :type event: str
         """
 
         if not self.main_script_added:

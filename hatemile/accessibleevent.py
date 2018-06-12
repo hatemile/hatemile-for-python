@@ -20,8 +20,9 @@ class AccessibleEvent:
     def fix_drop(self, element):
         """
         Provide a solution for the element that has drop events.
-        @param element: The element with drop event.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with drop event.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -29,8 +30,9 @@ class AccessibleEvent:
     def fix_drag(self, element):
         """
         Provide a solution for the element that has drag events.
-        @param element: The element with drag event.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with drag event.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -45,8 +47,9 @@ class AccessibleEvent:
     def fix_hover(self, element):
         """
         Provide a solution for the element that has inaccessible hover events.
-        @param element: The element with hover event.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with hover event.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -61,8 +64,9 @@ class AccessibleEvent:
     def fix_active(self, element):
         """
         Provide a solution for the element that has inaccessible active events.
-        @param element: The element with active event.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with active event.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass

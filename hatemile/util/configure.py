@@ -24,8 +24,9 @@ class Configure:
     def __init__(self, file_name=None):
         """
         Initializes a new object that contains the configuration of HaTeMiLe.
-        @param file_name: The full path of file.
-        @type file_name: str
+
+        :param file_name: The full path of file.
+        :type file_name: str
         """
 
         self.parameters = {}
@@ -68,8 +69,9 @@ class Configure:
     def get_parameters(self):
         """
         Returns the parameters of configuration.
-        @return: The parameters of configuration.
-        @rtype: dict
+
+        :return: The parameters of configuration.
+        :rtype: dict(str, str)
         """
 
         return self.parameters.copy()
@@ -77,10 +79,11 @@ class Configure:
     def get_parameter(self, name):
         """
         Returns the value of a parameter of configuration.
-        @param name: The parameter.
-        @type name: str
-        @return: The value of the parameter.
-        @rtype: str
+
+        :param name: The parameter.
+        :type name: str
+        :return: The value of the parameter.
+        :rtype: str
         """
 
         return self.parameters[name]
@@ -88,8 +91,9 @@ class Configure:
     def get_selector_changes(self):
         """
         Returns the changes that will be done in selectors.
-        @return: The changes that will be done in selectors.
-        @rtype: array.L{hatemile.util.SelectorChange}
+
+        :return: The changes that will be done in selectors.
+        :rtype: list(hatemile.util.selectorchange.SelectorChange)
         """
 
         return [] + self.selector_changes
@@ -97,8 +101,9 @@ class Configure:
     def get_skippers(self):
         """
         Returns the skippers.
-        @return: The skippers.
-        @rtype: array.L{hatemile.util.Skipper}
+
+        :return: The skippers.
+        :rtype: list(hatemile.util.skipper.Skipper)
         """
 
         return [] + self.skippers

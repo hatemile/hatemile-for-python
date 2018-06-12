@@ -20,8 +20,9 @@ class AccessibleNavigation:
     def fix_shortcut(self, element):
         """
         Display the shortcuts of element.
-        @param element: The element with shortcuts.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element with shortcuts.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -36,10 +37,11 @@ class AccessibleNavigation:
     def fix_skipper(self, element, skipper):
         """
         Provide content skipper for element.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @param skipper: The skipper.
-        @type skipper: L{hatemile.util.Skipper}
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :param skipper: The skipper.
+        :type skipper: hatemile.util.skipper.Skipper
         """
 
         pass
@@ -54,8 +56,9 @@ class AccessibleNavigation:
     def fix_heading(self, element):
         """
         Provide a navigation by heading.
-        @param element: The heading element.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The heading element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         pass

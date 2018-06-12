@@ -24,12 +24,13 @@ class SelectorChange:
     ):
         """
         Inicializes a new object with the values pre-defineds.
-        @param selector: The selector.
-        @type selector: str
-        @param attribute: The attribute.
-        @type attribute: str
-        @param value_for_attribute: The value of the attribute.
-        @type value_for_attribute: str
+
+        :param selector: The selector.
+        :type selector: str
+        :param attribute: The attribute.
+        :type attribute: str
+        :param value_for_attribute: The value of the attribute.
+        :type value_for_attribute: str
         """
 
         self.selector = selector
@@ -39,8 +40,9 @@ class SelectorChange:
     def get_selector(self):
         """
         Returns the selector.
-        @return: The selector.
-        @rtype: str
+
+        :return: The selector.
+        :rtype: str
         """
 
         return self.selector
@@ -48,8 +50,9 @@ class SelectorChange:
     def get_attribute(self):
         """
         Returns the attribute.
-        @return: The attribute.
-        @rtype: str
+
+        :return: The attribute.
+        :rtype: str
         """
 
         return self.attribute
@@ -57,8 +60,9 @@ class SelectorChange:
     def get_value_for_attribute(self):
         """
         Returns the value of the attribute.
-        @return: The value of the attribute.
-        @rtype: str
+
+        :return: The value of the attribute.
+        :rtype: str
         """
 
         return self.value_for_attribute

@@ -26,12 +26,13 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
         Initializes a new object that manipulate the accessibility of the
         navigation of parser.
-        @param parser: The HTML parser.
-        @type parser: L{hatemile.util.HTMLDOMParser}
-        @param configure: The configuration of HaTeMiLe.
-        @type configure: L{hatemile.util.Configure}
-        @param user_agent: The user agent of the user.
-        @type user_agent: str
+
+        :param parser: The HTML parser.
+        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :param configure: The configuration of HaTeMiLe.
+        :type configure: hatemile.util.configure.Configure
+        :param user_agent: The user agent of the user.
+        :type user_agent: str
         """
 
         self.parser = parser
@@ -96,10 +97,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _get_description(self, element):
         """
         Returns the description of element.
-        @param element: The element with description.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @return: The description of element.
-        @rtype: str
+
+        :param element: The element with description.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The description of element.
+        :rtype: str
         """
 
         description = None
@@ -153,8 +155,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _generate_list_shortcuts(self):
         """
         Generate the list of shortcuts of page.
-        @return: The list of shortcuts of page.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :return: The list of shortcuts of page.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -191,8 +194,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _generate_list_skippers(self):
         """
         Generate the list of skippers of page.
-        @return: The list of skippers of page.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :return: The list of skippers of page.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -219,8 +223,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _generate_list_heading(self):
         """
         Generate the list of heading links of page.
-        @return: The list of heading links of page.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :return: The list of heading links of page.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -255,10 +260,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _get_heading_level(self, element):
         """
         Returns the level of heading.
-        @param element: The heading.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @return: The level of heading.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The heading.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :return: The level of heading.
+        :rtype: int
         """
 
         tag = element.get_tag_name()
@@ -279,9 +285,10 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _is_valid_heading(self):
         """
         Inform if the headings of page are sintatic correct.
-        @return: True if the headings of page are sintatic correct or false if
+
+        :return: True if the headings of page are sintatic correct or false if
         not.
-        @rtype: bool
+        :rtype: bool
         """
 
         elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
@@ -303,15 +310,16 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _generate_anchor_for(self, element, data_attribute, anchor_class):
         """
         Generate an anchor for the element.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
-        @param data_attribute: The name of attribute that links the element
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :param data_attribute: The name of attribute that links the element
         with the anchor.
-        @type data_attribute: str
-        @param anchor_class: The HTML class of anchor.
-        @type anchor_class: str
-        @return: The anchor.
-        @rtype: L{hatemile.util.HTMLDOMElement}
+        :type data_attribute: str
+        :param anchor_class: The HTML class of anchor.
+        :type anchor_class: str
+        :return: The anchor.
+        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         CommonFunctions.generate_id(element, self.prefix_id)
@@ -333,8 +341,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _free_shortcut(self, shortcut):
         """
         Replace the shortcut of elements, that has the shortcut passed.
-        @param shortcut: The shortcut.
-        @type shortcut: str
+
+        :param shortcut: The shortcut.
+        :type shortcut: str
         """
 
         alpha_numbers = '1234567890abcdefghijklmnopqrstuvwxyz'
@@ -362,8 +371,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
         Call fixSkipper method for element, if the page has the container of
         skippers.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         if self.list_skippers is not None:
@@ -377,8 +387,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
         Call fixShortcut method for element, if the page has the container of
         shortcuts.
-        @param element: The element.
-        @type element: L{hatemile.util.HTMLDOMElement}
+
+        :param element: The element.
+        :type element: hatemile.util.htmldomelement.HTMLDOMElement
         """
 
         if self.list_shortcuts is not None:
