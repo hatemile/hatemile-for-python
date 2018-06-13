@@ -105,9 +105,9 @@ class HTMLDOMElement:
         Insert a element before this element.
 
         :param new_element: The element that be inserted.
-        :type new_element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The element inserted.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -117,9 +117,9 @@ class HTMLDOMElement:
         Insert a element after this element.
 
         :param new_element: The element that be inserted.
-        :type new_element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The element inserted.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -129,7 +129,7 @@ class HTMLDOMElement:
         Remove this element of the parser.
 
         :return: The removed element.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -139,9 +139,9 @@ class HTMLDOMElement:
         Replace this element for other element.
 
         :param new_element: The element that replace this element.
-        :type new_element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The element replaced.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -151,9 +151,9 @@ class HTMLDOMElement:
         Append a element child.
 
         :param element: The element that be inserted.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The element inserted.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -163,7 +163,7 @@ class HTMLDOMElement:
         Returns the children of this element.
 
         :return: The children of this element.
-        :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
+        :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         """
 
         pass
@@ -194,7 +194,7 @@ class HTMLDOMElement:
         Returns the parent element of this element.
 
         :return: The parent element of this element.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -254,7 +254,7 @@ class HTMLDOMElement:
         Clone this element.
 
         :return: The clone.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -264,7 +264,7 @@ class HTMLDOMElement:
         Returns the first element child of this element.
 
         :return: The first element child of this element.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -274,7 +274,7 @@ class HTMLDOMElement:
         Returns the last element child of this element.
 
         :return: The last element child of this element.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

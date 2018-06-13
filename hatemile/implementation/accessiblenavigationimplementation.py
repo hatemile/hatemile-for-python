@@ -32,7 +32,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         navigation of parser.
 
         :param parser: The HTML parser.
-        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
         :param user_agent: The user agent of the user.
@@ -106,7 +106,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Returns the description of element.
 
         :param element: The element with description.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The description of element.
         :rtype: str
         """
@@ -164,7 +164,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Generate the list of shortcuts of page.
 
         :return: The list of shortcuts of page.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -203,7 +203,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Generate the list of skippers of page.
 
         :return: The list of skippers of page.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -232,7 +232,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Generate the list of heading links of page.
 
         :return: The list of heading links of page.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         container = self.parser.find(
@@ -269,7 +269,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Returns the level of heading.
 
         :param element: The heading.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The level of heading.
         :rtype: int
         """
@@ -319,14 +319,14 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         Generate an anchor for the element.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param data_attribute: The name of attribute that links the element
                                with the anchor.
         :type data_attribute: str
         :param anchor_class: The HTML class of anchor.
         :type anchor_class: str
         :return: The anchor.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         CommonFunctions.generate_id(element, self.prefix_id)
@@ -380,7 +380,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         skippers.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         if self.list_skippers is not None:
@@ -396,7 +396,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         shortcuts.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         if self.list_shortcuts is not None:

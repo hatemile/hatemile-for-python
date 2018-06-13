@@ -26,7 +26,7 @@ class AccessibleTable:
         Associate data cells with header cells of table.
 
         :param table: The table.
-        :type table: hatemile.util.htmldomelement.HTMLDOMElement
+        :type table: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

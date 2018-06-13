@@ -26,7 +26,7 @@ class AccessibleEvent:
         Provide a solution for the element that has drop events.
 
         :param element: The element with drop event.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -36,7 +36,7 @@ class AccessibleEvent:
         Provide a solution for the element that has drag events.
 
         :param element: The element with drag event.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -53,7 +53,7 @@ class AccessibleEvent:
         Provide a solution for the element that has inaccessible hover events.
 
         :param element: The element with hover event.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -70,7 +70,7 @@ class AccessibleEvent:
         Provide a solution for the element that has inaccessible active events.
 
         :param element: The element with active event.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

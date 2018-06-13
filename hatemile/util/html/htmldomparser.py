@@ -26,9 +26,9 @@ class HTMLDOMParser:
         Find all elements in the parser by selector.
 
         :param selector: The selector.
-        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :type selector: str or hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The parser with the elements found.
-        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
+        :rtype: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -39,9 +39,9 @@ class HTMLDOMParser:
         elements.
 
         :param selector: The selector.
-        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :type selector: str or hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The parser with the elements found.
-        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
+        :rtype: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -52,9 +52,9 @@ class HTMLDOMParser:
         elements.
 
         :param selector: The selector.
-        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :type selector: str or hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The parser with the elements found.
-        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
+        :rtype: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -65,9 +65,9 @@ class HTMLDOMParser:
         elements.
 
         :param selector: The selector.
-        :type selector: str or hatemile.util.htmldomelement.HTMLDOMElement
+        :type selector: str or hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The parser with the elements found.
-        :rtype: hatemile.util.htmldomparser.HTMLDOMParser
+        :rtype: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
 
         pass
@@ -77,7 +77,7 @@ class HTMLDOMParser:
         Returns the first element found.
 
         :return: The first element found or None if not have elements found.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -87,7 +87,7 @@ class HTMLDOMParser:
         Returns the last element found.
 
         :return: The last element found or None if not have elements found.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -97,7 +97,7 @@ class HTMLDOMParser:
         Returns a list with all elements found.
 
         :return: The list with all elements found.
-        :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
+        :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         """
 
         pass
@@ -109,7 +109,7 @@ class HTMLDOMParser:
         :param tag: The tag of element.
         :type tag: str
         :return: The element created.
-        :rtype: hatemile.util.htmldomelement.HTMLDOMElement
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

@@ -26,7 +26,7 @@ class AccessibleForm:
         Display that the field is required.
 
         :param required_field: The required field.
-        :type required_field: hatemile.util.htmldomelement.HTMLDOMElement
+        :type required_field: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -43,7 +43,7 @@ class AccessibleForm:
         Display that the field have range.
 
         :param range_field: The range field.
-        :type range_field: hatemile.util.htmldomelement.HTMLDOMElement
+        :type range_field: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -55,12 +55,12 @@ class AccessibleForm:
 
         pass
 
-    def fix_autocomplete_field(self, autocomplete_field):
+    def fix_autocomplete_field(self, field):
         """
         Display that the field have autocomplete.
 
-        :param autocomplete_field: The field with autocomplete.
-        :type autocomplete_field: hatemile.util.htmldomelement.HTMLDOMElement
+        :param field: The field with autocomplete.
+        :type field: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -77,7 +77,7 @@ class AccessibleForm:
         Associate label with field.
 
         :param label: The label.
-        :type label: hatemile.util.htmldomelement.HTMLDOMElement
+        :type label: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

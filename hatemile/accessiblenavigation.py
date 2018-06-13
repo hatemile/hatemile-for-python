@@ -26,7 +26,7 @@ class AccessibleNavigation:
         Display the shortcuts of element.
 
         :param element: The element with shortcuts.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -43,7 +43,7 @@ class AccessibleNavigation:
         Provide content skipper for element.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param skipper: The skipper.
         :type skipper: hatemile.util.skipper.Skipper
         """
@@ -62,7 +62,7 @@ class AccessibleNavigation:
         Provide a navigation by heading.
 
         :param element: The heading element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass

@@ -35,7 +35,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         Javascript events of elements of parser.
 
         :param parser: The HTML parser.
-        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
         :param store_scripts_content: The state that indicates if the scripts
@@ -58,7 +58,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         Provide keyboard access for element, if it not has.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         if not element.has_attribute('tabindex'):
@@ -164,7 +164,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         Add a type of event in element.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param event: The type of event.
         :type event: str
         """

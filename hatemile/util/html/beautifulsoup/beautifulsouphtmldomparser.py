@@ -16,7 +16,7 @@ Module of BeautifulSoupHTMLDOMParser class.
 
 import re
 from bs4 import BeautifulSoup
-from hatemile.util.htmldomparser import HTMLDOMParser
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 from .beautifulsouphtmldomelement import BeautifulSoupHTMLDOMElement
 
 

@@ -30,7 +30,7 @@ class CommonFunctions:
         Generate a id for a element.
 
         :param element: The element.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param prefix: The prefix of id.
         :type prefix: str
         """
@@ -53,9 +53,9 @@ class CommonFunctions:
         Copy a list of attributes of a element for other element.
 
         :param element1: The element that have attributes copied.
-        :type element1: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element1: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param element2: The element that copy the attributes.
-        :type element2: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element2: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param attributes: The list of attributes that will be copied.
         :type attributes: list(str)
         """

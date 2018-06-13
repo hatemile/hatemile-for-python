@@ -29,7 +29,7 @@ class AccessibleSelectorImplementation(AccessibleSelector):
         the selectors of the configuration file.
 
         :param parser: The HTML parser.
-        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
         """

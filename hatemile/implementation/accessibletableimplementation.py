@@ -30,7 +30,7 @@ class AccessibleTableImplementation(AccessibleTable):
         tables of parser.
 
         :param parser: The HTML parser.
-        :type parser: hatemile.util.htmldomparser.HTMLDOMParser
+        :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
         """
@@ -44,9 +44,9 @@ class AccessibleTableImplementation(AccessibleTable):
         Returns a list that represents the table.
 
         :param part: The table header, table footer or table body.
-        :type part: hatemile.util.htmldomelement.HTMLDOMElement
+        :type part: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The list that represents the table.
-        :rtype: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
+        :rtype: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         """
 
         rows = self.parser.find(part).find_children('tr').list_results()
@@ -57,20 +57,20 @@ class AccessibleTableImplementation(AccessibleTable):
             ).find_children('td,th').list_results()))
         return self._generate_rowspan(table)
 
-    def _generate_rowspan(self, rows):
+    def _generate_rowspan(self, ros):
         """
         Returns a list that represents the table with the rowspans.
 
-        :param rows: The list that represents the table without the rowspans.
-        :type rows: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
+        :param ros: The list that represents the table without the rowspans.
+        :type ros: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         :return The list that represents the table with the rowspans.
-        :rtype: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
+        :rtype: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         """
 
-        copy = [] + rows
+        copy = [] + ros
         table = []
-        if bool(rows):
-            length_rows = len(rows)
+        if bool(ros):
+            length_rows = len(ros)
             for i in range(0, length_rows):
                 column_index = 0
                 cells = [] + copy[i]
@@ -112,9 +112,9 @@ class AccessibleTableImplementation(AccessibleTable):
 
         :param row: The list that represents the line of table without the
                     colspans.
-        :type row: list(hatemile.util.htmldomelement.HTMLDOMElement)
+        :type row: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         :return: The list that represents the line of table with the colspans.
-        :rtype: list(hatemile.util.htmldomelement.HTMLDOMElement)
+        :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         """
 
         copy = [] + row
@@ -129,21 +129,21 @@ class AccessibleTableImplementation(AccessibleTable):
                         copy.insert(i + j, cell)
         return copy
 
-    def _validate_header(self, header):
+    def _validate_header(self, hed):
         """
         Validate the list that represents the table header.
 
-        :param header: The list that represents the table header.
-        :type header: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
+        :param hed: The list that represents the table header.
+        :type hed: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         :return: True if the table header is valid or False if the table header
                  is not valid.
         :rtype: bool
         """
 
-        if not bool(header):
+        if not bool(hed):
             return False
         length = -1
-        for row in header:
+        for row in hed:
             if not bool(row):
                 return False
             elif length == -1:
@@ -152,12 +152,12 @@ class AccessibleTableImplementation(AccessibleTable):
                 return False
         return True
 
-    def _return_list_ids_columns(self, header, index):
+    def _return_list_ids_columns(self, hed, index):
         """
         Returns a list with ids of rows of same column.
 
-        :param header: The list that represents the table header.
-        :type header: list(list(hatemile.util.htmldomelement.HTMLDOMElement))
+        :param hed: The list that represents the table header.
+        :type hed: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         :param index: The index of columns.
         :type index: int
         :return: The list with ids of rows of same column.
@@ -165,7 +165,7 @@ class AccessibleTableImplementation(AccessibleTable):
         """
 
         ids = []
-        for row in header:
+        for row in hed:
             if row[index].get_tag_name() == 'TH':
                 ids.append(row[index].get_attribute('id'))
         return ids
@@ -175,7 +175,7 @@ class AccessibleTableImplementation(AccessibleTable):
         Fix the table body or table footer.
 
         :param element: The table body or table footer.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         table = self._generate_part(element)
@@ -203,7 +203,7 @@ class AccessibleTableImplementation(AccessibleTable):
         Fix the table header.
 
         :param table_header: The table header.
-        :type table_header: hatemile.util.htmldomelement.HTMLDOMElement
+        :type table_header: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         cells = self.parser.find(table_header).find_children(

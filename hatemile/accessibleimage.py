@@ -26,7 +26,7 @@ class AccessibleImage:
         Provide an alternative way to access the long description of element.
 
         :param element: The element with long description.
-        :type element: hatemile.util.htmldomelement.HTMLDOMElement
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
