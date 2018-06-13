@@ -16,7 +16,6 @@ Module of Configure class.
 
 import os
 from xml.dom import minidom
-from .selectorchange import SelectorChange
 from .skipper import Skipper
 
 
@@ -34,7 +33,6 @@ class Configure:
         """
 
         self.parameters = {}
-        self.selector_changes = []
         self.skippers = []
         if file_name is None:
             file_name = os.path.dirname(os.path.dirname(os.path.dirname(
@@ -51,15 +49,6 @@ class Configure:
                 ] = param.firstChild.nodeValue
             else:
                 self.parameters[param.attributes['name'].value] = ''
-        changes = xmldoc.getElementsByTagName(
-            'selector-changes'
-        )[0].getElementsByTagName('selector-change')
-        for change in changes:
-            self.selector_changes.append(SelectorChange(
-                change.attributes['selector'].value,
-                change.attributes['attribute'].value,
-                change.attributes['value-attribute'].value
-            ))
         skippers = xmldoc.getElementsByTagName(
             'skippers'
         )[0].getElementsByTagName('skipper')
@@ -91,16 +80,6 @@ class Configure:
         """
 
         return self.parameters[name]
-
-    def get_selector_changes(self):
-        """
-        Returns the changes that will be done in selectors.
-
-        :return: The changes that will be done in selectors.
-        :rtype: list(hatemile.util.selectorchange.SelectorChange)
-        """
-
-        return [] + self.selector_changes
 
     def get_skippers(self):
         """

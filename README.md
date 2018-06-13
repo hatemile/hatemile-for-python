@@ -5,18 +5,17 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 ## How to Use
 1.  Instanciate a new object with HTMLDOMParser interface, setting the HTML code;
 2.  Instanciate a new Configuration object;
-3.  Instanciate a new object with AccessibleForm, AccessibleImage, AccessibleNavigation, AccessibleTable, AccessibleEvent or AccessibleSelector interface and call yours methods;
+3.  Instanciate a new object with AccessibleForm, AccessibleImage, AccessibleNavigation, AccessibleTable or AccessibleEvent interface and call yours methods;
 4.  Get the HTML code of object with HTMLDOMParser interface.
 
 ## Example
-	from hatemile.util import Configure
-	from hatemile.util.beautifulsoup import BeautifulSoupHTMLDOMParser
-	from hatemile.implementation import AccessibleEventImplementation
-	from hatemile.implementation import AccessibleFormImplementation
-	from hatemile.implementation import AccessibleImageImplementation
-	from hatemile.implementation import AccessibleSelectorImplementation
-	from hatemile.implementation import AccessibleNavigationImplementation
-	from hatemile.implementation import AccessibleTableImplementation
+	from hatemile.util.configure import Configure
+    from hatemile.util.html.beautifulsoup.beautifulsouphtmldomparser import BeautifulSoupHTMLDOMParser
+    from hatemile.implementation.accessibleeventimplementation import AccessibleEventImplementation
+    from hatemile.implementation.accessibleformimplementation import AccessibleFormImplementation
+    from hatemile.implementation.accessibleimageimplementation import AccessibleImageImplementation
+    from hatemile.implementation.accessiblenavigationimplementation import AccessibleNavigationImplementation
+    from hatemile.implementation.accessibletableimplementation import AccessibleTableImplementation
 	
 	configure = Configure()
 	parser = BeautifulSoupHTMLDOMParser("""<!DOCTYPE html>
@@ -174,27 +173,24 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 	event = AccessibleEventImplementation(parser, configure, True)
 	form = AccessibleFormImplementation(parser, configure)
 	image = AccessibleImageImplementation(parser, configure)
-	selector = AccessibleSelectorImplementation(parser, configure)
 	navigation = AccessibleNavigationImplementation(parser, configure)
 	table = AccessibleTableImplementation(parser, configure)
 	
-	event.fixDragsandDrops()
-	event.fixActives()
-	event.fixHovers()
-	
-	form.fixAutoCompleteFields()
-	form.fixLabels()
-	form.fixRangeFields()
-	form.fixRequiredFields()
-	
-	image.fixLongDescriptions()
-	
-	selector.fixSelectors()
-	
-	navigation.fixShortcuts()
-	navigation.fixHeadings()
-	navigation.fixSkippers()
-	
-	table.fixTables()
-	
-	print(parser.getHTML())
+	event.fix_drags_and_drops()
+    event.fix_actives()
+    event.fix_hovers()
+
+    form.fix_autocomplete_fields()
+    form.fix_labels()
+    form.fix_range_fields()
+    form.fix_required_fields()
+
+    image.fix_long_descriptions()
+
+    navigation.fixShortcuts()
+    navigation.fix_headings()
+    navigation.fix_skippers()
+
+    table.fix_association_cells_tables()
+
+    print(parser.get_html())
