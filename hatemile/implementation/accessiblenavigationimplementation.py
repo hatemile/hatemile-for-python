@@ -48,7 +48,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.class_skipper_anchor = 'skipper-anchor'
         self.class_heading_anchor = 'heading-anchor'
         self.data_access_key = 'data-shortcutdescriptionfor'
-        self.data_ignore = 'data-ignoreaccessibilityfix'
         self.data_anchor_for = 'data-anchorfor'
         self.data_heading_anchor_for = 'data-headinganchorfor'
         self.data_heading_level = 'data-headinglevel'
@@ -435,7 +434,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def fix_shortcuts(self):
         elements = self.parser.find('[accesskey]').list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_shortcut(element)
 
     def fix_skipper(self, element, skipper):
@@ -475,7 +474,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 i = 1
             shortcuts = skipper.get_shortcuts()
             for element in elements:
-                if not element.has_attribute(self.data_ignore):
+                if CommonFunctions.is_valid_element(element):
                     if count:
                         default_text = (
                             skipper.get_default_text()
@@ -553,5 +552,5 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def fix_headings(self):
         elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_heading(element)

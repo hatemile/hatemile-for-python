@@ -49,7 +49,6 @@ class AccessibleFormImplementation(AccessibleForm):
         self.data_label_suffix_autocomplete_field = (
             'data-suffixautocompletefield'
         )
-        self.data_ignore = 'data-ignoreaccessibilityfix'
         self.prefix_id = configure.get_parameter('prefix-generated-ids')
         self.prefix_required_field = configure.get_parameter(
             'prefix-required-field'
@@ -397,7 +396,7 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_required_fields(self):
         required_fields = self.parser.find('[required]').list_results()
         for required_field in required_fields:
-            if not required_field.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(required_field):
                 self.fix_required_field(required_field)
 
     def fix_range_field(self, range_field):
@@ -418,7 +417,7 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_range_fields(self):
         range_fields = self.parser.find('[min],[max]').list_results()
         for range_field in range_fields:
-            if not range_field.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(range_field):
                 self.fix_range_field(range_field)
 
     def fix_autocomplete_field(self, field):
@@ -440,7 +439,7 @@ class AccessibleFormImplementation(AccessibleForm):
             + '[list],[form]'
         ).list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_autocomplete_field(element)
 
     def fix_label(self, label):
@@ -484,5 +483,5 @@ class AccessibleFormImplementation(AccessibleForm):
     def fix_labels(self):
         labels = self.parser.find('label').list_results()
         for label in labels:
-            if not label.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(label):
                 self.fix_label(label)

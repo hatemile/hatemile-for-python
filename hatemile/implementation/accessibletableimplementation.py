@@ -37,7 +37,6 @@ class AccessibleTableImplementation(AccessibleTable):
 
         self.parser = parser
         self.prefix_id = configure.get_parameter('prefix-generated-ids')
-        self.data_ignore = 'data-ignoreaccessibilityfix'
 
     def _generate_part(self, part):
         """
@@ -251,5 +250,5 @@ class AccessibleTableImplementation(AccessibleTable):
     def fix_association_cells_tables(self):
         tables = self.parser.find('table').list_results()
         for table in tables:
-            if not table.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(table):
                 self.fix_association_cells_table(table)

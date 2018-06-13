@@ -49,7 +49,6 @@ class AccessibleEventImplementation(AccessibleEvent):
         self.id_script_event_listener = 'script-eventlistener'
         self.id_list_ids_script = 'list-ids-script'
         self.id_function_script_fix = 'id-function-script-fix'
-        self.data_ignore = 'data-ignoreaccessibilityfix'
         self.main_script_added = False
         self.script_list = None
 
@@ -198,14 +197,14 @@ class AccessibleEventImplementation(AccessibleEvent):
             '[ondrag],[ondragstart],[ondragend]'
         ).list_results()
         for draggable_element in draggable_elements:
-            if not draggable_element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(draggable_element):
                 self.fix_drag(draggable_element)
 
         droppable_elements = self.parser.find(
             '[ondrop],[ondragenter],[ondragleave],[ondragover]'
         ).list_results()
         for droppable_element in droppable_elements:
-            if not droppable_element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(droppable_element):
                 self.fix_drop(droppable_element)
 
     def fix_hover(self, element):
@@ -218,7 +217,7 @@ class AccessibleEventImplementation(AccessibleEvent):
             '[onmouseover],[onmouseout]'
         ).list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_hover(element)
 
     def fix_active(self, element):
@@ -231,5 +230,5 @@ class AccessibleEventImplementation(AccessibleEvent):
             '[onclick],[onmousedown],[onmouseup],[ondblclick]'
         ).list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_active(element)

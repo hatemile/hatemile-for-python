@@ -39,7 +39,6 @@ class AccessibleImageImplementation(AccessibleImage):
         self.prefix_id = configure.get_parameter('prefix-generated-ids')
         self.class_long_description_link = 'longdescription-link'
         self.data_long_description_for_image = 'data-longdescriptionfor'
-        self.data_ignore = 'data-ignoreaccessibilityfix'
         self.prefix_long_description_link = configure.get_parameter(
             'prefix-longdescription'
         )
@@ -86,5 +85,5 @@ class AccessibleImageImplementation(AccessibleImage):
     def fix_long_descriptions(self):
         elements = self.parser.find('[longdesc]').list_results()
         for element in elements:
-            if not element.has_attribute(self.data_ignore):
+            if CommonFunctions.is_valid_element(element):
                 self.fix_long_description(element)
