@@ -17,6 +17,7 @@ Module of AccessibleFormImplementation class.
 import re
 from hatemile.accessibleform import AccessibleForm
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.idgenerator import IDGenerator
 
 
 class AccessibleFormImplementation(AccessibleForm):
@@ -37,6 +38,7 @@ class AccessibleFormImplementation(AccessibleForm):
         """
 
         self.parser = parser
+        self.id_generator = IDGenerator('form')
         self.data_label_prefix_required_field = 'data-prefixrequiredfield'
         self.data_label_suffix_required_field = 'data-suffixrequiredfield'
         self.data_label_prefix_range_min_field = 'data-prefixvalueminfield'
@@ -49,7 +51,6 @@ class AccessibleFormImplementation(AccessibleForm):
         self.data_label_suffix_autocomplete_field = (
             'data-suffixautocompletefield'
         )
-        self.prefix_id = configure.get_parameter('prefix-generated-ids')
         self.prefix_required_field = configure.get_parameter(
             'prefix-required-field'
         )
@@ -454,7 +455,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 ).first_result()
 
                 if field is not None:
-                    CommonFunctions.generate_id(field, self.prefix_id)
+                    self.id_generator.generate_id(field)
                     label.set_attribute('for', field.get_attribute('id'))
             if field is not None:
                 if not field.has_attribute('aria-label'):
@@ -471,7 +472,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 self._fix_label_range_field(label, field)
                 self._fix_label_autocomplete_field(label, field)
 
-                CommonFunctions.generate_id(label, self.prefix_id)
+                self.id_generator.generate_id(label)
                 field.set_attribute(
                     'aria-labelledby',
                     CommonFunctions.increase_in_list(

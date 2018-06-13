@@ -170,11 +170,11 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 		</body>
 	</html>""")
 	
-	event = AccessibleEventImplementation(parser, configure, True)
+	event = AccessibleEventImplementation(parser, True)
 	form = AccessibleFormImplementation(parser, configure)
 	image = AccessibleImageImplementation(parser, configure)
 	navigation = AccessibleNavigationImplementation(parser, configure)
-	table = AccessibleTableImplementation(parser, configure)
+	table = AccessibleTableImplementation(parser)
 	
 	event.fix_drags_and_drops()
     event.fix_actives()

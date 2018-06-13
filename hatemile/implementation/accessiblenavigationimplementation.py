@@ -17,6 +17,7 @@ Module of AccessibleNavigationImplementation class.
 import re
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.idgenerator import IDGenerator
 from hatemile.util.skipper import Skipper
 
 
@@ -40,6 +41,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         self.parser = parser
+        self.id_generator = IDGenerator('navigation')
         self.id_container_shortcuts = 'container-shortcuts'
         self.id_container_skippers = 'container-skippers'
         self.id_container_heading = 'container-heading'
@@ -51,7 +53,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.data_anchor_for = 'data-anchorfor'
         self.data_heading_anchor_for = 'data-headinganchorfor'
         self.data_heading_level = 'data-headinglevel'
-        self.prefix_id = configure.get_parameter('prefix-generated-ids')
         self.text_shortcuts = configure.get_parameter('text-shortcuts')
         self.text_heading = configure.get_parameter('text-heading')
         self.standart_prefix = configure.get_parameter(
@@ -328,7 +329,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
-        CommonFunctions.generate_id(element, self.prefix_id)
+        self.id_generator.generate_id(element)
         if self.parser.find(
             '[' + data_attribute + '="' + element.get_attribute('id') + '"]'
         ).first_result() is None:
@@ -336,7 +337,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 anchor = element
             else:
                 anchor = self.parser.create_element('a')
-                CommonFunctions.generate_id(anchor, self.prefix_id)
+                self.id_generator.generate_id(anchor)
                 anchor.set_attribute('class', anchor_class)
                 element.insert_before(anchor)
             if not anchor.has_attribute('name'):
@@ -458,7 +459,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     if shortcut != '':
                         self._free_shortcut(shortcut)
                         link.set_attribute('accesskey', shortcut)
-                CommonFunctions.generate_id(link, self.prefix_id)
+                self.id_generator.generate_id(link)
 
                 item_link.append_element(link)
                 self.list_skippers.append_element(item_link)

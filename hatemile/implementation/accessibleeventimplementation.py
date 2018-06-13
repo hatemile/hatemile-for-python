@@ -17,6 +17,7 @@ Module of AccessibleEventImplementation class.
 import os
 from hatemile.accessibleevent import AccessibleEvent
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.idgenerator import IDGenerator
 
 
 class AccessibleEventImplementation(AccessibleEvent):
@@ -29,7 +30,7 @@ class AccessibleEventImplementation(AccessibleEvent):
 
     include_script_content = None
 
-    def __init__(self, parser, configure, store_scripts_content):
+    def __init__(self, parser, store_scripts_content):
         """
         Initializes a new object that manipulate the accessibility of the
         Javascript events of elements of parser.
@@ -44,8 +45,8 @@ class AccessibleEventImplementation(AccessibleEvent):
         """
 
         self.parser = parser
+        self.id_generator = IDGenerator('event')
         self.store_scripts_content = store_scripts_content
-        self.prefix_id = configure.get_parameter('prefix-generated-ids')
         self.id_script_event_listener = 'script-eventlistener'
         self.id_list_ids_script = 'list-ids-script'
         self.id_function_script_fix = 'id-function-script-fix'
@@ -172,7 +173,7 @@ class AccessibleEventImplementation(AccessibleEvent):
             self._generate_main_scripts()
 
         if self.script_list is not None:
-            CommonFunctions.generate_id(element, self.prefix_id)
+            self.id_generator.generate_id(element)
             self.script_list.append_text(
                 event
                 + "Elements.push('"

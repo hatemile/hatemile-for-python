@@ -16,6 +16,7 @@ Module of AccessibleImageImplementation class.
 
 from hatemile.accessibleimage import AccessibleImage
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.idgenerator import IDGenerator
 
 
 class AccessibleImageImplementation(AccessibleImage):
@@ -36,7 +37,7 @@ class AccessibleImageImplementation(AccessibleImage):
         """
 
         self.parser = parser
-        self.prefix_id = configure.get_parameter('prefix-generated-ids')
+        self.id_generator = IDGenerator('image')
         self.class_long_description_link = 'longdescription-link'
         self.data_long_description_for_image = 'data-longdescriptionfor'
         self.prefix_long_description_link = configure.get_parameter(
@@ -48,7 +49,7 @@ class AccessibleImageImplementation(AccessibleImage):
 
     def fix_long_description(self, element):
         if element.has_attribute('longdesc'):
-            CommonFunctions.generate_id(element, self.prefix_id)
+            self.id_generator.generate_id(element)
             id_element = element.get_attribute('id')
             if self.parser.find(
                 '['

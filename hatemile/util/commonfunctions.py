@@ -25,32 +25,6 @@ class CommonFunctions:
     #: The name of attribute for not modify the elements.
     DATA_IGNORE = 'data-ignoreaccessibilityfix'
 
-    #: Count the number of ids created.
-    count = 0
-
-    @staticmethod
-    def generate_id(element, prefix):
-        """
-        Generate a id for a element.
-
-        :param element: The element.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :param prefix: The prefix of id.
-        :type prefix: str
-        """
-
-        if not element.has_attribute('id'):
-            element.set_attribute('id', prefix + str(CommonFunctions.count))
-            CommonFunctions.count += 1
-
-    @staticmethod
-    def reset_count():
-        """
-        Reset the count number of ids.
-        """
-
-        CommonFunctions.count = 0
-
     @staticmethod
     def set_list_attributes(element1, element2, attributes):
         """

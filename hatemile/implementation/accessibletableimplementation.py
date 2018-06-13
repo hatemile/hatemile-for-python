@@ -16,6 +16,7 @@ Module of AccessibleTableImplementation class.
 
 from hatemile.accessibletable import AccessibleTable
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.idgenerator import IDGenerator
 
 
 class AccessibleTableImplementation(AccessibleTable):
@@ -24,7 +25,7 @@ class AccessibleTableImplementation(AccessibleTable):
     interface.
     """
 
-    def __init__(self, parser, configure):
+    def __init__(self, parser):
         """
         Initializes a new object that manipulate the accessibility of the
         tables of parser.
@@ -36,7 +37,7 @@ class AccessibleTableImplementation(AccessibleTable):
         """
 
         self.parser = parser
-        self.prefix_id = configure.get_parameter('prefix-generated-ids')
+        self.id_generator = IDGenerator('table')
 
     def _generate_part(self, part):
         """
@@ -182,7 +183,7 @@ class AccessibleTableImplementation(AccessibleTable):
             headers_ids = []
             for cell in cells:
                 if cell.get_tag_name() == 'TH':
-                    CommonFunctions.generate_id(cell, self.prefix_id)
+                    self.id_generator.generate_id(cell)
                     headers_ids.append(cell.get_attribute('id'))
 
                     cell.set_attribute('scope', 'row')
@@ -209,7 +210,7 @@ class AccessibleTableImplementation(AccessibleTable):
             'tr'
         ).find_children('th').list_results()
         for cell in cells:
-            CommonFunctions.generate_id(cell, self.prefix_id)
+            self.id_generator.generate_id(cell)
 
             cell.set_attribute('scope', 'col')
 

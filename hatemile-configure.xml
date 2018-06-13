@@ -14,7 +14,6 @@
 		<parameter name="prefix-range-min-field"></parameter>
 		<parameter name="prefix-range-max-field"></parameter>
 		<parameter name="prefix-autocomplete-field"></parameter>
-		<parameter name="prefix-generated-ids">id-</parameter>
 		<parameter name="prefix-longdescription"></parameter>
 		<!-- Suffix parameters -->
 		<parameter name="suffix-longdescription">[d]</parameter>
