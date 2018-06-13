@@ -78,19 +78,37 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         elements = self.document.select('*')
         for element in elements:
             attributes = element.attrs.keys()
+            data_attributes = list()
             for attribute in attributes:
                 if bool(re.findall('^data-', attribute)):
-                    element[
-                        re.sub('data-', 'dataaaaaa', attribute)
-                    ] = element[attribute]
+                    data_attributes.append({
+                        'original': attribute,
+                        'modified': re.sub('data-', 'dataaaaaa', attribute),
+                        'value': element[attribute]
+                    })
+            if data_attributes:
+                auxiliar_element = BeautifulSoupHTMLDOMElement(element)
+                for data_attribute in data_attributes:
+                    auxiliar_element.remove_attribute(
+                        data_attribute['original']
+                    )
+                    auxiliar_element.set_attribute(
+                        data_attribute['modified'],
+                        data_attribute['value']
+                    )
 
     def _remove_data_select(self):
         elements = self.document.select('*')
         for element in elements:
             attributes = element.attrs.keys()
+            data_attributes = list()
             for attribute in attributes:
                 if bool(re.findall('^dataaaaaa', attribute)):
-                    del element[attribute]
+                    data_attributes.append(attribute)
+            if data_attributes:
+                auxiliar_element = BeautifulSoupHTMLDOMElement(element)
+                for data_attribute in data_attributes:
+                    auxiliar_element.remove_attribute(data_attribute)
 
     def find(self, selector):
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
@@ -195,7 +213,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
 
     def get_html(self):
         self._remove_data_select()
-        content = self.document.encode(formatter=None)
+        content = str(self.document)
         self._fix_data_select()
         return content
 
