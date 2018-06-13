@@ -209,16 +209,6 @@ class HTMLDOMElement:
 
         pass
 
-    def set_inner_html(self, html):
-        """
-        Modify the inner HTML code of this element.
-
-        :param html: The HTML code.
-        :type html: str
-        """
-
-        pass
-
     def get_outer_html(self):
         """
         Returns the HTML code of this element.

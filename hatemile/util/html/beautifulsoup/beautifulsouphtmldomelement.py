@@ -16,7 +16,6 @@ Module of BeautifulSoupHTMLDOMElement class.
 
 import copy
 import re
-from bs4 import BeautifulSoup
 from bs4 import PageElement
 from hatemile.util.html.htmldomelement import HTMLDOMElement
 
@@ -112,16 +111,6 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         for child in self.data.children:
             string += str(child)
         return string
-
-    def set_inner_html(self, html):
-        document_auxiliar = BeautifulSoup(html, 'html.parser')
-        children = []
-        for child in self.data.children:
-            children.append(child)
-        for child in children:
-            child.extract()
-        for child in document_auxiliar.children:
-            self.data.append(child)
 
     def get_outer_html(self):
         return str(self.data)
