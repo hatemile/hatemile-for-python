@@ -20,7 +20,6 @@ from xml.dom import minidom
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
-from hatemile.util.skipper import Skipper
 
 
 class AccessibleNavigationImplementation(AccessibleNavigation):
@@ -121,7 +120,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :param file_name: The file path of skippers configuration.
         :type file_name: str
         :return: The skippers of configuration.
-        :rtype: hatemile.util.skipper.Skipper
+        :rtype: list(dict(str, str))
         """
 
         skippers = []
@@ -134,11 +133,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             'skippers'
         )[0].getElementsByTagName('skipper')
         for skipper_xml in skippers_xml:
-            skippers.append(Skipper(
-                skipper_xml.attributes['selector'].value,
-                skipper_xml.attributes['default-text'].value,
-                skipper_xml.attributes['shortcut'].value
-            ))
+            skippers.append({
+                'selector': skipper_xml.attributes['selector'].value,
+                'description': skipper_xml.attributes['description'].value,
+                'shortcut': skipper_xml.attributes['shortcut'].value
+            })
         return skippers
 
     def _get_description(self, element):
@@ -426,7 +425,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         if self.list_skippers is not None:
             for skipper in self.skippers:
                 if element in self.parser.find(
-                    skipper.get_selector()
+                    skipper['selector']
                 ).list_results():
                     self.fix_skipper(element, skipper)
 
@@ -491,9 +490,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 item_link = self.parser.create_element('li')
                 link = self.parser.create_element('a')
                 link.set_attribute('href', '#' + anchor.get_attribute('name'))
-                link.append_text(skipper.get_default_text())
+                link.append_text(skipper['description'])
 
-                shortcuts = skipper.get_shortcuts()
+                shortcuts = skipper['shortcut']
                 if shortcuts:
                     shortcut = shortcuts[0]
                     if shortcut != '':
@@ -507,42 +506,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self._execute_fix_shortcut(link)
 
     def fix_skippers(self):
-        i = 0
         for skipper in self.skippers:
-            elements = self.parser.find(skipper.get_selector()).list_results()
-            count = len(elements) > 1
-            if count:
-                i = 1
-            shortcuts = skipper.get_shortcuts()
+            elements = self.parser.find(skipper['selector']).list_results()
             for element in elements:
                 if CommonFunctions.is_valid_element(element):
-                    if count:
-                        default_text = (
-                            skipper.get_default_text()
-                            + " "
-                            + str(i)
-                        )
-                        i = i + 1
-                    else:
-                        default_text = skipper.get_default_text()
-                    if shortcuts:
-                        self.fix_skipper(
-                            element,
-                            Skipper(
-                                skipper.get_selector(),
-                                default_text,
-                                shortcuts.pop()
-                            )
-                        )
-                    else:
-                        self.fix_skipper(
-                            element,
-                            Skipper(
-                                skipper.get_selector(),
-                                default_text,
-                                ''
-                            )
-                        )
+                    self.fix_skipper(element, skipper)
 
     def fix_heading(self, element):
         if not self.validate_heading:

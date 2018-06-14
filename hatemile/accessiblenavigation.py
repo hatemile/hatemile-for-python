@@ -45,7 +45,7 @@ class AccessibleNavigation:
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :param skipper: The skipper.
-        :type skipper: hatemile.util.skipper.Skipper
+        :type skipper: list(dict(str, str))
         """
 
         pass
