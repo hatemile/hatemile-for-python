@@ -35,9 +35,9 @@ class Configure:
         self.parameters = {}
         self.skippers = []
         if file_name is None:
-            file_name = os.path.dirname(os.path.dirname(os.path.dirname(
-                os.path.realpath(__file__)
-            ))) + '/hatemile-configure.xml'
+            file_name = os.path.join(os.path.dirname(os.path.dirname(
+                os.path.dirname(os.path.realpath(__file__))
+            )), 'hatemile-configure.xml')
         xmldoc = minidom.parse(file_name)
         params = xmldoc.getElementsByTagName(
             'parameters'

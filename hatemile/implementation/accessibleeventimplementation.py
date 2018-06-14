@@ -86,9 +86,16 @@ class AccessibleEventImplementation(AccessibleEvent):
                 '#' + self.id_script_event_listener
             ).first_result() is None)
         ):
-            event_listener_file = open(os.path.dirname(os.path.dirname(
-                os.path.dirname(os.path.realpath(__file__))
-            )) + '/js/eventlistener.js', 'r')
+            event_listener_file = open(
+                os.path.join(
+                    os.path.dirname(os.path.dirname(os.path.dirname(
+                        os.path.realpath(__file__)
+                    ))),
+                    'js',
+                    'eventlistener.js'
+                ),
+                'r'
+            )
             if self.store_scripts_content:
                 if (
                     AccessibleEventImplementation
@@ -133,9 +140,16 @@ class AccessibleEventImplementation(AccessibleEvent):
             if self.parser.find(
                     '#' + self.id_function_script_fix
             ).first_result() is None:
-                include_file = open(os.path.dirname(os.path.dirname(
-                    os.path.dirname(os.path.realpath(__file__))
-                )) + '/js/include.js', 'r')
+                include_file = open(
+                    os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.dirname(
+                            os.path.realpath(__file__)
+                        ))),
+                        'js',
+                        'include.js'
+                    ),
+                    'r'
+                )
                 if self.store_scripts_content:
                     if AccessibleEventImplementation.include_script_content \
                             is None:
