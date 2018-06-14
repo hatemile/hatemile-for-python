@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skippers>
+	<skipper selector="main,[role=main]" default-text="Main Content" shortcut="1" />
+	<skipper selector="nav,[role=navigation]" default-text="Menu" shortcut="2" />
+	<skipper selector="form" default-text="Form" shortcut="3" />
+	<skipper selector="#container-shortcuts" default-text="Shortcuts" shortcut="9" />
+	<skipper selector="#container-heading" default-text="Summary" shortcut="0" />
+</skippers>

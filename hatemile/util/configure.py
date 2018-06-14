@@ -16,7 +16,6 @@ Module of Configure class.
 
 import os
 from xml.dom import minidom
-from .skipper import Skipper
 
 
 class Configure:
@@ -33,7 +32,6 @@ class Configure:
         """
 
         self.parameters = {}
-        self.skippers = []
         if file_name is None:
             file_name = os.path.join(os.path.dirname(os.path.dirname(
                 os.path.dirname(os.path.realpath(__file__))
@@ -49,15 +47,6 @@ class Configure:
                 ] = param.firstChild.nodeValue
             else:
                 self.parameters[param.attributes['name'].value] = ''
-        skippers = xmldoc.getElementsByTagName(
-            'skippers'
-        )[0].getElementsByTagName('skipper')
-        for skipper in skippers:
-            self.skippers.append(Skipper(
-                skipper.attributes['selector'].value,
-                skipper.attributes['default-text'].value,
-                skipper.attributes['shortcut'].value
-            ))
 
     def get_parameters(self):
         """
@@ -80,13 +69,3 @@ class Configure:
         """
 
         return self.parameters[name]
-
-    def get_skippers(self):
-        """
-        Returns the skippers.
-
-        :return: The skippers.
-        :rtype: list(hatemile.util.skipper.Skipper)
-        """
-
-        return [] + self.skippers

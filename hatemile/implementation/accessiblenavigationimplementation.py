@@ -14,7 +14,9 @@
 Module of AccessibleNavigationImplementation class.
 """
 
+import os
 import re
+from xml.dom import minidom
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
@@ -27,7 +29,13 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     AccessibleNavigation interface.
     """
 
-    def __init__(self, parser, configure, user_agent=None):
+    def __init__(
+        self,
+        parser,
+        configure,
+        skipper_file_name=None,
+        user_agent=None
+    ):
         """
         Initializes a new object that manipulate the accessibility of the
         navigation of parser.
@@ -36,6 +44,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
+        :param skipper_file_name: The file path of skippers configuration.
+        :type skipper_file_name: str
         :param user_agent: The user agent of the user.
         :type user_agent: str
         """
@@ -58,7 +68,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.standart_prefix = configure.get_parameter(
             'text-standart-shortcut-prefix'
         )
-        self.skippers = configure.get_skippers()
+        self.skippers = AccessibleNavigationImplementation._get_skippers(
+            skipper_file_name
+        )
         self.list_shortcuts_added = False
         self.list_skippers_added = False
         self.validate_heading = False
@@ -100,6 +112,34 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.prefix = self.standart_prefix
         else:
             self.prefix = self.standart_prefix
+
+    @staticmethod
+    def _get_skippers(file_name=None):
+        """
+        Returns the skippers of configuration.
+
+        :param file_name: The file path of skippers configuration.
+        :type file_name: str
+        :return: The skippers of configuration.
+        :rtype: hatemile.util.skipper.Skipper
+        """
+
+        skippers = []
+        if file_name is None:
+            file_name = os.path.join(os.path.dirname(os.path.dirname(
+                os.path.dirname(os.path.realpath(__file__))
+            )), 'skippers.xml')
+        xmldoc = minidom.parse(file_name)
+        skippers_xml = xmldoc.getElementsByTagName(
+            'skippers'
+        )[0].getElementsByTagName('skipper')
+        for skipper_xml in skippers_xml:
+            skippers.append(Skipper(
+                skipper_xml.attributes['selector'].value,
+                skipper_xml.attributes['default-text'].value,
+                skipper_xml.attributes['shortcut'].value
+            ))
+        return skippers
 
     def _get_description(self, element):
         """
