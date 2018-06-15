@@ -119,10 +119,7 @@ class AccessibleEventImplementation(AccessibleEvent):
             script.set_attribute('id', self.id_script_event_listener)
             script.set_attribute('type', 'text/javascript')
             script.append_text(local_event_listener_script_content)
-            if head.has_children():
-                head.get_first_element_child().insert_before(script)
-            else:
-                head.append_element(script)
+            head.prepend_element(script)
         local = self.parser.find('body').first_result()
         if local is not None:
             self.script_list = self.parser.find(

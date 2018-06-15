@@ -116,19 +116,40 @@ class HTMLDOMElement(HTMLDOMNode):
 
         pass
 
+    def get_children_elements(self):
+        """
+        Returns the elements children of this element.
+
+        :return: The elements children of this element.
+        :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
+        """
+
+        pass
+
     def get_children(self):
         """
         Returns the children of this element.
 
         :return: The children of this element.
-        :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
+        :rtype: list(hatemile.util.html.htmldomnode.HTMLDOMNode)
+        """
+
+        pass
+
+    def has_children_elements(self):
+        """
+        Check that the element has elements children.
+
+        :return: True if the element has elements children or false if the
+                 element not has elements children.
+        :rtype: bool
         """
 
         pass
 
     def has_children(self):
         """
-        Returns if the element has children.
+        Check that the element has children.
 
         :return: True if the element has children or False if the element not
                  has children.
@@ -183,6 +204,26 @@ class HTMLDOMElement(HTMLDOMNode):
 
         :return: The last element child of this element.
         :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def get_first_node_child(self):
+        """
+        Returns the first node child of this element.
+
+        :return: The first node child of this element.
+        :rtype: hatemile.util.html.htmldomnode.HTMLDOMNode
+        """
+
+        pass
+
+    def get_last_node_child(self):
+        """
+        Returns the last node child of this element.
+
+        :return: The last node child of this element.
+        :rtype: hatemile.util.html.htmldomnode.HTMLDOMNode
         """
 
         pass

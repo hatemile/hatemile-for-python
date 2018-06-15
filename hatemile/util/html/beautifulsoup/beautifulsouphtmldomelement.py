@@ -67,22 +67,27 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         return self
 
     def prepend_element(self, element):
-        first_child = None
-        for child in self.node.children:
-            if isinstance(child, (NavigableString, Tag)):
-                first_child = child
-                break
-        if first_child is not None:
-            first_child.insert_before(element.get_data())
+        if self.has_children():
+            self.get_first_node_child().insert_before(element)
         else:
             self.append_element(element)
         return self
 
-    def get_children(self):
+    def get_children_elements(self):
         children = []
         for child in self.node.children:
             if isinstance(child, Tag):
                 children.append(BeautifulSoupHTMLDOMElement(child))
+        return children
+
+    def get_children(self):
+        from .beautifulsouphtmldomtextnode import BeautifulSoupHTMLDOMTextNode
+        children = []
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                children.append(BeautifulSoupHTMLDOMElement(child))
+            elif isinstance(child, NavigableString):
+                children.append(BeautifulSoupHTMLDOMTextNode(child))
         return children
 
     def append_text(self, text):
@@ -90,19 +95,25 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         return self
 
     def prepend_text(self, text):
-        first_child = None
-        for child in self.node.children:
-            if isinstance(child, (NavigableString, Tag)):
-                first_child = child
-                break
-        if first_child is not None:
-            first_child.insert_before(NavigableString(text))
+        if self.has_children():
+            self.get_first_node_child().get_data().insert_before(
+                NavigableString(text)
+            )
         else:
             self.append_text(text)
         return self
 
+    def has_children_elements(self):
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                return True
+        return False
+
     def has_children(self):
-        return bool(self.get_children())
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                return True
+        return False
 
     def get_parent_element(self):
         return BeautifulSoupHTMLDOMElement(self.node.parent)
@@ -120,7 +131,7 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         return BeautifulSoupHTMLDOMElement(copy.copy(self.node))
 
     def get_first_element_child(self):
-        if not self.has_children():
+        if not self.has_children_elements():
             return None
         for child in self.node.children:
             if isinstance(child, Tag):
@@ -128,7 +139,7 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         return None
 
     def get_last_element_child(self):
-        if not self.has_children():
+        if not self.has_children_elements():
             return None
         last_value = None
         for child in self.node.children:
@@ -136,6 +147,32 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
                 last_value = child
         if last_value is not None:
             return BeautifulSoupHTMLDOMElement(last_value)
+        return None
+
+    def get_first_node_child(self):
+        from .beautifulsouphtmldomtextnode import BeautifulSoupHTMLDOMTextNode
+        if not self.has_children():
+            return None
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                return BeautifulSoupHTMLDOMElement(child)
+            elif isinstance(child, NavigableString):
+                return BeautifulSoupHTMLDOMTextNode(child)
+        return None
+
+    def get_last_node_child(self):
+        from .beautifulsouphtmldomtextnode import BeautifulSoupHTMLDOMTextNode
+        if not self.has_children():
+            return None
+        last_value = None
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                last_value = child
+        if last_value is not None:
+            if isinstance(last_value, Tag):
+                return BeautifulSoupHTMLDOMElement(last_value)
+            elif isinstance(last_value, NavigableString):
+                return BeautifulSoupHTMLDOMTextNode(last_value)
         return None
 
     def __eq__(self, obj):
