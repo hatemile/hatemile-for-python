@@ -230,9 +230,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
                 container.append_element(text_container)
                 local.append_element(container)
-
-                self._execute_fix_skipper(container)
-                self._execute_fix_skipper(text_container)
         if container is not None:
             html_list = self.parser.find(container).find_children(
                 'ul'
@@ -240,7 +237,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             if html_list is None:
                 html_list = self.parser.create_element('ul')
                 container.append_element(html_list)
-            self._execute_fix_skipper(html_list)
         self.list_shortcuts_added = True
 
         return html_list
@@ -298,9 +294,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
                 container.append_element(text_container)
                 local.append_element(container)
-
-                self._execute_fix_skipper(container)
-                self._execute_fix_skipper(text_container)
         if container is not None:
             html_list = self.parser.find(container).find_children(
                 'ol'
@@ -308,7 +301,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             if html_list is None:
                 html_list = self.parser.create_element('ol')
                 container.append_element(html_list)
-            self._execute_fix_skipper(html_list)
         return html_list
 
     def _get_heading_level(self, element):
@@ -421,34 +413,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 if found:
                     break
 
-    def _execute_fix_skipper(self, element):
-        """
-        Call fixSkipper method for element, if the page has the container of
-        skippers.
-
-        :param element: The element.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        if self.list_skippers is not None:
-            for skipper in self.skippers:
-                if element in self.parser.find(
-                    skipper['selector']
-                ).list_results():
-                    self.fix_skipper(element, skipper)
-
-    def _execute_fix_shortcut(self, element):
-        """
-        Call fixShortcut method for element, if the page has the container of
-        shortcuts.
-
-        :param element: The element.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        if self.list_shortcuts is not None:
-            self.fix_shortcut(element)
-
     def fix_shortcut(self, element):
         if element.has_attribute('accesskey'):
             description = self._get_description(element)
@@ -510,8 +474,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
                 item_link.append_element(link)
                 self.list_skippers.append_element(item_link)
-
-                self._execute_fix_shortcut(link)
 
     def fix_skippers(self):
         for skipper in self.skippers:
