@@ -16,11 +16,12 @@ Module of BeautifulSoupHTMLDOMElement class.
 
 import copy
 import re
-from bs4 import PageElement
+from bs4.element import Tag
 from hatemile.util.html.htmldomelement import HTMLDOMElement
+from .beautifulsouphtmldomnode import BeautifulSoupHTMLDOMNode
 
 
-class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
+class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
     """
     The BeautifulSoupHTMLDOMElement class is official implementation of
     HTMLDOMElement interface for the BeautifulSoup library.
@@ -34,6 +35,7 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         :type element: bs4.element.Tag
         """
 
+        super().__init__(element)
         self.data = element
 
     def get_tag_name(self):
@@ -70,22 +72,6 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def get_text_content(self):
         return self.data.get_text()
 
-    def insert_before(self, new_node):
-        self.data.insert_before(new_node.get_data())
-        return self
-
-    def insert_after(self, new_node):
-        self.data.insert_after(new_node.get_data())
-        return self
-
-    def remove_node(self):
-        self.data.extract()
-        return self
-
-    def replace_node(self, new_node):
-        self.data.replace_with(new_node.get_data())
-        return self
-
     def append_element(self, element):
         self.data.append(element.get_data())
         return self
@@ -93,7 +79,7 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def get_children(self):
         children = []
         for child in self.data.children:
-            if isinstance(child, PageElement):
+            if isinstance(child, Tag):
                 children.append(BeautifulSoupHTMLDOMElement(child))
         return children
 
@@ -116,12 +102,6 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
     def get_outer_html(self):
         return str(self.data)
 
-    def get_data(self):
-        return self.data
-
-    def set_data(self, data):
-        self.data = data
-
     def clone_element(self):
         return BeautifulSoupHTMLDOMElement(copy.copy(self.data))
 
@@ -129,7 +109,7 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         if not self.has_children():
             return None
         for child in self.data.children:
-            if isinstance(child, PageElement):
+            if isinstance(child, Tag):
                 return BeautifulSoupHTMLDOMElement(child)
         return None
 
@@ -138,7 +118,7 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
             return None
         last_value = None
         for child in self.data.children:
-            if isinstance(child, PageElement):
+            if isinstance(child, Tag):
                 last_value = child
         if last_value is not None:
             return BeautifulSoupHTMLDOMElement(last_value)
