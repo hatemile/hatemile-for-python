@@ -14,8 +14,10 @@
 Module of HTMLDOMElement interface.
 """
 
+from .htmldomnode import HTMLDOMNode
 
-class HTMLDOMElement:
+
+class HTMLDOMElement(HTMLDOMNode):
     """
     The HTMLDOMElement interface contains the methods for access of the HTML
     element.
@@ -90,69 +92,13 @@ class HTMLDOMElement:
 
         pass
 
-    def get_text_content(self):
-        """
-        Returns the text of element.
-
-        :return: The text of element.
-        :rtype: str
-        """
-
-        pass
-
-    def insert_before(self, new_element):
-        """
-        Insert a element before this element.
-
-        :param new_element: The element that be inserted.
-        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :return: The element inserted.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
-    def insert_after(self, new_element):
-        """
-        Insert a element after this element.
-
-        :param new_element: The element that be inserted.
-        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :return: The element inserted.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
-    def remove_element(self):
-        """
-        Remove this element of the parser.
-
-        :return: The removed element.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
-    def replace_element(self, new_element):
-        """
-        Replace this element for other element.
-
-        :param new_element: The element that replace this element.
-        :type new_element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :return: The element replaced.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
     def append_element(self, element):
         """
         Append a element child.
 
         :param element: The element that be inserted.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :return: The element inserted.
+        :return: This element.
         :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
@@ -168,16 +114,6 @@ class HTMLDOMElement:
 
         pass
 
-    def append_text(self, text):
-        """
-        Append a text child.
-
-        :param text: The text.
-        :type text: str
-        """
-
-        pass
-
     def has_children(self):
         """
         Returns if the element has children.
@@ -185,16 +121,6 @@ class HTMLDOMElement:
         :return: True if the element has children or False if the element not
                  has children.
         :rtype: bool
-        """
-
-        pass
-
-    def get_parent_element(self):
-        """
-        Returns the parent element of this element.
-
-        :return: The parent element of this element.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
@@ -215,26 +141,6 @@ class HTMLDOMElement:
 
         :return: The HTML code of this element.
         :rtype: str
-        """
-
-        pass
-
-    def get_data(self):
-        """
-        Returns the native object of this element.
-
-        :return: The native object of this element.
-        :rtype: object
-        """
-
-        pass
-
-    def set_data(self, data):
-        """
-        Modify the native object of this element.
-
-        :param data: Modify the native object of this element.
-        :type data: object
         """
 
         pass
