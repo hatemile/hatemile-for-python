@@ -125,8 +125,8 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         return self
 
     def find_children(self, selector):
-        self.results = []
         last_results = self.results
+        self.results = []
         if isinstance(selector, BeautifulSoupHTMLDOMElement):
             for result in last_results:
                 if self._in_list(result.children, selector):
