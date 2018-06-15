@@ -104,6 +104,18 @@ class HTMLDOMElement(HTMLDOMNode):
 
         pass
 
+    def prepend_element(self, element):
+        """
+        Prepend a element child.
+
+        :param element: The element that be inserted.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        :return: This element.
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
     def get_children(self):
         """
         Returns the children of this element.

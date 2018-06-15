@@ -16,6 +16,7 @@ Module of BeautifulSoupHTMLDOMElement class.
 
 import copy
 import re
+from bs4.element import NavigableString
 from bs4.element import Tag
 from hatemile.util.html.htmldomelement import HTMLDOMElement
 from .beautifulsouphtmldomnode import BeautifulSoupHTMLDOMNode
@@ -65,6 +66,18 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         self.node.append(element.get_data())
         return self
 
+    def prepend_element(self, element):
+        first_child = None
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                first_child = child
+                break
+        if first_child is not None:
+            first_child.insert_before(element.get_data())
+        else:
+            self.append_element(element)
+        return self
+
     def get_children(self):
         children = []
         for child in self.node.children:
@@ -74,6 +87,18 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
 
     def append_text(self, text):
         self.node.append(text)
+        return self
+
+    def prepend_text(self, text):
+        first_child = None
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                first_child = child
+                break
+        if first_child is not None:
+            first_child.insert_before(NavigableString(text))
+        else:
+            self.append_text(text)
         return self
 
     def has_children(self):

@@ -80,7 +80,19 @@ class HTMLDOMNode:
         """
         Append a text content in node.
 
-        :param text: The text.
+        :param text: The text content.
+        :type text: str
+        :return: This node.
+        :rtype: hatemile.util.html.htmldomnode.HTMLDOMNode
+        """
+
+        pass
+
+    def prepend_text(self, text):
+        """
+        Prepend a text content in node.
+
+        :param text: The text content.
         :type text: str
         :return: This node.
         :rtype: hatemile.util.html.htmldomnode.HTMLDOMNode

@@ -38,5 +38,9 @@ class BeautifulSoupHTMLDOMTextNode(BeautifulSoupHTMLDOMNode, HTMLDOMTextNode):
         self.set_text_content(self.get_text_content() + text)
         return self
 
+    def prepend_text(self, text):
+        self.set_text_content(text + self.get_text_content())
+        return self
+
     def get_parent_element(self):
         return BeautifulSoupHTMLDOMElement(self.node.parent)
