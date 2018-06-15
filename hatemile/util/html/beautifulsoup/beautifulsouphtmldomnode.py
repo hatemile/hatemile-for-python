@@ -27,8 +27,8 @@ class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
         """
         Initializes a new object that encapsulate the BeautifulSoup node.
 
-        :param element: The BeautifulSoup node.
-        :type element: bs4.element.PageElement
+        :param node: The BeautifulSoup node.
+        :type node: bs4.element.PageElement
         """
 
         self.node = node
