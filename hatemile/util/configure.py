@@ -14,8 +14,9 @@
 Module of Configure class.
 """
 
+import json
+import locale
 import os
-from xml.dom import minidom
 
 
 class Configure:
@@ -23,30 +24,30 @@ class Configure:
     The Configure class contains the configuration of HaTeMiLe.
     """
 
-    def __init__(self, file_name=None):
+    def __init__(self, file_name=None, locale_configuration=None):
         """
         Initializes a new object that contains the configuration of HaTeMiLe.
 
         :param file_name: The full path of file.
         :type file_name: str
+        :param locale_configuration: The locale of configuration.
+        :type locale_configuration: tuple(str, str)
         """
 
-        self.parameters = {}
         if file_name is None:
+            if locale_configuration is not None:
+                locale_code = locale_configuration[0]
+            else:
+                locale_code = locale.getdefaultlocale()[0]
             file_name = os.path.join(os.path.dirname(os.path.dirname(
                 os.path.dirname(os.path.realpath(__file__))
-            )), 'hatemile-configure.xml')
-        xmldoc = minidom.parse(file_name)
-        params = xmldoc.getElementsByTagName(
-            'parameters'
-        )[0].getElementsByTagName('parameter')
-        for param in params:
-            if param.hasChildNodes():
-                self.parameters[
-                    param.attributes['name'].value
-                ] = param.firstChild.nodeValue
-            else:
-                self.parameters[param.attributes['name'].value] = ''
+            )), '_locales', locale_code, 'configuration.json')
+            if not os.path.isfile(file_name):
+                file_name = os.path.join(os.path.dirname(os.path.dirname(
+                    os.path.dirname(os.path.realpath(__file__))
+                )), '_locales', 'en_US', 'configuration.json')
+        with open(file_name, 'r') as json_file:
+            self.parameters = json.load(json_file)
 
     def get_parameters(self):
         """
