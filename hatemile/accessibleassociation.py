@@ -11,19 +11,19 @@
 # limitations under the License.
 
 """
-Module of AccessibleTable interface.
+Module of AccessibleAssociation interface.
 """
 
 
-class AccessibleTable:
+class AccessibleAssociation:
     """
-    The AccessibleTable interface fixes accessibility problems associated with
-    tables.
+    The AccessibleAssociation interface improve accessibility, associating
+    elements.
     """
 
     def fix_association_cells_table(self, table):
         """
-        Associate data cells with header cells of table.
+        Associate all data cells with header cells of table.
 
         :param table: The table.
         :type table: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -33,7 +33,24 @@ class AccessibleTable:
 
     def fix_association_cells_tables(self):
         """
-        Associate data cells with header cells of tables.
+        Associate all data cells with header cells of all tables of page.
+        """
+
+        pass
+
+    def fix_label(self, label):
+        """
+        Associate label with field.
+
+        :param label: The label.
+        :type label: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def fix_labels(self):
+        """
+        Associate all labels of page with fields.
         """
 
         pass

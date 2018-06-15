@@ -17,8 +17,7 @@ Module of AccessibleForm interface.
 
 class AccessibleForm:
     """
-    The AccessibleForm interface fixes accessibility problems associated with
-    forms.
+    The AccessibleForm interface improve the accessibility of forms.
     """
 
     def fix_required_field(self, required_field):
@@ -68,23 +67,6 @@ class AccessibleForm:
     def fix_autocomplete_fields(self):
         """
         Display that the fields have autocomplete.
-        """
-
-        pass
-
-    def fix_label(self, label):
-        """
-        Associate label with field.
-
-        :param label: The label.
-        :type label: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
-    def fix_labels(self):
-        """
-        Associate labels with fields.
         """
 
         pass

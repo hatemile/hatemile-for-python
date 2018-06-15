@@ -14,21 +14,22 @@
 Module of AccessibleTableImplementation class.
 """
 
-from hatemile.accessibletable import AccessibleTable
+import re
+from hatemile.accessibleassociation import AccessibleAssociation
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
 
 
-class AccessibleTableImplementation(AccessibleTable):
+class AccessibleAssociationImplementation(AccessibleAssociation):
     """
-    The AccessibleTableImpl class is official implementation of AccessibleTable
-    interface.
+    The AccessibleAssociationImplementation class is official implementation of
+    AccessibleAssociation.
     """
 
     def __init__(self, parser):
         """
-        Initializes a new object that manipulate the accessibility of the
-        tables of parser.
+        Initializes a new object that improve the accessibility of associations
+        of parser.
 
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
@@ -253,3 +254,44 @@ class AccessibleTableImplementation(AccessibleTable):
         for table in tables:
             if CommonFunctions.is_valid_element(table):
                 self.fix_association_cells_table(table)
+
+    def fix_label(self, label):
+        if label.get_tag_name() == 'LABEL':
+            if label.has_attribute('for'):
+                field = self.parser.find(
+                    '#'
+                    + label.get_attribute('for')
+                ).first_result()
+            else:
+                field = self.parser.find(label).find_descendants(
+                    'input,select,textarea'
+                ).first_result()
+
+                if field is not None:
+                    self.id_generator.generate_id(field)
+                    label.set_attribute('for', field.get_attribute('id'))
+            if field is not None:
+                if not field.has_attribute('aria-label'):
+                    field.set_attribute(
+                        'aria-label',
+                        re.sub(
+                            '[ \n\r\t]+',
+                            ' ',
+                            label.get_text_content().strip()
+                        )
+                    )
+
+                self.id_generator.generate_id(label)
+                field.set_attribute(
+                    'aria-labelledby',
+                    CommonFunctions.increase_in_list(
+                        field.get_attribute('aria-labelledby'),
+                        label.get_attribute('id')
+                    )
+                )
+
+    def fix_labels(self):
+        labels = self.parser.find('label').list_results()
+        for label in labels:
+            if CommonFunctions.is_valid_element(label):
+                self.fix_label(label)
