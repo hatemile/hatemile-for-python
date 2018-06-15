@@ -38,14 +38,12 @@ class AccessibleNavigation:
 
         pass
 
-    def fix_skipper(self, element, skipper):
+    def fix_skipper(self, element):
         """
         Provide content skipper for element.
 
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :param skipper: The skipper.
-        :type skipper: list(dict(str, str))
         """
 
         pass

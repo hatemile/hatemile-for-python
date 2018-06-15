@@ -449,38 +449,49 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             if CommonFunctions.is_valid_element(element):
                 self.fix_shortcut(element)
 
-    def fix_skipper(self, element, skipper):
+    def fix_skipper(self, element):
         if not self.list_skippers_added:
             self.list_skippers = self._generate_list_skippers()
         if self.list_skippers is not None:
-            anchor = self._generate_anchor_for(
-                element,
-                self.data_anchor_for,
-                self.class_skipper_anchor
-            )
-            if anchor is not None:
-                item_link = self.parser.create_element('li')
-                link = self.parser.create_element('a')
-                link.set_attribute('href', '#' + anchor.get_attribute('name'))
-                link.append_text(skipper['description'])
+            skipper = None
+            for auxiliar_skipper in self.skippers:
+                elements = self.parser.find(
+                    auxiliar_skipper['selector']
+                ).list_results()
+                if element in elements:
+                    skipper = auxiliar_skipper
+            if skipper is not None:
+                anchor = self._generate_anchor_for(
+                    element,
+                    self.data_anchor_for,
+                    self.class_skipper_anchor
+                )
+                if anchor is not None:
+                    item_link = self.parser.create_element('li')
+                    link = self.parser.create_element('a')
+                    link.set_attribute(
+                        'href',
+                        '#' + anchor.get_attribute('name')
+                    )
+                    link.append_text(skipper['description'])
 
-                shortcuts = skipper['shortcut']
-                if shortcuts:
-                    shortcut = shortcuts[0]
-                    if shortcut != '':
-                        self._free_shortcut(shortcut)
-                        link.set_attribute('accesskey', shortcut)
-                self.id_generator.generate_id(link)
+                    shortcuts = skipper['shortcut']
+                    if shortcuts:
+                        shortcut = shortcuts[0]
+                        if shortcut != '':
+                            self._free_shortcut(shortcut)
+                            link.set_attribute('accesskey', shortcut)
+                    self.id_generator.generate_id(link)
 
-                item_link.append_element(link)
-                self.list_skippers.append_element(item_link)
+                    item_link.append_element(link)
+                    self.list_skippers.append_element(item_link)
 
     def fix_skippers(self):
         for skipper in self.skippers:
             elements = self.parser.find(skipper['selector']).list_results()
             for element in elements:
                 if CommonFunctions.is_valid_element(element):
-                    self.fix_skipper(element, skipper)
+                    self.fix_skipper(element)
 
     def fix_heading(self, element):
         if not self.validate_heading:

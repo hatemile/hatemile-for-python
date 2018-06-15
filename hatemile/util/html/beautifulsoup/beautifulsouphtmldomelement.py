@@ -142,3 +142,8 @@ class BeautifulSoupHTMLDOMElement(HTMLDOMElement):
         if last_value is not None:
             return BeautifulSoupHTMLDOMElement(last_value)
         return None
+
+    def __eq__(self, obj):
+        if isinstance(obj, BeautifulSoupHTMLDOMElement):
+            return self.get_data() == obj.get_data()
+        return False
