@@ -58,14 +58,22 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.id_text_heading = 'text-heading'
         self.class_skipper_anchor = 'skipper-anchor'
         self.class_heading_anchor = 'heading-anchor'
+        self.class_long_description_link = 'longdescription-link'
         self.data_access_key = 'data-shortcutdescriptionfor'
         self.data_anchor_for = 'data-anchorfor'
         self.data_heading_anchor_for = 'data-headinganchorfor'
         self.data_heading_level = 'data-headinglevel'
+        self.data_long_description_for_image = 'data-longdescriptionfor'
         self.text_shortcuts = configure.get_parameter('text-shortcuts')
         self.text_heading = configure.get_parameter('text-heading')
         self.standart_prefix = configure.get_parameter(
             'text-standart-shortcut-prefix'
+        )
+        self.prefix_long_description_link = configure.get_parameter(
+            'prefix-longdescription'
+        )
+        self.suffix_long_description_link = configure.get_parameter(
+            'suffix-longdescription'
         )
         self.skippers = AccessibleNavigationImplementation._get_skippers(
             skipper_file_name
@@ -563,3 +571,45 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.fix_heading(element)
+
+    def fix_long_description(self, element):
+        if element.has_attribute('longdesc'):
+            self.id_generator.generate_id(element)
+            id_element = element.get_attribute('id')
+            if self.parser.find(
+                '['
+                + self.data_long_description_for_image
+                + '="'
+                + id_element
+                + '"]'
+            ).first_result() is None:
+                if element.has_attribute('alt'):
+                    text = (
+                        self.prefix_long_description_link
+                        + ' '
+                        + element.get_attribute('alt')
+                        + ' '
+                        + self.suffix_long_description_link
+                    )
+                else:
+                    text = (
+                        self.prefix_long_description_link
+                        + ' '
+                        + self.suffix_long_description_link
+                    )
+                anchor = self.parser.create_element('a')
+                anchor.set_attribute('href', element.get_attribute('longdesc'))
+                anchor.set_attribute('target', '_blank')
+                anchor.set_attribute(
+                    self.data_long_description_for_image,
+                    id_element
+                )
+                anchor.set_attribute('class', self.class_long_description_link)
+                anchor.append_text(text.strip())
+                element.insert_after(anchor)
+
+    def fix_long_descriptions(self):
+        elements = self.parser.find('[longdesc]').list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.fix_long_description(element)

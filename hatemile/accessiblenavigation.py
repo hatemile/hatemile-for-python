@@ -73,3 +73,21 @@ class AccessibleNavigation:
         """
 
         pass
+
+    def fix_long_description(self, element):
+        """
+        Provide an alternative way to access the long description of element.
+
+        :param element: The element with long description.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def fix_long_descriptions(self):
+        """
+        Provide an alternative way to access the longs descriptions of
+        elements.
+        """
+
+        pass
