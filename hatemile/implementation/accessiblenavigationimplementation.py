@@ -15,7 +15,6 @@ Module of AccessibleNavigationImplementation class.
 """
 
 import os
-import re
 from xml.dom import minidom
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
@@ -32,8 +31,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self,
         parser,
         configure,
-        skipper_file_name=None,
-        user_agent=None
+        skipper_file_name=None
     ):
         """
         Initializes a new object that manipulate the accessibility of the
@@ -45,30 +43,21 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :type configure: hatemile.util.configure.Configure
         :param skipper_file_name: The file path of skippers configuration.
         :type skipper_file_name: str
-        :param user_agent: The user agent of the user.
-        :type user_agent: str
         """
 
         self.parser = parser
         self.id_generator = IDGenerator('navigation')
-        self.id_container_shortcuts = 'container-shortcuts'
         self.id_container_skippers = 'container-skippers'
         self.id_container_heading = 'container-heading'
-        self.id_text_shortcuts = 'text-shortcuts'
         self.id_text_heading = 'text-heading'
         self.class_skipper_anchor = 'skipper-anchor'
         self.class_heading_anchor = 'heading-anchor'
         self.class_long_description_link = 'longdescription-link'
-        self.data_access_key = 'data-shortcutdescriptionfor'
         self.data_anchor_for = 'data-anchorfor'
         self.data_heading_anchor_for = 'data-headinganchorfor'
         self.data_heading_level = 'data-headinglevel'
         self.data_long_description_for_image = 'data-longdescriptionfor'
-        self.text_shortcuts = configure.get_parameter('text-shortcuts')
         self.text_heading = configure.get_parameter('text-heading')
-        self.standart_prefix = configure.get_parameter(
-            'text-standart-shortcut-prefix'
-        )
         self.prefix_long_description_link = configure.get_parameter(
             'prefix-longdescription'
         )
@@ -78,47 +67,10 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.skippers = AccessibleNavigationImplementation._get_skippers(
             skipper_file_name
         )
-        self.list_shortcuts_added = False
         self.list_skippers_added = False
         self.validate_heading = False
         self.valid_heading = False
         self.list_skippers = None
-        self.list_shortcuts = None
-
-        if user_agent is not None:
-            user_agent = user_agent.lower()
-            opera = 'opera' in user_agent
-            mac = 'mac' in user_agent
-            konqueror = 'konqueror' in user_agent
-            spoofer = 'spoofer' in user_agent
-            safari = 'applewebkit' in user_agent
-            windows = 'windows' in user_agent
-            chrome = 'chrome' in user_agent
-            firefox = re.match(
-                '.*firefox/[2-9]|minefield/3.*',
-                user_agent
-            ) is not None
-            internet_explorer = (
-                ('msie' in user_agent)
-                or ('trident' in user_agent)
-            )
-
-            if opera:
-                self.prefix = 'SHIFT + ESC'
-            elif chrome and mac and (not spoofer):
-                self.prefix = 'CTRL + OPTION'
-            elif safari and (not windows) and (not spoofer):
-                self.prefix = 'CTRL + ALT'
-            elif (not windows) and (safari or mac or konqueror):
-                self.prefix = 'CTRL'
-            elif firefox:
-                self.prefix = 'ALT + SHIFT'
-            elif chrome or internet_explorer:
-                self.prefix = 'ALT'
-            else:
-                self.prefix = self.standart_prefix
-        else:
-            self.prefix = self.standart_prefix
 
     @staticmethod
     def _get_skippers(file_name=None):
@@ -147,99 +99,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 'shortcut': skipper_xml.attributes['shortcut'].value
             })
         return skippers
-
-    def _get_description(self, element):
-        """
-        Returns the description of element.
-
-        :param element: The element with description.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        :return: The description of element.
-        :rtype: str
-        """
-
-        description = None
-        if element.has_attribute('title'):
-            description = element.get_attribute('title')
-        elif element.has_attribute('aria-label'):
-            description = element.get_attribute('aria-label')
-        elif element.has_attribute('alt'):
-            description = element.get_attribute('alt')
-        elif element.has_attribute('label'):
-            description = element.get_attribute('label')
-        elif (
-            (element.has_attribute('aria-labelledby'))
-            or (element.has_attribute('aria-describedby'))
-        ):
-            if element.has_attribute('aria-labelledby'):
-                description_ids = re.split(
-                    '[ \n\r\t]+',
-                    element.get_attribute('aria-labelledby').strip()
-                )
-            else:
-                description_ids = re.split(
-                    '[ \n\r\t]+',
-                    element.get_attribute('aria-describedby').strip()
-                )
-            for description_id in description_ids:
-                element_description = self.parser.find(
-                    '#' + description_id
-                ).first_result()
-                if element_description is not None:
-                    description = element_description.get_text_content()
-                    break
-        elif (
-            (element.get_tag_name() == 'INPUT')
-            and (element.has_attribute('type'))
-        ):
-            type_attribute = element.get_attribute('type').lower()
-            if (
-                (
-                    (type_attribute == 'button')
-                    or (type_attribute == 'submit')
-                    or (type_attribute == 'reset')
-                )
-                and (element.has_attribute('value'))
-            ):
-                description = element.get_attribute('value')
-        if not bool(description):
-            description = element.get_text_content()
-        return re.sub('[ \n\r\t]+', ' ', description.strip())
-
-    def _generate_list_shortcuts(self):
-        """
-        Generate the list of shortcuts of page.
-
-        :return: The list of shortcuts of page.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        container = self.parser.find(
-            '#' + self.id_container_shortcuts
-        ).first_result()
-        html_list = None
-        if container is None:
-            local = self.parser.find('body').first_result()
-            if local is not None:
-                container = self.parser.create_element('div')
-                container.set_attribute('id', self.id_container_shortcuts)
-
-                text_container = self.parser.create_element('span')
-                text_container.set_attribute('id', self.id_text_shortcuts)
-                text_container.append_text(self.text_shortcuts)
-
-                container.append_element(text_container)
-                local.append_element(container)
-        if container is not None:
-            html_list = self.parser.find(container).find_children(
-                'ul'
-            ).first_result()
-            if html_list is None:
-                html_list = self.parser.create_element('ul')
-                container.append_element(html_list)
-        self.list_shortcuts_added = True
-
-        return html_list
 
     def _generate_list_skippers(self):
         """
@@ -412,42 +271,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         break
                 if found:
                     break
-
-    def fix_shortcut(self, element):
-        if element.has_attribute('accesskey'):
-            description = self._get_description(element)
-            if not element.has_attribute('title'):
-                element.set_attribute('title', description)
-
-            if not self.list_shortcuts_added:
-                self.list_shortcuts = self._generate_list_shortcuts()
-
-            if self.list_shortcuts is not None:
-                keys = re.split(
-                    '[ \n\t\r]+',
-                    element.get_attribute('accesskey')
-                )
-                for key in keys:
-                    key = key.upper()
-                    if self.parser.find(self.list_shortcuts).find_children(
-                        '[' + self.data_access_key + '="' + key + '"]'
-                    ).first_result() is None:
-                        item = self.parser.create_element('li')
-                        item.set_attribute(self.data_access_key, key)
-                        item.append_text(
-                            self.prefix
-                            + ' + '
-                            + key
-                            + ': '
-                            + description
-                        )
-                        self.list_shortcuts.append_element(item)
-
-    def fix_shortcuts(self):
-        elements = self.parser.find('[accesskey]').list_results()
-        for element in elements:
-            if CommonFunctions.is_valid_element(element):
-                self.fix_shortcut(element)
 
     def fix_skipper(self, element):
         if not self.list_skippers_added:

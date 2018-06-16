@@ -21,23 +21,6 @@ class AccessibleNavigation:
     with navigation.
     """
 
-    def fix_shortcut(self, element):
-        """
-        Display the shortcuts of element.
-
-        :param element: The element with shortcuts.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
-        """
-
-        pass
-
-    def fix_shortcuts(self):
-        """
-        Display the shortcuts of elements.
-        """
-
-        pass
-
     def fix_skipper(self, element):
         """
         Provide content skipper for element.
