@@ -130,6 +130,20 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
                 children.append(BeautifulSoupHTMLDOMTextNode(child))
         return children
 
+    def normalize(self):
+        if self.has_children():
+            last = None
+            for child in self.get_children():
+                if isinstance(child, BeautifulSoupHTMLDOMElement):
+                    child.normalize()
+                elif (
+                    isinstance(child, BeautifulSoupHTMLDOMTextNode)
+                    and isinstance(last, BeautifulSoupHTMLDOMTextNode)
+                ):
+                    child.prepend_text(last.get_text_content())
+                    last.remove_node()
+                last = child
+
     def append_text(self, text):
         self.node.append(text)
         return self

@@ -136,6 +136,16 @@ class HTMLDOMElement(HTMLDOMNode):
 
         pass
 
+    def normalize(self):
+        """
+        Joins adjacent Text nodes.
+
+        :return: This element.
+        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
     def has_children_elements(self):
         """
         Check that the element has elements children.
