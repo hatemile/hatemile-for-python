@@ -11,10 +11,17 @@
 # limitations under the License.
 
 """
-Module of BeautifulSoupHTMLDOMNode class.
+Module of BeautifulSoupHTMLDOMNode, BeautifulSoupHTMLDOMElement and
+BeautifulSoupHTMLDOMTextNode classes.
 """
 
+import copy
+import re
+from bs4.element import NavigableString
+from bs4.element import Tag
+from hatemile.util.html.htmldomelement import HTMLDOMElement
 from hatemile.util.html.htmldomnode import HTMLDOMNode
+from hatemile.util.html.htmldomtextnode import HTMLDOMTextNode
 
 
 class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
@@ -54,3 +61,185 @@ class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
 
     def set_data(self, data):
         self.node = data
+
+
+class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
+    """
+    The BeautifulSoupHTMLDOMElement class is official implementation of
+    HTMLDOMElement interface for the BeautifulSoup library.
+    """
+
+    def get_tag_name(self):
+        return self.node.name.upper()
+
+    def get_attribute(self, name):
+        if not self.has_attribute(name):
+            return None
+        if isinstance(self.node[name], list):
+            values = self.node[name]
+            value = ''
+            for item in values:
+                value += item + ' '
+            return value.strip()
+        return self.node[name]
+
+    def set_attribute(self, name, value):
+        self.node[name] = value
+        if bool(re.findall('^data-', name)):
+            self.node[re.sub('^data-', 'dataaaaaa', name)] = value
+
+    def remove_attribute(self, name):
+        if self.has_attribute(name):
+            del self.node[name]
+            if bool(re.findall('^data-', name)):
+                del self.node[re.sub('^data-', 'dataaaaaa', name)]
+
+    def has_attribute(self, name):
+        return self.node.has_attr(name)
+
+    def has_attributes(self):
+        return bool(self.node.attrs)
+
+    def get_text_content(self):
+        return self.node.get_text()
+
+    def append_element(self, element):
+        self.node.append(element.get_data())
+        return self
+
+    def prepend_element(self, element):
+        if self.has_children():
+            self.get_first_node_child().insert_before(element)
+        else:
+            self.append_element(element)
+        return self
+
+    def get_children_elements(self):
+        children = []
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                children.append(BeautifulSoupHTMLDOMElement(child))
+        return children
+
+    def get_children(self):
+        children = []
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                children.append(BeautifulSoupHTMLDOMElement(child))
+            elif isinstance(child, NavigableString):
+                children.append(BeautifulSoupHTMLDOMTextNode(child))
+        return children
+
+    def append_text(self, text):
+        self.node.append(text)
+        return self
+
+    def prepend_text(self, text):
+        if self.has_children():
+            self.get_first_node_child().get_data().insert_before(
+                NavigableString(text)
+            )
+        else:
+            self.append_text(text)
+        return self
+
+    def has_children_elements(self):
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                return True
+        return False
+
+    def has_children(self):
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                return True
+        return False
+
+    def get_parent_element(self):
+        return BeautifulSoupHTMLDOMElement(self.node.parent)
+
+    def get_inner_html(self):
+        string = ''
+        for child in self.node.children:
+            string += str(child)
+        return string
+
+    def get_outer_html(self):
+        return str(self.node)
+
+    def clone_element(self):
+        return BeautifulSoupHTMLDOMElement(copy.copy(self.node))
+
+    def get_first_element_child(self):
+        if not self.has_children_elements():
+            return None
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                return BeautifulSoupHTMLDOMElement(child)
+        return None
+
+    def get_last_element_child(self):
+        if not self.has_children_elements():
+            return None
+        last_value = None
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                last_value = child
+        if last_value is not None:
+            return BeautifulSoupHTMLDOMElement(last_value)
+        return None
+
+    def get_first_node_child(self):
+        if not self.has_children():
+            return None
+        for child in self.node.children:
+            if isinstance(child, Tag):
+                return BeautifulSoupHTMLDOMElement(child)
+            elif isinstance(child, NavigableString):
+                return BeautifulSoupHTMLDOMTextNode(child)
+        return None
+
+    def get_last_node_child(self):
+        if not self.has_children():
+            return None
+        last_value = None
+        for child in self.node.children:
+            if isinstance(child, (NavigableString, Tag)):
+                last_value = child
+        if last_value is not None:
+            if isinstance(last_value, Tag):
+                return BeautifulSoupHTMLDOMElement(last_value)
+            elif isinstance(last_value, NavigableString):
+                return BeautifulSoupHTMLDOMTextNode(last_value)
+        return None
+
+    def __eq__(self, obj):
+        if isinstance(obj, BeautifulSoupHTMLDOMElement):
+            return self.get_data() == obj.get_data()
+        return False
+
+
+class BeautifulSoupHTMLDOMTextNode(BeautifulSoupHTMLDOMNode, HTMLDOMTextNode):
+    """
+    The VanillaHTMLDOMTextNode class is official implementation of
+    :py:class:`hatemile.util.html.htmldomtextnode.HTMLDOMTextNode` for the
+    :py:class:`bs4.element.NavigableString`.
+    """
+
+    def get_text_content(self):
+        return str(self.node)
+
+    def set_text_content(self, text):
+        new_text_node = BeautifulSoupHTMLDOMTextNode(NavigableString(text))
+        self.replace_node(new_text_node)
+
+    def append_text(self, text):
+        self.set_text_content(self.get_text_content() + text)
+        return self
+
+    def prepend_text(self, text):
+        self.set_text_content(text + self.get_text_content())
+        return self
+
+    def get_parent_element(self):
+        return BeautifulSoupHTMLDOMElement(self.node.parent)
