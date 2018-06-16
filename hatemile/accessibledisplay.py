@@ -21,7 +21,7 @@ class AccessibleDisplay:
     informations.
     """
 
-    def fix_shortcut(self, element):
+    def display_shortcut(self, element):
         """
         Display the shortcuts of element.
 
@@ -31,9 +31,9 @@ class AccessibleDisplay:
 
         pass
 
-    def fix_shortcuts(self):
+    def display_all_shortcuts(self):
         """
-        Display the shortcuts of elements.
+        Display all shortcuts of page.
         """
 
         pass

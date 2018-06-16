@@ -20,9 +20,9 @@ class AccessibleForm:
     The AccessibleForm interface improve the accessibility of forms.
     """
 
-    def fix_required_field(self, required_field):
+    def mark_required_field(self, required_field):
         """
-        Display that the field is required.
+        Mark that the field is required.
 
         :param required_field: The required field.
         :type required_field: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -30,16 +30,16 @@ class AccessibleForm:
 
         pass
 
-    def fix_required_fields(self):
+    def mark_all_required_fields(self):
         """
-        Display that the fields is required.
+        Mark that the fields is required.
         """
 
         pass
 
-    def fix_range_field(self, range_field):
+    def mark_range_field(self, range_field):
         """
-        Display that the field have range.
+        Mark that the field have range.
 
         :param range_field: The range field.
         :type range_field: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -47,16 +47,16 @@ class AccessibleForm:
 
         pass
 
-    def fix_range_fields(self):
+    def mark_all_range_fields(self):
         """
-        Display that the fields have range.
+        Mark that the fields have range.
         """
 
         pass
 
-    def fix_autocomplete_field(self, field):
+    def mark_autocomplete_field(self, field):
         """
-        Display that the field have autocomplete.
+        Mark that the field have autocomplete.
 
         :param field: The field with autocomplete.
         :type field: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -64,9 +64,9 @@ class AccessibleForm:
 
         pass
 
-    def fix_autocomplete_fields(self):
+    def mark_all_autocomplete_fields(self):
         """
-        Display that the fields have autocomplete.
+        Mark that the fields have autocomplete.
         """
 
         pass

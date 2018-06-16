@@ -176,23 +176,23 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
     association = AccessibleAssociationImplementation(parser)
     display = AccessibleDisplayImplementation(parser, configure)
 
-    event.fix_drags_and_drops()
-    event.fix_actives()
-    event.fix_hovers()
+    event.make_accessible_all_drag_and_drop_events()
+    event.make_accessible_all_click_events()
+    event.make_accessible_all_hover_events()
 
-    form.fix_autocomplete_fields()
-    form.fix_range_fields()
-    form.fix_required_fields()
+    form.mark_all_required_fields()
+    form.mark_all_range_fields()
+    form.mark_all_autocomplete_fields()
 
-    navigation.fix_headings()
-    navigation.fix_skippers()
-    navigation.fix_long_descriptions()
+    navigation.provide_navigation_by_all_headings()
+    navigation.provide_navigation_by_all_skippers()
+    navigation.provide_navigation_to_all_long_descriptions()
 
-    association.fix_association_cells_tables()
-    association.fix_labels()
+    association.associate_all_data_cells_with_header_cells()
+    association.associate_all_labels_with_fields()
 
-    display.fix_shortcuts()
+    display.display_all_shortcuts()
 
-    navigation.fix_skippers()
+    navigation.provide_navigation_by_all_skippers()
 
     print(parser.get_html())

@@ -23,7 +23,8 @@ from hatemile.util.idgenerator import IDGenerator
 class AccessibleDisplayImplementation(AccessibleDisplay):
     """
     The AccessibleDisplayImplementation class is official implementation of
-    AccessibleDisplay for screen readers.
+    :py:class:`hatemile.accessibledisplay.AccessibleDisplay` for screen
+    readers.
     """
 
     def __init__(self, parser, configure, user_agent=None):
@@ -190,7 +191,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
 
         return html_list
 
-    def fix_shortcut(self, element):
+    def display_shortcut(self, element):
         if element.has_attribute('accesskey'):
             description = self._get_description(element)
             if not element.has_attribute('title'):
@@ -220,8 +221,8 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                         )
                         self.list_shortcuts.append_element(item)
 
-    def fix_shortcuts(self):
+    def display_all_shortcuts(self):
         elements = self.parser.find('[accesskey]').list_results()
         for element in elements:
             if CommonFunctions.is_valid_element(element):
-                self.fix_shortcut(element)
+                self.display_shortcut(element)

@@ -23,7 +23,7 @@ from hatemile.util.idgenerator import IDGenerator
 class AccessibleEventImplementation(AccessibleEvent):
     """
     The AccessibleEventImplementation class is official implementation of
-    AccessibleEvent interface.
+    :py:class:`hatemile.accessibleevent.AccessibleEvent`.
     """
 
     event_listener_script_content = None
@@ -37,8 +37,6 @@ class AccessibleEventImplementation(AccessibleEvent):
 
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
-        :param configure: The configuration of HaTeMiLe.
-        :type configure: hatemile.util.configure.Configure
         :param store_scripts_content: The state that indicates if the scripts
                                       used are stored or deleted, after use.
         :type store_scripts_content: bool
@@ -192,55 +190,55 @@ class AccessibleEventImplementation(AccessibleEvent):
                 + "');"
             )
 
-    def fix_drop(self, element):
+    def make_accessible_drop_events(self, element):
         element.set_attribute('aria-dropeffect', 'none')
 
         self._add_event_in_element(element, 'drop')
 
-    def fix_drag(self, element):
+    def make_accessible_drag_events(self, element):
         self._keyboard_access(element)
 
         element.set_attribute('aria-grabbed', 'false')
 
         self._add_event_in_element(element, 'drag')
 
-    def fix_drags_and_drops(self):
+    def make_accessible_all_drag_and_drop_events(self):
         draggable_elements = self.parser.find(
             '[ondrag],[ondragstart],[ondragend]'
         ).list_results()
         for draggable_element in draggable_elements:
             if CommonFunctions.is_valid_element(draggable_element):
-                self.fix_drag(draggable_element)
+                self.make_accessible_drag_events(draggable_element)
 
         droppable_elements = self.parser.find(
             '[ondrop],[ondragenter],[ondragleave],[ondragover]'
         ).list_results()
         for droppable_element in droppable_elements:
             if CommonFunctions.is_valid_element(droppable_element):
-                self.fix_drop(droppable_element)
+                self.make_accessible_drop_events(droppable_element)
 
-    def fix_hover(self, element):
+    def make_accessible_hover_events(self, element):
         self._keyboard_access(element)
 
         self._add_event_in_element(element, 'hover')
 
-    def fix_hovers(self):
+    def make_accessible_all_hover_events(self):
         elements = self.parser.find(
             '[onmouseover],[onmouseout]'
         ).list_results()
         for element in elements:
             if CommonFunctions.is_valid_element(element):
-                self.fix_hover(element)
+                self.make_accessible_hover_events(element)
 
-    def fix_active(self, element):
+    def make_accessible_click_events(self, element):
         self._keyboard_access(element)
 
         self._add_event_in_element(element, 'active')
 
-    def fix_actives(self):
+    def make_accessible_all_click_events(self):
         elements = self.parser.find(
             '[onclick],[onmousedown],[onmouseup],[ondblclick]'
         ).list_results()
         for element in elements:
             if CommonFunctions.is_valid_element(element):
-                self.fix_active(element)
+                self.make_accessible_click_events(element)

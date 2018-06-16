@@ -11,7 +11,7 @@
 # limitations under the License.
 
 """
-Module of AccessibleTableImplementation class.
+Module of AccessibleAssociationImplementation class.
 """
 
 import re
@@ -23,7 +23,7 @@ from hatemile.util.idgenerator import IDGenerator
 class AccessibleAssociationImplementation(AccessibleAssociation):
     """
     The AccessibleAssociationImplementation class is official implementation of
-    AccessibleAssociation.
+    :py:class:`hatemile.accessibleassociation.AccessibleAssociation`.
     """
 
     def __init__(self, parser):
@@ -33,12 +33,10 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
 
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
-        :param configure: The configuration of HaTeMiLe.
-        :type configure: hatemile.util.configure.Configure
         """
 
         self.parser = parser
-        self.id_generator = IDGenerator('table')
+        self.id_generator = IDGenerator('association')
 
     def _generate_part(self, part):
         """
@@ -215,7 +213,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
 
             cell.set_attribute('scope', 'col')
 
-    def fix_association_cells_table(self, table):
+    def associate_data_cells_with_header_cells(self, table):
         header = self.parser.find(table).find_children('thead').first_result()
         body = self.parser.find(table).find_children('tbody').first_result()
         footer = self.parser.find(table).find_children('tfoot').first_result()
@@ -249,13 +247,13 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         if footer is not None:
             self._fix_body_or_footer(footer)
 
-    def fix_association_cells_tables(self):
+    def associate_all_data_cells_with_header_cells(self):
         tables = self.parser.find('table').list_results()
         for table in tables:
             if CommonFunctions.is_valid_element(table):
-                self.fix_association_cells_table(table)
+                self.associate_data_cells_with_header_cells(table)
 
-    def fix_label(self, label):
+    def associate_label_with_field(self, label):
         if label.get_tag_name() == 'LABEL':
             if label.has_attribute('for'):
                 field = self.parser.find(
@@ -290,8 +288,8 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                     )
                 )
 
-    def fix_labels(self):
+    def associate_all_labels_with_fields(self):
         labels = self.parser.find('label').list_results()
         for label in labels:
             if CommonFunctions.is_valid_element(label):
-                self.fix_label(label)
+                self.associate_label_with_field(label)

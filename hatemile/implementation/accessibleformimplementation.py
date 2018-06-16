@@ -22,7 +22,7 @@ from hatemile.util.idgenerator import IDGenerator
 class AccessibleFormImplementation(AccessibleForm):
     """
     The AccessibleFormImplementation class is official implementation of
-    AccessibleForm interface.
+    :py:class:`hatemile.accessibleform.AccessibleForm`.
     """
 
     def __init__(self, parser):
@@ -93,17 +93,17 @@ class AccessibleFormImplementation(AccessibleForm):
                 return 'none'
         return None
 
-    def fix_required_field(self, required_field):
+    def mark_required_field(self, required_field):
         if required_field.has_attribute('required'):
             required_field.set_attribute('aria-required', 'true')
 
-    def fix_required_fields(self):
+    def mark_all_required_fields(self):
         required_fields = self.parser.find('[required]').list_results()
         for required_field in required_fields:
             if CommonFunctions.is_valid_element(required_field):
-                self.fix_required_field(required_field)
+                self.mark_required_field(required_field)
 
-    def fix_range_field(self, range_field):
+    def mark_range_field(self, range_field):
         if range_field.has_attribute('min'):
             range_field.set_attribute(
                 'aria-valuemin',
@@ -115,13 +115,13 @@ class AccessibleFormImplementation(AccessibleForm):
                 range_field.get_attribute('max')
             )
 
-    def fix_range_fields(self):
+    def mark_all_range_fields(self):
         range_fields = self.parser.find('[min],[max]').list_results()
         for range_field in range_fields:
             if CommonFunctions.is_valid_element(range_field):
-                self.fix_range_field(range_field)
+                self.mark_range_field(range_field)
 
-    def fix_autocomplete_field(self, field):
+    def mark_autocomplete_field(self, field):
         aria_autocomplete = self._get_aria_autocomplete(field)
         if aria_autocomplete is not None:
             field.set_attribute(
@@ -129,7 +129,7 @@ class AccessibleFormImplementation(AccessibleForm):
                 aria_autocomplete
             )
 
-    def fix_autocomplete_fields(self):
+    def mark_all_autocomplete_fields(self):
         elements = self.parser.find(
             'input[autocomplete],textarea[autocomplete],'
             + 'form[autocomplete] input,form[autocomplete] textarea,'
@@ -137,4 +137,4 @@ class AccessibleFormImplementation(AccessibleForm):
         ).list_results()
         for element in elements:
             if CommonFunctions.is_valid_element(element):
-                self.fix_autocomplete_field(element)
+                self.mark_autocomplete_field(element)

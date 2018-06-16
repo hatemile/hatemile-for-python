@@ -17,13 +17,12 @@ Module of AccessibleNavigation interface.
 
 class AccessibleNavigation:
     """
-    The AccessibleNavigation interface fixes accessibility problems associated
-    with navigation.
+    The AccessibleNavigation interface improve the accessibility of navigation.
     """
 
-    def fix_skipper(self, element):
+    def provide_navigation_by_skipper(self, element):
         """
-        Provide content skipper for element.
+        Provide a content skipper for element.
 
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -31,44 +30,44 @@ class AccessibleNavigation:
 
         pass
 
-    def fix_skippers(self):
+    def provide_navigation_by_all_skippers(self):
         """
-        Provide content skippers.
-        """
-
-        pass
-
-    def fix_heading(self, element):
-        """
-        Provide a navigation by heading.
-
-        :param element: The heading element.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        Provide navigation by content skippers.
         """
 
         pass
 
-    def fix_headings(self):
+    def provide_navigation_by_heading(self, heading):
         """
-        Provide a navigation by headings.
+        Provide navigation by heading.
+
+        :param heading: The heading element.
+        :type heading: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
 
-    def fix_long_description(self, element):
+    def provide_navigation_by_all_headings(self):
+        """
+        Provide navigation by headings of page.
+        """
+
+        pass
+
+    def provide_navigation_to_long_description(self, image):
         """
         Provide an alternative way to access the long description of element.
 
-        :param element: The element with long description.
-        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        :param image: The image with long description.
+        :type image: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
 
-    def fix_long_descriptions(self):
+    def provide_navigation_to_all_long_descriptions(self):
         """
-        Provide an alternative way to access the longs descriptions of
-        elements.
+        Provide an alternative way to access the longs descriptions of all
+        elements of page.
         """
 
         pass

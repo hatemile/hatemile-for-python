@@ -24,7 +24,7 @@ from hatemile.util.idgenerator import IDGenerator
 class AccessibleNavigationImplementation(AccessibleNavigation):
     """
     The AccessibleNavigationImplementation class is official implementation of
-    AccessibleNavigation interface.
+    :py:class:`hatemile.accessiblenavigation.AccessibleNavigation`.
     """
 
     def __init__(
@@ -273,7 +273,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 if found:
                     break
 
-    def fix_skipper(self, element):
+    def provide_navigation_by_skipper(self, element):
         if not self.list_skippers_added:
             self.list_skippers = self._generate_list_skippers()
         if self.list_skippers is not None:
@@ -310,27 +310,27 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     item_link.append_element(link)
                     self.list_skippers.append_element(item_link)
 
-    def fix_skippers(self):
+    def provide_navigation_by_all_skippers(self):
         for skipper in self.skippers:
             elements = self.parser.find(skipper['selector']).list_results()
             for element in elements:
                 if CommonFunctions.is_valid_element(element):
-                    self.fix_skipper(element)
+                    self.provide_navigation_by_skipper(element)
 
-    def fix_heading(self, element):
+    def provide_navigation_by_heading(self, heading):
         if not self.validate_heading:
             self.valid_heading = self._is_valid_heading()
         if self.valid_heading:
             anchor = self._generate_anchor_for(
-                element,
+                heading,
                 self.data_heading_anchor_for,
                 self.class_heading_anchor
             )
             if anchor is not None:
-                list_element = None
-                level = self._get_heading_level(element)
+                list_heading = None
+                level = self._get_heading_level(heading)
                 if level == 1:
-                    list_element = self._generate_list_heading()
+                    list_heading = self._generate_list_heading()
                 else:
                     super_item = self.parser.find(
                         '#'
@@ -343,13 +343,13 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         + '"]'
                     ).last_result()
                     if super_item is not None:
-                        list_element = self.parser.find(
+                        list_heading = self.parser.find(
                             super_item
                         ).find_children('ol').first_result()
-                        if list_element is None:
-                            list_element = self.parser.create_element('ol')
-                            super_item.append_element(list_element)
-                if list_element is not None:
+                        if list_heading is None:
+                            list_heading = self.parser.create_element('ol')
+                            super_item.append_element(list_heading)
+                if list_heading is not None:
                     item = self.parser.create_element('li')
                     item.set_attribute(self.data_heading_level, str(level))
 
@@ -358,33 +358,33 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         'href',
                         '#' + anchor.get_attribute('name')
                     )
-                    link.append_text(element.get_text_content())
+                    link.append_text(heading.get_text_content())
 
                     item.append_element(link)
-                    list_element.append_element(item)
+                    list_heading.append_element(item)
 
-    def fix_headings(self):
-        elements = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
-        for element in elements:
-            if CommonFunctions.is_valid_element(element):
-                self.fix_heading(element)
+    def provide_navigation_by_all_headings(self):
+        headings = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
+        for heading in headings:
+            if CommonFunctions.is_valid_element(heading):
+                self.provide_navigation_by_heading(heading)
 
-    def fix_long_description(self, element):
-        if element.has_attribute('longdesc'):
-            self.id_generator.generate_id(element)
-            id_element = element.get_attribute('id')
+    def provide_navigation_to_long_description(self, image):
+        if image.has_attribute('longdesc'):
+            self.id_generator.generate_id(image)
+            id_image = image.get_attribute('id')
             if self.parser.find(
                 '['
                 + self.data_long_description_for_image
                 + '="'
-                + id_element
+                + id_image
                 + '"]'
             ).first_result() is None:
-                if element.has_attribute('alt'):
+                if image.has_attribute('alt'):
                     text = (
                         self.prefix_long_description_link
                         + ' '
-                        + element.get_attribute('alt')
+                        + image.get_attribute('alt')
                         + ' '
                         + self.suffix_long_description_link
                     )
@@ -395,18 +395,18 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                         + self.suffix_long_description_link
                     )
                 anchor = self.parser.create_element('a')
-                anchor.set_attribute('href', element.get_attribute('longdesc'))
+                anchor.set_attribute('href', image.get_attribute('longdesc'))
                 anchor.set_attribute('target', '_blank')
                 anchor.set_attribute(
                     self.data_long_description_for_image,
-                    id_element
+                    id_image
                 )
                 anchor.set_attribute('class', self.class_long_description_link)
                 anchor.append_text(text.strip())
-                element.insert_after(anchor)
+                image.insert_after(anchor)
 
-    def fix_long_descriptions(self):
-        elements = self.parser.find('[longdesc]').list_results()
-        for element in elements:
-            if CommonFunctions.is_valid_element(element):
-                self.fix_long_description(element)
+    def provide_navigation_to_all_long_descriptions(self):
+        images = self.parser.find('[longdesc]').list_results()
+        for image in images:
+            if CommonFunctions.is_valid_element(image):
+                self.provide_navigation_to_long_description(image)

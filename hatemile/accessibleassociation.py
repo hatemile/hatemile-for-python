@@ -21,7 +21,7 @@ class AccessibleAssociation:
     elements.
     """
 
-    def fix_association_cells_table(self, table):
+    def associate_data_cells_with_header_cells(self, table):
         """
         Associate all data cells with header cells of table.
 
@@ -31,14 +31,14 @@ class AccessibleAssociation:
 
         pass
 
-    def fix_association_cells_tables(self):
+    def associate_all_data_cells_with_header_cells(self):
         """
         Associate all data cells with header cells of all tables of page.
         """
 
         pass
 
-    def fix_label(self, label):
+    def associate_label_with_field(self, label):
         """
         Associate label with field.
 
@@ -48,7 +48,7 @@ class AccessibleAssociation:
 
         pass
 
-    def fix_labels(self):
+    def associate_all_labels_with_fields(self):
         """
         Associate all labels of page with fields.
         """

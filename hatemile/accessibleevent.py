@@ -17,13 +17,13 @@ Module of AccessibleEvent interface.
 
 class AccessibleEvent:
     """
-    The AccessibleEvent interface fixes accessibility problems associated with
-    JavaScript events in elements.
+    The AccessibleEvent interface improve the accessibility, making elements
+    events available from a keyboard.
     """
 
-    def fix_drop(self, element):
+    def make_accessible_drop_events(self, element):
         """
-        Provide a solution for the element that has drop events.
+        Make the drop events of element available from a keyboard.
 
         :param element: The element with drop event.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -31,9 +31,9 @@ class AccessibleEvent:
 
         pass
 
-    def fix_drag(self, element):
+    def make_accessible_drag_events(self, element):
         """
-        Provide a solution for the element that has drag events.
+        Make the drag events of element available from a keyboard.
 
         :param element: The element with drag event.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -41,16 +41,16 @@ class AccessibleEvent:
 
         pass
 
-    def fix_drags_and_drops(self):
+    def make_accessible_all_drag_and_drop_events(self):
         """
-        Provide a solution for elements that has Drag-and-Drop events.
+        Make all Drag-and-Drop events of page available from a keyboard.
         """
 
         pass
 
-    def fix_hover(self, element):
+    def make_accessible_hover_events(self, element):
         """
-        Provide a solution for the element that has inaccessible hover events.
+        Make the hover events of element available from a keyboard.
 
         :param element: The element with hover event.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -58,26 +58,26 @@ class AccessibleEvent:
 
         pass
 
-    def fix_hovers(self):
+    def make_accessible_all_hover_events(self):
         """
-        Provide a solution for elements that has inaccessible hover events.
+        Make all hover events of page available from a keyboard.
         """
 
         pass
 
-    def fix_active(self, element):
+    def make_accessible_click_events(self, element):
         """
-        Provide a solution for the element that has inaccessible active events.
+        Make the click events of element available from a keyboard.
 
-        :param element: The element with active event.
+        :param element: The element with click events.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
         pass
 
-    def fix_actives(self):
+    def make_accessible_all_click_events(self):
         """
-        Provide a solution for elements that has inaccessible active events.
+        Make all click events of page available from a keyboard.
         """
 
         pass
