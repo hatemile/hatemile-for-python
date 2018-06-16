@@ -241,7 +241,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             if not anchor.has_attribute('name'):
                 anchor.set_attribute('name', anchor.get_attribute('id'))
             anchor.set_attribute(data_attribute, element.get_attribute('id'))
-        return anchor
+            return anchor
+        return None
 
     def _free_shortcut(self, shortcut):
         """
