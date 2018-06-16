@@ -45,11 +45,24 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         self.id_text_shortcuts = 'text-shortcuts'
         self.data_access_key = 'data-shortcutdescriptionfor'
         self.text_shortcuts = configure.get_parameter('text-shortcuts')
-        self.standart_prefix = configure.get_parameter(
-            'text-standart-shortcut-prefix'
+        self.shortcut_prefix = self._get_shortcut_prefix(
+            user_agent,
+            configure.get_parameter('text-standart-shortcut-prefix')
         )
         self.list_shortcuts_added = False
         self.list_shortcuts = None
+
+    def _get_shortcut_prefix(self, user_agent, standart_prefix):
+        """
+        Returns the shortcut prefix of browser.
+
+        :param user_agent: The user agent of browser.
+        :type user_agent: str
+        :param standart_prefix: The default prefix.
+        :type standart_prefix: str
+        :return: The shortcut prefix of browser.
+        :rtype: str
+        """
 
         if user_agent is not None:
             user_agent = user_agent.lower()
@@ -60,31 +73,29 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
             safari = 'applewebkit' in user_agent
             windows = 'windows' in user_agent
             chrome = 'chrome' in user_agent
-            firefox = re.match(
-                '.*firefox/[2-9]|minefield/3.*',
-                user_agent
-            ) is not None
+            firefox = (
+                ('firefox' in user_agent)
+                or ('minefield' in user_agent)
+            )
             internet_explorer = (
                 ('msie' in user_agent)
                 or ('trident' in user_agent)
             )
 
             if opera:
-                self.prefix = 'SHIFT + ESC'
+                return 'SHIFT + ESC'
             elif chrome and mac and (not spoofer):
-                self.prefix = 'CTRL + OPTION'
+                return 'CTRL + OPTION'
             elif safari and (not windows) and (not spoofer):
-                self.prefix = 'CTRL + ALT'
+                return 'CTRL + ALT'
             elif (not windows) and (safari or mac or konqueror):
-                self.prefix = 'CTRL'
+                return 'CTRL'
             elif firefox:
-                self.prefix = 'ALT + SHIFT'
+                return 'ALT + SHIFT'
             elif chrome or internet_explorer:
-                self.prefix = 'ALT'
-            else:
-                self.prefix = self.standart_prefix
-        else:
-            self.prefix = self.standart_prefix
+                return 'ALT'
+            return standart_prefix
+        return standart_prefix
 
     def _get_description(self, element):
         """
@@ -201,7 +212,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                         item = self.parser.create_element('li')
                         item.set_attribute(self.data_access_key, key)
                         item.append_text(
-                            self.prefix
+                            self.shortcut_prefix
                             + ' + '
                             + key
                             + ': '
