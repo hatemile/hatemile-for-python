@@ -59,14 +59,27 @@ class Configure:
 
         return self.parameters.copy()
 
-    def get_parameter(self, name):
+    def has_parameter(self, parameter):
+        """
+        Check that the configuration has an parameter.
+
+        :param parameter: The name of parameter.
+        :type parameter: str
+        :return: True if the configuration has the parameter or False if the
+                 configuration not has the parameter.
+        :rtype: bool
+        """
+
+        return parameter in self.parameters
+
+    def get_parameter(self, parameter):
         """
         Returns the value of a parameter of configuration.
 
-        :param name: The parameter.
-        :type name: str
+        :param parameter: The name of parameter.
+        :type parameter: str
         :return: The value of the parameter.
         :rtype: str
         """
 
-        return self.parameters[name]
+        return self.parameters[parameter]
