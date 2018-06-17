@@ -36,6 +36,9 @@ class AccessibleEventImplementation(AccessibleEvent):
     #: The id of script element that modify the events of elements.
     ID_FUNCTION_SCRIPT_FIX = 'id-function-script-fix'
 
+    #: The ID of script element that contains the common functions of scripts.
+    ID_SCRIPT_COMMON_FUNCTIONS = 'hatemile-common-functions'
+
     def __init__(self, parser):
         """
         Initializes a new object that manipulate the accessibility of the
@@ -77,34 +80,63 @@ class AccessibleEventImplementation(AccessibleEvent):
         """
 
         head = self.parser.find('head').first_result()
-        if (
-            (head is not None)
-            and (self.parser.find(
+        if head is not None:
+            common_functions_script = self.parser.find(
                 '#'
-                + AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
-            ).first_result() is None)
-        ):
-            event_listener_file = open(
-                os.path.join(
-                    os.path.dirname(os.path.dirname(os.path.dirname(
-                        os.path.realpath(__file__)
-                    ))),
-                    'js',
-                    'eventlistener.js'
-                ),
-                'r'
-            )
-            local_event_listener_script_content = event_listener_file.read()
-            event_listener_file.close()
+                + AccessibleEventImplementation.ID_SCRIPT_COMMON_FUNCTIONS
+            ).first_result()
+            if common_functions_script is None:
+                common_functions_file = open(
+                    os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.dirname(
+                            os.path.realpath(__file__)
+                        ))),
+                        'js',
+                        'common.js'
+                    ),
+                    'r'
+                )
+                common_functions_content = common_functions_file.read()
+                common_functions_file.close()
 
-            script = self.parser.create_element('script')
-            script.set_attribute(
-                'id',
-                AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
-            )
-            script.set_attribute('type', 'text/javascript')
-            script.append_text(local_event_listener_script_content)
-            head.prepend_element(script)
+                common_functions_script = self.parser.create_element('script')
+                common_functions_script.set_attribute(
+                    'id',
+                    AccessibleEventImplementation.ID_SCRIPT_COMMON_FUNCTIONS
+                )
+                common_functions_script.set_attribute(
+                    'type',
+                    'text/javascript'
+                )
+                common_functions_script.append_text(common_functions_content)
+                head.prepend_element(common_functions_script)
+            if (
+                self.parser.find(
+                    '#'
+                    + AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
+                ).first_result() is None
+            ):
+                event_listener_file = open(
+                    os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.dirname(
+                            os.path.realpath(__file__)
+                        ))),
+                        'js',
+                        'eventlistener.js'
+                    ),
+                    'r'
+                )
+                event_listener_script_content = event_listener_file.read()
+                event_listener_file.close()
+
+                script = self.parser.create_element('script')
+                script.set_attribute(
+                    'id',
+                    AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
+                )
+                script.set_attribute('type', 'text/javascript')
+                script.append_text(event_listener_script_content)
+                common_functions_script.insert_after(script)
         local = self.parser.find('body').first_result()
         if local is not None:
             self.script_list = self.parser.find(

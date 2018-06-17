@@ -70,3 +70,18 @@ class AccessibleForm:
         """
 
         pass
+
+    def mark_invalid_field(self, field):
+        """
+        Mark a solution to display that this field is invalid.
+
+        :param field: The field.
+        :type field: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+    def mark_all_invalid_fields(self):
+        """
+        Mark a solution to display that a fields are invalid.
+        """
+
+        pass
