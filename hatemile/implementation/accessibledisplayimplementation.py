@@ -27,6 +27,15 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     readers.
     """
 
+    #: The id of list element that contains the description of shortcuts.
+    ID_CONTAINER_SHORTCUTS = 'container-shortcuts'
+
+    #: The id of text of description of container of shortcuts descriptions.
+    ID_TEXT_SHORTCUTS = 'text-shortcuts'
+
+    #: The name of attribute that link the list item element with the shortcut.
+    DATA_ACCESS_KEY = 'data-shortcutdescriptionfor'
+
     def __init__(self, parser, configure, user_agent=None):
         """
         Initializes a new object that manipulate the display for screen readers
@@ -42,9 +51,6 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
 
         self.parser = parser
         self.id_generator = IDGenerator('display')
-        self.id_container_shortcuts = 'container-shortcuts'
-        self.id_text_shortcuts = 'text-shortcuts'
-        self.data_access_key = 'data-shortcutdescriptionfor'
         self.text_shortcuts = configure.get_parameter('text-shortcuts')
         self.shortcut_prefix = self._get_shortcut_prefix(
             user_agent,
@@ -165,17 +171,24 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         """
 
         container = self.parser.find(
-            '#' + self.id_container_shortcuts
+            '#'
+            + AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS
         ).first_result()
         html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
                 container = self.parser.create_element('div')
-                container.set_attribute('id', self.id_container_shortcuts)
+                container.set_attribute(
+                    'id',
+                    AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS
+                )
 
                 text_container = self.parser.create_element('span')
-                text_container.set_attribute('id', self.id_text_shortcuts)
+                text_container.set_attribute(
+                    'id',
+                    AccessibleDisplayImplementation.ID_TEXT_SHORTCUTS
+                )
                 text_container.append_text(self.text_shortcuts)
 
                 container.append_element(text_container)
@@ -208,10 +221,17 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                 for key in keys:
                     key = key.upper()
                     if self.parser.find(self.list_shortcuts).find_children(
-                        '[' + self.data_access_key + '="' + key + '"]'
+                        '['
+                        + AccessibleDisplayImplementation.DATA_ACCESS_KEY
+                        + '="'
+                        + key
+                        + '"]'
                     ).first_result() is None:
                         item = self.parser.create_element('li')
-                        item.set_attribute(self.data_access_key, key)
+                        item.set_attribute(
+                            AccessibleDisplayImplementation.DATA_ACCESS_KEY,
+                            key
+                        )
                         item.append_text(
                             self.shortcut_prefix
                             + ' + '

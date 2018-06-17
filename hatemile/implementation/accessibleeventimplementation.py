@@ -26,6 +26,16 @@ class AccessibleEventImplementation(AccessibleEvent):
     :py:class:`hatemile.accessibleevent.AccessibleEvent`.
     """
 
+    #: The id of script element that replace the event listener methods.
+    ID_SCRIPT_EVENT_LISTENER = 'script-eventlistener'
+
+    #: The id of script element that contains the list of elements that has
+    #: inaccessible events.
+    ID_LIST_IDS_SCRIPT = 'list-ids-script'
+
+    #: The id of script element that modify the events of elements.
+    ID_FUNCTION_SCRIPT_FIX = 'id-function-script-fix'
+
     def __init__(self, parser):
         """
         Initializes a new object that manipulate the accessibility of the
@@ -37,9 +47,6 @@ class AccessibleEventImplementation(AccessibleEvent):
 
         self.parser = parser
         self.id_generator = IDGenerator('event')
-        self.id_script_event_listener = 'script-eventlistener'
-        self.id_list_ids_script = 'list-ids-script'
-        self.id_function_script_fix = 'id-function-script-fix'
         self.main_script_added = False
         self.script_list = None
 
@@ -73,7 +80,8 @@ class AccessibleEventImplementation(AccessibleEvent):
         if (
             (head is not None)
             and (self.parser.find(
-                '#' + self.id_script_event_listener
+                '#'
+                + AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
             ).first_result() is None)
         ):
             event_listener_file = open(
@@ -90,18 +98,25 @@ class AccessibleEventImplementation(AccessibleEvent):
             event_listener_file.close()
 
             script = self.parser.create_element('script')
-            script.set_attribute('id', self.id_script_event_listener)
+            script.set_attribute(
+                'id',
+                AccessibleEventImplementation.ID_SCRIPT_EVENT_LISTENER
+            )
             script.set_attribute('type', 'text/javascript')
             script.append_text(local_event_listener_script_content)
             head.prepend_element(script)
         local = self.parser.find('body').first_result()
         if local is not None:
             self.script_list = self.parser.find(
-                '#' + self.id_list_ids_script
+                '#'
+                + AccessibleEventImplementation.ID_LIST_IDS_SCRIPT
             ).first_result()
             if self.script_list is None:
                 self.script_list = self.parser.create_element('script')
-                self.script_list.set_attribute('id', self.id_list_ids_script)
+                self.script_list.set_attribute(
+                    'id',
+                    AccessibleEventImplementation.ID_LIST_IDS_SCRIPT
+                )
                 self.script_list.set_attribute('type', 'text/javascript')
                 self.script_list.append_text('var activeElements = [];')
                 self.script_list.append_text('var hoverElements = [];')
@@ -109,7 +124,8 @@ class AccessibleEventImplementation(AccessibleEvent):
                 self.script_list.append_text('var dropElements = [];')
                 local.append_element(self.script_list)
             if self.parser.find(
-                    '#' + self.id_function_script_fix
+                    '#'
+                    + AccessibleEventImplementation.ID_FUNCTION_SCRIPT_FIX
             ).first_result() is None:
                 include_file = open(
                     os.path.join(
@@ -127,7 +143,7 @@ class AccessibleEventImplementation(AccessibleEvent):
                 script_function = self.parser.create_element('script')
                 script_function.set_attribute(
                     'id',
-                    self.id_function_script_fix
+                    AccessibleEventImplementation.ID_FUNCTION_SCRIPT_FIX
                 )
                 script_function.set_attribute('type', 'text/javascript')
                 script_function.append_text(local_include_script_content)

@@ -27,6 +27,38 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     :py:class:`hatemile.accessiblenavigation.AccessibleNavigation`.
     """
 
+    #: The id of list element that contains the skippers.
+    ID_CONTAINER_SKIPPERS = 'container-skippers'
+
+    #: The id of list element that contains the links for the headings.
+    ID_CONTAINER_HEADING = 'container-heading'
+
+    #: The id of text of description of container of heading links.
+    ID_TEXT_HEADING = 'text-heading'
+
+    #: The HTML class of anchor of skipper.
+    CLASS_SKIPPER_ANCHOR = 'skipper-anchor'
+
+    #: The HTML class of anchor of heading link.
+    CLASS_HEADING_ANCHOR = 'heading-anchor'
+
+    #: The HTML class of element for show the long description of image.
+    CLASS_LONG_DESCRIPTION_LINK = 'longdescription-link'
+
+    #: The name of attribute that links the anchor of skipper with the element.
+    DATA_ANCHOR_FOR = 'data-anchorfor'
+
+    #: The name of attribute that indicates the level of heading of link.
+    DATA_HEADING_LEVEL = 'data-headinglevel'
+
+    #: The name of attribute that links the anchor of heading link with
+    #: heading.
+    DATA_HEADING_ANCHOR_FOR = 'data-headinganchorfor'
+
+    #: The name of attribute that link the anchor of long description with the
+    #: image.
+    DATA_LONG_DESCRIPTION_FOR_IMAGE = 'data-longdescriptionfor'
+
     def __init__(
         self,
         parser,
@@ -47,16 +79,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
         self.parser = parser
         self.id_generator = IDGenerator('navigation')
-        self.id_container_skippers = 'container-skippers'
-        self.id_container_heading = 'container-heading'
-        self.id_text_heading = 'text-heading'
-        self.class_skipper_anchor = 'skipper-anchor'
-        self.class_heading_anchor = 'heading-anchor'
-        self.class_long_description_link = 'longdescription-link'
-        self.data_anchor_for = 'data-anchorfor'
-        self.data_heading_anchor_for = 'data-headinganchorfor'
-        self.data_heading_level = 'data-headinglevel'
-        self.data_long_description_for_image = 'data-longdescriptionfor'
         self.text_heading = configure.get_parameter('text-heading')
         self.prefix_long_description_link = configure.get_parameter(
             'prefix-longdescription'
@@ -109,14 +131,18 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         container = self.parser.find(
-            '#' + self.id_container_skippers
+            '#'
+            + AccessibleNavigationImplementation.ID_CONTAINER_SKIPPERS
         ).first_result()
         html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
                 container = self.parser.create_element('div')
-                container.set_attribute('id', self.id_container_skippers)
+                container.set_attribute(
+                    'id',
+                    AccessibleNavigationImplementation.ID_CONTAINER_SKIPPERS
+                )
                 local.get_first_element_child().insert_before(container)
         if container is not None:
             html_list = self.parser.find(container).find_children(
@@ -138,17 +164,24 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         """
 
         container = self.parser.find(
-            '#' + self.id_container_heading
+            '#'
+            + AccessibleNavigationImplementation.ID_CONTAINER_HEADING
         ).first_result()
         html_list = None
         if container is None:
             local = self.parser.find('body').first_result()
             if local is not None:
                 container = self.parser.create_element('div')
-                container.set_attribute('id', self.id_container_heading)
+                container.set_attribute(
+                    'id',
+                    AccessibleNavigationImplementation.ID_CONTAINER_HEADING
+                )
 
                 text_container = self.parser.create_element('span')
-                text_container.set_attribute('id', self.id_text_heading)
+                text_container.set_attribute(
+                    'id',
+                    AccessibleNavigationImplementation.ID_TEXT_HEADING
+                )
                 text_container.append_text(self.text_heading)
 
                 container.append_element(text_container)
@@ -287,8 +320,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             if skipper is not None:
                 anchor = self._generate_anchor_for(
                     element,
-                    self.data_anchor_for,
-                    self.class_skipper_anchor
+                    AccessibleNavigationImplementation.DATA_ANCHOR_FOR,
+                    AccessibleNavigationImplementation.CLASS_SKIPPER_ANCHOR
                 )
                 if anchor is not None:
                     item_link = self.parser.create_element('li')
@@ -318,13 +351,14 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     self.provide_navigation_by_skipper(element)
 
     def provide_navigation_by_heading(self, heading):
+        id_container = AccessibleNavigationImplementation.ID_CONTAINER_HEADING
         if not self.validate_heading:
             self.valid_heading = self._is_valid_heading()
         if self.valid_heading:
             anchor = self._generate_anchor_for(
                 heading,
-                self.data_heading_anchor_for,
-                self.class_heading_anchor
+                AccessibleNavigationImplementation.DATA_HEADING_ANCHOR_FOR,
+                AccessibleNavigationImplementation.CLASS_HEADING_ANCHOR
             )
             if anchor is not None:
                 list_heading = None
@@ -334,10 +368,10 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 else:
                     super_item = self.parser.find(
                         '#'
-                        + self.id_container_heading
+                        + id_container
                     ).find_descendants(
                         '['
-                        + self.data_heading_level
+                        + AccessibleNavigationImplementation.DATA_HEADING_LEVEL
                         + '="'
                         + str(level - 1)
                         + '"]'
@@ -351,7 +385,10 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                             super_item.append_element(list_heading)
                 if list_heading is not None:
                     item = self.parser.create_element('li')
-                    item.set_attribute(self.data_heading_level, str(level))
+                    item.set_attribute(
+                        AccessibleNavigationImplementation.DATA_HEADING_LEVEL,
+                        str(level)
+                    )
 
                     link = self.parser.create_element('a')
                     link.set_attribute(
@@ -370,12 +407,18 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.provide_navigation_by_heading(heading)
 
     def provide_navigation_to_long_description(self, image):
+        html_class = (
+            AccessibleNavigationImplementation.CLASS_LONG_DESCRIPTION_LINK
+        )
+        custom_attribute = (
+            AccessibleNavigationImplementation.DATA_LONG_DESCRIPTION_FOR_IMAGE
+        )
         if image.has_attribute('longdesc'):
             self.id_generator.generate_id(image)
             id_image = image.get_attribute('id')
             if self.parser.find(
                 '['
-                + self.data_long_description_for_image
+                + custom_attribute
                 + '="'
                 + id_image
                 + '"]'
@@ -397,11 +440,8 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 anchor = self.parser.create_element('a')
                 anchor.set_attribute('href', image.get_attribute('longdesc'))
                 anchor.set_attribute('target', '_blank')
-                anchor.set_attribute(
-                    self.data_long_description_for_image,
-                    id_image
-                )
-                anchor.set_attribute('class', self.class_long_description_link)
+                anchor.set_attribute(custom_attribute, id_image)
+                anchor.set_attribute('class', html_class)
                 anchor.append_text(text.strip())
                 image.insert_after(anchor)
 
