@@ -50,6 +50,10 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     #: The name of attribute that links the description of shortcut of element.
     DATA_ATTRIBUTE_ACCESSKEY_OF = 'data-attributeaccesskeyof'
 
+    #: The name of attribute that links the content of header cell with the
+    #: data cell.
+    DATA_ATTRIBUTE_HEADERS_OF = 'data-headersof'
+
     #: The name of attribute that links the content of role of element with the
     #: element.
     DATA_ROLE_OF = 'data-roleof'
@@ -91,6 +95,18 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         )
         self.attribute_accesskey_suffix_after = configure.get_parameter(
             'attribute-accesskey-suffix-after'
+        )
+        self.attribute_headers_prefix_before = configure.get_parameter(
+            'attribute-headers-prefix-before'
+        )
+        self.attribute_headers_suffix_before = configure.get_parameter(
+            'attribute-headers-suffix-before'
+        )
+        self.attribute_headers_prefix_after = configure.get_parameter(
+            'attribute-headers-prefix-after'
+        )
+        self.attribute_headers_suffix_after = configure.get_parameter(
+            'attribute-headers-suffix-after'
         )
         self.attribute_role_prefix_before = configure.get_parameter(
             'attribute-role-prefix-before'
@@ -559,3 +575,38 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_role(element)
+
+    def display_cell_header(self, table_cell):
+        if table_cell.has_attribute('headers'):
+            text_header = ''
+            ids_headers = re.split(
+                '[ \n\t\r]+',
+                table_cell.get_attribute('headers')
+            )
+            for id_header in ids_headers:
+                header = self.parser.find('#' + id_header).first_result()
+                if header is not None:
+                    if text_header == '':
+                        text_header = header.get_text_content().strip()
+                    else:
+                        text_header = (
+                            text_header
+                            + ' '
+                            + header.get_text_content().strip()
+                        )
+            if text_header.strip() != '':
+                self._force_read(
+                    table_cell,
+                    text_header,
+                    self.attribute_headers_prefix_before,
+                    self.attribute_headers_suffix_before,
+                    self.attribute_headers_prefix_after,
+                    self.attribute_headers_suffix_after,
+                    AccessibleDisplayImplementation.DATA_ATTRIBUTE_HEADERS_OF
+                )
+
+    def display_all_cell_headers(self):
+        elements = self.parser.find('td[headers],th[headers]').list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.display_cell_header(element)

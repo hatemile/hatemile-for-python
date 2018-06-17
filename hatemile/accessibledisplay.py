@@ -54,3 +54,20 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_cell_header(self, table_cell):
+        """
+        Display the headers of each data cell of table.
+
+        :param table_cell: The table cell.
+        :type table_cell: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_cell_headers(self):
+        """
+        Display the headers of each data cell of all tables of page.
+        """
+
+        pass
