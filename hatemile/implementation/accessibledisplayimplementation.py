@@ -59,7 +59,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         self.id_generator = IDGenerator('display')
         self.shortcut_prefix = self._get_shortcut_prefix(
             user_agent,
-            configure.get_parameter('text-standart-shortcut-prefix')
+            configure.get_parameter('attribute-accesskey-default')
         )
         self.attribute_accesskey_before = configure.get_parameter(
             'attribute-accesskey-before'
