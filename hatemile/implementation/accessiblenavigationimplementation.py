@@ -175,7 +175,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     'id',
                     AccessibleNavigationImplementation.ID_CONTAINER_SKIPPERS
                 )
-                local.get_first_element_child().insert_before(container)
+                local.prepend_element(container)
         if container is not None:
             html_list = self.parser.find(container).find_children(
                 'ul'
