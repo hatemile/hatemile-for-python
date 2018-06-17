@@ -31,11 +31,16 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     #: The id of list element that contains the skippers.
     ID_CONTAINER_SKIPPERS = 'container-skippers'
 
-    #: The id of list element that contains the links for the headings.
-    ID_CONTAINER_HEADING = 'container-heading'
+    #: The id of list element that contains the links for the headings, before
+    #: the whole page.
+    ID_CONTAINER_HEADING_BEFORE = 'container-heading-before'
 
-    #: The id of text of description of container of heading links.
-    ID_TEXT_HEADING = 'text-heading'
+    #: The id of list element that contains the links for the headings, after
+    #: the whole page.
+    ID_CONTAINER_HEADING_AFTER = 'container-heading-after'
+
+    #: The HTML class of text of description of container of heading links.
+    CLASS_TEXT_HEADING = 'text-heading'
 
     #: The HTML class of anchor of skipper.
     CLASS_SKIPPER_ANCHOR = 'skipper-anchor'
@@ -83,7 +88,12 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
         self.parser = parser
         self.id_generator = IDGenerator('navigation')
-        self.text_heading = configure.get_parameter('text-heading')
+        self.elements_heading_before = configure.get_parameter(
+            'elements-heading-before'
+        )
+        self.elements_heading_after = configure.get_parameter(
+            'elements-heading-after'
+        )
         self.attribute_long_description_prefix_before = (
             configure.get_parameter(
                 'attribute-longdescription-prefix-before'
@@ -104,9 +114,12 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             skipper_file_name
         )
         self.list_skippers_added = False
+        self.list_heading_added = False
         self.validate_heading = False
         self.valid_heading = False
         self.list_skippers = None
+        self.list_heading_before = None
+        self.list_heading_after = None
 
     @staticmethod
     def _get_skippers(file_name=None):
@@ -172,42 +185,69 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     def _generate_list_heading(self):
         """
         Generate the list of heading links of page.
-
-        :return: The list of heading links of page.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
-        container = self.parser.find(
-            '#'
-            + AccessibleNavigationImplementation.ID_CONTAINER_HEADING
-        ).first_result()
-        html_list = None
-        if container is None:
-            local = self.parser.find('body').first_result()
-            if local is not None:
-                container = self.parser.create_element('div')
-                container.set_attribute(
-                    'id',
-                    AccessibleNavigationImplementation.ID_CONTAINER_HEADING
-                )
-
-                text_container = self.parser.create_element('span')
-                text_container.set_attribute(
-                    'id',
-                    AccessibleNavigationImplementation.ID_TEXT_HEADING
-                )
-                text_container.append_text(self.text_heading)
-
-                container.append_element(text_container)
-                local.append_element(container)
-        if container is not None:
-            html_list = self.parser.find(container).find_children(
-                'ol'
+        local = self.parser.find('body').first_result()
+        id_container_heading_before = (
+            AccessibleNavigationImplementation.ID_CONTAINER_HEADING_BEFORE
+        )
+        id_container_heading_after = (
+            AccessibleNavigationImplementation.ID_CONTAINER_HEADING_AFTER
+        )
+        if local is not None:
+            container_before = self.parser.find(
+                '#'
+                + id_container_heading_before
             ).first_result()
-            if html_list is None:
-                html_list = self.parser.create_element('ol')
-                container.append_element(html_list)
-        return html_list
+            if (container_before is None) and (self.elements_heading_before):
+                container_before = self.parser.create_element('div')
+                container_before.set_attribute(
+                    'id',
+                    id_container_heading_before
+                )
+
+                text_container_before = self.parser.create_element('span')
+                text_container_before.set_attribute(
+                    'class',
+                    AccessibleNavigationImplementation.CLASS_TEXT_HEADING
+                )
+                text_container_before.append_text(self.elements_heading_before)
+
+                container_before.append_element(text_container_before)
+                local.prepend_element(container_before)
+            if container_before is not None:
+                self.list_heading_before = self.parser.find(
+                    container_before
+                ).find_children('ol').first_result()
+                if self.list_heading_before is None:
+                    self.list_heading_before = self.parser.create_element('ol')
+                    container_before.append_element(self.list_heading_before)
+
+            container_after = self.parser.find(
+                '#'
+                + id_container_heading_after
+            ).first_result()
+            if (container_after is None) and (self.elements_heading_after):
+                container_after = self.parser.create_element('div')
+                container_after.set_attribute('id', id_container_heading_after)
+
+                text_container_after = self.parser.create_element('span')
+                text_container_after.set_attribute(
+                    'class',
+                    AccessibleNavigationImplementation.CLASS_TEXT_HEADING
+                )
+                text_container_after.append_text(self.elements_heading_after)
+
+                container_after.append_element(text_container_after)
+                local.append_element(container_after)
+            if container_after is not None:
+                self.list_heading_after = self.parser.find(
+                    container_after
+                ).find_children('ol').first_result()
+                if self.list_heading_after is None:
+                    self.list_heading_after = self.parser.create_element('ol')
+                    container_after.append_element(self.list_heading_after)
+        self.list_heading_added = True
 
     def _get_heading_level(self, element):
         """
@@ -365,7 +405,6 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                     self.provide_navigation_by_skipper(element)
 
     def provide_navigation_by_heading(self, heading):
-        id_container = AccessibleNavigationImplementation.ID_CONTAINER_HEADING
         if not self.validate_heading:
             self.valid_heading = self._is_valid_heading()
         if self.valid_heading:
@@ -375,44 +414,62 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 AccessibleNavigationImplementation.CLASS_HEADING_ANCHOR
             )
             if anchor is not None:
-                list_heading = None
+                if not self.list_heading_added:
+                    self._generate_list_heading()
+                list_before = None
+                list_after = None
                 level = self._get_heading_level(heading)
                 if level == 1:
-                    list_heading = self._generate_list_heading()
+                    list_before = self.list_heading_before
+                    list_after = self.list_heading_after
                 else:
-                    super_item = self.parser.find(
-                        '#'
-                        + id_container
-                    ).find_descendants(
+                    selector = (
                         '['
                         + AccessibleNavigationImplementation.DATA_HEADING_LEVEL
                         + '="'
                         + str(level - 1)
                         + '"]'
-                    ).last_result()
-                    if super_item is not None:
-                        list_heading = self.parser.find(
-                            super_item
-                        ).find_children('ol').first_result()
-                        if list_heading is None:
-                            list_heading = self.parser.create_element('ol')
-                            super_item.append_element(list_heading)
-                if list_heading is not None:
-                    item = self.parser.create_element('li')
-                    item.set_attribute(
-                        AccessibleNavigationImplementation.DATA_HEADING_LEVEL,
-                        str(level)
                     )
+                    if self.list_heading_before is not None:
+                        super_item_before = self.parser.find(
+                            self.list_heading_before
+                        ).find_descendants(selector).last_result()
+                        if super_item_before is not None:
+                            list_before = self.parser.find(
+                                super_item_before
+                            ).find_children('ol').first_result()
+                            if list_before is None:
+                                list_before = self.parser.create_element('ol')
+                                super_item_before.append_element(list_before)
+                    if self.list_heading_after is not None:
+                        super_item_after = self.parser.find(
+                            self.list_heading_after
+                        ).find_descendants(selector).last_result()
+                        if super_item_after is not None:
+                            list_after = self.parser.find(
+                                super_item_after
+                            ).find_children('ol').first_result()
+                            if list_after is None:
+                                list_after = self.parser.create_element('ol')
+                                super_item_after.append_element(list_after)
+                item = self.parser.create_element('li')
+                item.set_attribute(
+                    AccessibleNavigationImplementation.DATA_HEADING_LEVEL,
+                    str(level)
+                )
 
-                    link = self.parser.create_element('a')
-                    link.set_attribute(
-                        'href',
-                        '#' + anchor.get_attribute('name')
-                    )
-                    link.append_text(heading.get_text_content())
+                link = self.parser.create_element('a')
+                link.set_attribute(
+                    'href',
+                    '#' + anchor.get_attribute('name')
+                )
+                link.append_text(heading.get_text_content())
+                item.append_element(link)
 
-                    item.append_element(link)
-                    list_heading.append_element(item)
+                if list_before is not None:
+                    list_before.append_element(item.clone_element())
+                if list_after is not None:
+                    list_after.append_element(item.clone_element())
 
     def provide_navigation_by_all_headings(self):
         headings = self.parser.find('h1,h2,h3,h4,h5,h6').list_results()
