@@ -26,25 +26,17 @@ class AccessibleEventImplementation(AccessibleEvent):
     :py:class:`hatemile.accessibleevent.AccessibleEvent`.
     """
 
-    event_listener_script_content = None
-
-    include_script_content = None
-
-    def __init__(self, parser, store_scripts_content):
+    def __init__(self, parser):
         """
         Initializes a new object that manipulate the accessibility of the
         Javascript events of elements of parser.
 
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
-        :param store_scripts_content: The state that indicates if the scripts
-                                      used are stored or deleted, after use.
-        :type store_scripts_content: bool
         """
 
         self.parser = parser
         self.id_generator = IDGenerator('event')
-        self.store_scripts_content = store_scripts_content
         self.id_script_event_listener = 'script-eventlistener'
         self.id_list_ids_script = 'list-ids-script'
         self.id_function_script_fix = 'id-function-script-fix'
@@ -94,23 +86,7 @@ class AccessibleEventImplementation(AccessibleEvent):
                 ),
                 'r'
             )
-            if self.store_scripts_content:
-                if (
-                    AccessibleEventImplementation
-                    .event_listener_script_content
-                ) is None:
-                    AccessibleEventImplementation\
-                        .event_listener_script_content = (
-                            event_listener_file.read()
-                        )
-                local_event_listener_script_content = (
-                    AccessibleEventImplementation
-                    .event_listener_script_content
-                )
-            else:
-                local_event_listener_script_content = (
-                    event_listener_file.read()
-                )
+            local_event_listener_script_content = event_listener_file.read()
             event_listener_file.close()
 
             script = self.parser.create_element('script')
@@ -145,17 +121,7 @@ class AccessibleEventImplementation(AccessibleEvent):
                     ),
                     'r'
                 )
-                if self.store_scripts_content:
-                    if AccessibleEventImplementation.include_script_content \
-                            is None:
-                        AccessibleEventImplementation \
-                            .include_script_content = include_file.read()
-                    local_include_script_content = (
-                        AccessibleEventImplementation
-                        .include_script_content
-                    )
-                else:
-                    local_include_script_content = include_file.read()
+                local_include_script_content = include_file.read()
                 include_file.close()
 
                 script_function = self.parser.create_element('script')
