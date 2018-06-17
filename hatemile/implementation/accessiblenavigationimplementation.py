@@ -371,6 +371,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 ).list_results()
                 if element in elements:
                     skipper = auxiliar_skipper
+                    break
             if skipper is not None:
                 anchor = self._generate_anchor_for(
                     element,
