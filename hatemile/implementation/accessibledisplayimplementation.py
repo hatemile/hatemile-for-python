@@ -27,14 +27,20 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     readers.
     """
 
-    #: The id of list element that contains the description of shortcuts.
-    ID_CONTAINER_SHORTCUTS = 'container-shortcuts'
+    #: The id of list element that contains the description of shortcuts,
+    #: before the whole content of page.
+    ID_CONTAINER_SHORTCUTS_BEFORE = 'container-shortcuts-before'
 
-    #: The id of text of description of container of shortcuts descriptions.
-    ID_TEXT_SHORTCUTS = 'text-shortcuts'
+    #: The id of list element that contains the description of shortcuts, after
+    #: the whole content of page.
+    ID_CONTAINER_SHORTCUTS_AFTER = 'container-shortcuts-after'
 
-    #: The name of attribute that link the list item element with the shortcut.
-    DATA_ACCESS_KEY = 'data-shortcutdescriptionfor'
+    #: The HTML class of text of description of container of shortcuts
+    #: descriptions.
+    CLASS_TEXT_SHORTCUTS = 'text-shortcuts'
+
+    #: The name of attribute that links the description of shortcut of element.
+    DATA_ATTRIBUTE_ACCESSKEY_OF = 'data-attributeaccesskeyof'
 
     def __init__(self, parser, configure, user_agent=None):
         """
@@ -51,13 +57,19 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
 
         self.parser = parser
         self.id_generator = IDGenerator('display')
-        self.text_shortcuts = configure.get_parameter('text-shortcuts')
         self.shortcut_prefix = self._get_shortcut_prefix(
             user_agent,
             configure.get_parameter('text-standart-shortcut-prefix')
         )
+        self.attribute_accesskey_before = configure.get_parameter(
+            'attribute-accesskey-before'
+        )
+        self.attribute_accesskey_after = configure.get_parameter(
+            'attribute-accesskey-after'
+        )
         self.list_shortcuts_added = False
-        self.list_shortcuts = None
+        self.list_shortcuts_before = None
+        self.list_shortcuts_after = None
 
     def _get_shortcut_prefix(self, user_agent, standart_prefix):
         """
@@ -165,81 +177,143 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     def _generate_list_shortcuts(self):
         """
         Generate the list of shortcuts of page.
-
-        :return: The list of shortcuts of page.
-        :rtype: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
-        container = self.parser.find(
-            '#'
-            + AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS
-        ).first_result()
-        html_list = None
-        if container is None:
-            local = self.parser.find('body').first_result()
-            if local is not None:
-                container = self.parser.create_element('div')
-                container.set_attribute(
-                    'id',
-                    AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS
-                )
-
-                text_container = self.parser.create_element('span')
-                text_container.set_attribute(
-                    'id',
-                    AccessibleDisplayImplementation.ID_TEXT_SHORTCUTS
-                )
-                text_container.append_text(self.text_shortcuts)
-
-                container.append_element(text_container)
-                local.append_element(container)
-        if container is not None:
-            html_list = self.parser.find(container).find_children(
-                'ul'
+        id_container_shortcuts_before = (
+            AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS_BEFORE
+        )
+        id_container_shortcuts_after = (
+            AccessibleDisplayImplementation.ID_CONTAINER_SHORTCUTS_AFTER
+        )
+        local = self.parser.find('body').first_result()
+        if local is not None:
+            container_before = self.parser.find(
+                '#'
+                + id_container_shortcuts_before
             ).first_result()
-            if html_list is None:
-                html_list = self.parser.create_element('ul')
-                container.append_element(html_list)
+            if (
+                (container_before is None)
+                and (self.attribute_accesskey_before)
+            ):
+                container_before = self.parser.create_element('div')
+                container_before.set_attribute(
+                    'id',
+                    id_container_shortcuts_before
+                )
+
+                text_container_before = self.parser.create_element('span')
+                text_container_before.set_attribute(
+                    'class',
+                    AccessibleDisplayImplementation.CLASS_TEXT_SHORTCUTS
+                )
+                text_container_before.append_text(
+                    self.attribute_accesskey_before
+                )
+
+                container_before.append_element(text_container_before)
+                local.prepend_element(container_before)
+            if container_before is not None:
+                self.list_shortcuts_before = self.parser.find(
+                    container_before
+                ).find_children('ul').first_result()
+                if self.list_shortcuts_before is None:
+                    self.list_shortcuts_before = self.parser.create_element(
+                        'ul'
+                    )
+                    container_before.append_element(self.list_shortcuts_before)
+
+            container_after = self.parser.find(
+                '#'
+                + id_container_shortcuts_after
+            ).first_result()
+            if (
+                (container_after is None)
+                and (self.attribute_accesskey_after)
+            ):
+                container_after = self.parser.create_element('div')
+                container_after.set_attribute(
+                    'id',
+                    id_container_shortcuts_after
+                )
+
+                text_container_after = self.parser.create_element('span')
+                text_container_after.set_attribute(
+                    'class',
+                    AccessibleDisplayImplementation.CLASS_TEXT_SHORTCUTS
+                )
+                text_container_after.append_text(
+                    self.attribute_accesskey_after
+                )
+
+                container_after.append_element(text_container_after)
+                local.append_element(container_after)
+            if container_after is not None:
+                self.list_shortcuts_after = self.parser.find(
+                    container_after
+                ).find_children('ul').first_result()
+                if self.list_shortcuts_after is None:
+                    self.list_shortcuts_after = self.parser.create_element(
+                        'ul'
+                    )
+                    container_after.append_element(self.list_shortcuts_after)
         self.list_shortcuts_added = True
 
-        return html_list
-
     def display_shortcut(self, element):
+        data_attribute_accesskey_of = (
+            AccessibleDisplayImplementation.DATA_ATTRIBUTE_ACCESSKEY_OF
+        )
         if element.has_attribute('accesskey'):
             description = self._get_description(element)
             if not element.has_attribute('title'):
                 element.set_attribute('title', description)
 
             if not self.list_shortcuts_added:
-                self.list_shortcuts = self._generate_list_shortcuts()
+                self._generate_list_shortcuts()
 
-            if self.list_shortcuts is not None:
-                keys = re.split(
-                    '[ \n\t\r]+',
-                    element.get_attribute('accesskey')
+            keys = re.split(
+                '[ \n\t\r]+',
+                element.get_attribute('accesskey').upper()
+            )
+            for key in keys:
+                item = self.parser.create_element('li')
+                item.set_attribute(data_attribute_accesskey_of, key)
+                item.append_text(
+                    self.shortcut_prefix
+                    + ' + '
+                    + key
+                    + ': '
+                    + description
                 )
-                for key in keys:
-                    key = key.upper()
-                    if self.parser.find(self.list_shortcuts).find_children(
-                        '['
-                        + AccessibleDisplayImplementation.DATA_ACCESS_KEY
-                        + '="'
-                        + key
-                        + '"]'
-                    ).first_result() is None:
-                        item = self.parser.create_element('li')
-                        item.set_attribute(
-                            AccessibleDisplayImplementation.DATA_ACCESS_KEY,
-                            key
-                        )
-                        item.append_text(
-                            self.shortcut_prefix
-                            + ' + '
-                            + key
-                            + ': '
-                            + description
-                        )
-                        self.list_shortcuts.append_element(item)
+
+                selector = (
+                    '['
+                    + data_attribute_accesskey_of
+                    + '="'
+                    + key
+                    + '"]'
+                )
+                if (
+                    (self.list_shortcuts_before is not None)
+                    and (
+                        self.parser.find(
+                            self.list_shortcuts_before
+                        ).find_children(selector).first_result() is None
+                    )
+                ):
+                    self.list_shortcuts_before.append_element(
+                        item.clone_element()
+                    )
+                if (
+                    (self.list_shortcuts_after)
+                    and (
+                        self.parser.find(
+                            self.list_shortcuts_after
+                        ).find_children(selector).first_result() is None
+                    )
+                ):
+                    self.list_shortcuts_after.append_element(
+                        item.clone_element()
+                    )
 
     def display_all_shortcuts(self):
         elements = self.parser.find('[accesskey]').list_results()
