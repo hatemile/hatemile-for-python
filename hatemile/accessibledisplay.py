@@ -71,3 +71,20 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_waiaria_states(self, element):
+        """
+        Display the WAI-ARIA attributes of element.
+
+        :param element: The element with WAI-ARIA attributes.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_waiaria_states(self):
+        """
+        Display the WAI-ARIA attributes of all elements of page.
+        """
+
+        pass

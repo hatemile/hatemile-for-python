@@ -54,6 +54,59 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     #: data cell.
     DATA_ATTRIBUTE_HEADERS_OF = 'data-headersof'
 
+    #: The name of attribute that links the content of autocomplete state of
+    #: field.
+    DATA_ARIA_AUTOCOMPLETE_OF = 'data-ariaautocompleteof'
+
+    #: The name of attribute that links the content of busy state of element.
+    DATA_ARIA_BUSY_OF = 'data-ariabusyof'
+
+    #: The name of attribute that links the content of checked state field.
+    DATA_ARIA_CHECKED_OF = 'data-ariacheckedof'
+
+    #: The name of attribute that links the content of drop effect state of
+    #: element.
+    DATA_ARIA_DROPEFFECT_OF = 'data-ariadropeffectof'
+
+    #: The name of attribute that links the content of expanded state of
+    #: element.
+    DATA_ARIA_EXPANDED_OF = 'data-ariaexpandedof'
+
+    #: The name of attribute that links the content of grabbed state of
+    #: element.
+    DATA_ARIA_GRABBED_OF = 'data-ariagrabbedof'
+
+    #: The name of attribute that links the content that show if the field has
+    #: popup.
+    DATA_ARIA_HASPOPUP_OF = 'data-ariahaspopupof'
+
+    #: The name of attribute that links the content of level state of element.
+    DATA_ARIA_LEVEL_OF = 'data-arialevelof'
+
+    #: The name of attribute that links the content of orientation state of
+    #: element.
+    DATA_ARIA_ORIENTATION_OF = 'data-ariaorientationof'
+
+    #: The name of attribute that links the content of pressed state of field.
+    DATA_ARIA_PRESSED_OF = 'data-ariapressedof'
+
+    #: The name of attribute that links the content of minimum range state of
+    #: field.
+    DATA_ARIA_RANGE_MIN_OF = 'data-attributevalueminof'
+
+    #: The name of attribute that links the content of maximum range state of
+    #: field.
+    DATA_ARIA_RANGE_MAX_OF = 'data-attributevaluemaxof'
+
+    #: The name of attribute that links the content of required state of field.
+    DATA_ARIA_REQUIRED_OF = 'data-attributerequiredof'
+
+    #: The name of attribute that links the content of selected state of field.
+    DATA_ARIA_SELECTED_OF = 'data-ariaselectedof'
+
+    #: The name of attribute that links the content of sort state of element.
+    DATA_ARIA_SORT_OF = 'data-ariasortof'
+
     #: The name of attribute that links the content of role of element with the
     #: element.
     DATA_ROLE_OF = 'data-roleof'
@@ -119,6 +172,210 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         )
         self.attribute_role_suffix_after = configure.get_parameter(
             'attribute-role-suffix-after'
+        )
+        self.aria_autocomplete_both_before = configure.get_parameter(
+            'aria-autocomplete-both-before'
+        )
+        self.aria_autocomplete_both_after = configure.get_parameter(
+            'aria-autocomplete-both-after'
+        )
+        self.aria_autocomplete_inline_before = configure.get_parameter(
+            'aria-autocomplete-inline-before'
+        )
+        self.aria_autocomplete_inline_after = configure.get_parameter(
+            'aria-autocomplete-inline-after'
+        )
+        self.aria_autocomplete_list_before = configure.get_parameter(
+            'aria-autocomplete-list-before'
+        )
+        self.aria_autocomplete_list_after = configure.get_parameter(
+            'aria-autocomplete-list-after'
+        )
+        self.aria_busy_true_before = configure.get_parameter(
+            'aria-busy-true-before'
+        )
+        self.aria_busy_true_after = configure.get_parameter(
+            'aria-busy-true-after'
+        )
+        self.aria_checked_false_before = configure.get_parameter(
+            'aria-checked-false-before'
+        )
+        self.aria_checked_false_after = configure.get_parameter(
+            'aria-checked-false-after'
+        )
+        self.aria_checked_mixed_before = configure.get_parameter(
+            'aria-checked-mixed-before'
+        )
+        self.aria_checked_mixed_after = configure.get_parameter(
+            'aria-checked-mixed-after'
+        )
+        self.aria_checked_true_before = configure.get_parameter(
+            'aria-checked-true-before'
+        )
+        self.aria_checked_true_after = configure.get_parameter(
+            'aria-checked-true-after'
+        )
+        self.aria_dropeffect_copy_before = configure.get_parameter(
+            'aria-dropeffect-copy-before'
+        )
+        self.aria_dropeffect_copy_after = configure.get_parameter(
+            'aria-dropeffect-copy-after'
+        )
+        self.aria_dropeffect_execute_before = configure.get_parameter(
+            'aria-dropeffect-execute-before'
+        )
+        self.aria_dropeffect_execute_after = configure.get_parameter(
+            'aria-dropeffect-execute-after'
+        )
+        self.aria_dropeffect_link_before = configure.get_parameter(
+            'aria-dropeffect-link-before'
+        )
+        self.aria_dropeffect_link_after = configure.get_parameter(
+            'aria-dropeffect-link-after'
+        )
+        self.aria_dropeffect_move_before = configure.get_parameter(
+            'aria-dropeffect-move-before'
+        )
+        self.aria_dropeffect_move_after = configure.get_parameter(
+            'aria-dropeffect-move-after'
+        )
+        self.aria_dropeffect_popup_before = configure.get_parameter(
+            'aria-dropeffect-popup-before'
+        )
+        self.aria_dropeffect_popup_after = configure.get_parameter(
+            'aria-dropeffect-popup-after'
+        )
+        self.aria_expanded_false_before = configure.get_parameter(
+            'aria-expanded-false-before'
+        )
+        self.aria_expanded_false_after = configure.get_parameter(
+            'aria-expanded-false-after'
+        )
+        self.aria_expanded_true_before = configure.get_parameter(
+            'aria-expanded-true-before'
+        )
+        self.aria_expanded_true_after = configure.get_parameter(
+            'aria-expanded-true-after'
+        )
+        self.aria_grabbed_false_before = configure.get_parameter(
+            'aria-grabbed-false-before'
+        )
+        self.aria_grabbed_false_after = configure.get_parameter(
+            'aria-grabbed-false-after'
+        )
+        self.aria_grabbed_true_before = configure.get_parameter(
+            'aria-grabbed-true-before'
+        )
+        self.aria_grabbed_true_after = configure.get_parameter(
+            'aria-grabbed-true-after'
+        )
+        self.aria_haspopup_true_before = configure.get_parameter(
+            'aria-haspopup-true-before'
+        )
+        self.aria_haspopup_true_after = configure.get_parameter(
+            'aria-haspopup-true-after'
+        )
+        self.aria_level_prefix_before = configure.get_parameter(
+            'aria-level-prefix-before'
+        )
+        self.aria_level_suffix_before = configure.get_parameter(
+            'aria-level-suffix-before'
+        )
+        self.aria_level_prefix_after = configure.get_parameter(
+            'aria-level-prefix-after'
+        )
+        self.aria_level_suffix_after = configure.get_parameter(
+            'aria-level-suffix-after'
+        )
+        self.aria_value_maximum_prefix_before = configure.get_parameter(
+            'aria-value-maximum-prefix-before'
+        )
+        self.aria_value_maximum_suffix_before = configure.get_parameter(
+            'aria-value-maximum-suffix-before'
+        )
+        self.aria_value_maximum_prefix_after = configure.get_parameter(
+            'aria-value-maximum-prefix-after'
+        )
+        self.aria_value_maximum_suffix_after = configure.get_parameter(
+            'aria-value-maximum-suffix-after'
+        )
+        self.aria_value_minimum_prefix_before = configure.get_parameter(
+            'aria-value-minimum-prefix-before'
+        )
+        self.aria_value_minimum_suffix_before = configure.get_parameter(
+            'aria-value-minimum-suffix-before'
+        )
+        self.aria_value_minimum_prefix_after = configure.get_parameter(
+            'aria-value-minimum-prefix-after'
+        )
+        self.aria_value_minimum_suffix_after = configure.get_parameter(
+            'aria-value-minimum-suffix-after'
+        )
+        self.aria_orientation_horizontal_before = configure.get_parameter(
+            'aria-orientation-horizontal-before'
+        )
+        self.aria_orientation_horizontal_after = configure.get_parameter(
+            'aria-orientation-horizontal-after'
+        )
+        self.aria_orientation_vertical_before = configure.get_parameter(
+            'aria-orientation-vertical-before'
+        )
+        self.aria_orientation_vertical_after = configure.get_parameter(
+            'aria-orientation-vertical-after'
+        )
+        self.aria_pressed_false_before = configure.get_parameter(
+            'aria-pressed-false-before'
+        )
+        self.aria_pressed_false_after = configure.get_parameter(
+            'aria-pressed-false-after'
+        )
+        self.aria_pressed_mixed_before = configure.get_parameter(
+            'aria-pressed-mixed-before'
+        )
+        self.aria_pressed_mixed_after = configure.get_parameter(
+            'aria-pressed-mixed-after'
+        )
+        self.aria_pressed_true_before = configure.get_parameter(
+            'aria-pressed-true-before'
+        )
+        self.aria_pressed_true_after = configure.get_parameter(
+            'aria-pressed-true-after'
+        )
+        self.aria_required_true_before = configure.get_parameter(
+            'aria-required-true-before'
+        )
+        self.aria_required_true_after = configure.get_parameter(
+            'aria-required-true-after'
+        )
+        self.aria_selected_false_before = configure.get_parameter(
+            'aria-selected-false-before'
+        )
+        self.aria_selected_false_after = configure.get_parameter(
+            'aria-selected-false-after'
+        )
+        self.aria_selected_true_before = configure.get_parameter(
+            'aria-selected-true-before'
+        )
+        self.aria_selected_true_after = configure.get_parameter(
+            'aria-selected-true-after'
+        )
+        self.aria_sort_ascending_before = configure.get_parameter(
+            'aria-sort-ascending-before'
+        )
+        self.aria_sort_ascending_after = configure.get_parameter(
+            'aria-sort-ascending-after'
+        )
+        self.aria_sort_descending_before = configure.get_parameter(
+            'aria-sort-descending-before'
+        )
+        self.aria_sort_descending_after = configure.get_parameter(
+            'aria-sort-descending-after'
+        )
+        self.aria_sort_other_before = configure.get_parameter(
+            'aria-sort-other-before'
+        )
+        self.aria_sort_other_after = configure.get_parameter(
+            'aria-sort-other-after'
         )
         self.list_shortcuts_added = False
         self.list_shortcuts_before = None
@@ -610,3 +867,217 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_cell_header(element)
+
+    def display_waiaria_states(self, element):
+        if (
+            (element.has_attribute('aria-busy'))
+            and (element.get_attribute('aria-busy') == 'true')
+        ):
+            self._force_read_simple(
+                element,
+                self.aria_busy_true_before,
+                self.aria_busy_true_after,
+                AccessibleDisplayImplementation.DATA_ARIA_BUSY_OF
+            )
+        if element.has_attribute('aria-checked'):
+            attribute_value = element.get_attribute('aria-checked')
+            if attribute_value == 'true':
+                self._force_read_simple(
+                    element,
+                    self.aria_checked_true_before,
+                    self.aria_checked_true_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_CHECKED_OF
+                )
+            elif attribute_value == 'false':
+                self._force_read_simple(
+                    element,
+                    self.aria_checked_false_before,
+                    self.aria_checked_false_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_CHECKED_OF
+                )
+            elif attribute_value == 'mixed':
+                self._force_read_simple(
+                    element,
+                    self.aria_checked_mixed_before,
+                    self.aria_checked_mixed_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_CHECKED_OF
+                )
+        if element.has_attribute('aria-expanded'):
+            attribute_value = element.get_attribute('aria-expanded')
+            if attribute_value == 'true':
+                self._force_read_simple(
+                    element,
+                    self.aria_expanded_true_before,
+                    self.aria_expanded_true_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_EXPANDED_OF
+                )
+            elif attribute_value == 'false':
+                self._force_read_simple(
+                    element,
+                    self.aria_expanded_false_before,
+                    self.aria_expanded_false_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_EXPANDED_OF
+                )
+        if (
+            (element.has_attribute('aria-haspopup'))
+            and (element.get_attribute('aria-haspopup') == 'true')
+        ):
+            self._force_read_simple(
+                element,
+                self.aria_haspopup_true_before,
+                self.aria_haspopup_true_after,
+                AccessibleDisplayImplementation.DATA_ARIA_HASPOPUP_OF
+            )
+        if element.has_attribute('aria-level'):
+            self._force_read(
+                element,
+                element.get_attribute('aria-level'),
+                self.aria_level_prefix_before,
+                self.aria_level_suffix_before,
+                self.aria_level_prefix_after,
+                self.aria_level_suffix_after,
+                AccessibleDisplayImplementation.DATA_ARIA_LEVEL_OF
+            )
+        if element.has_attribute('aria-orientation'):
+            attribute_value = element.get_attribute('aria-orientation')
+            if attribute_value == 'vertical':
+                self._force_read_simple(
+                    element,
+                    self.aria_orientation_vertical_before,
+                    self.aria_orientation_vertical_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_ORIENTATION_OF
+                )
+            elif attribute_value == 'horizontal':
+                self._force_read_simple(
+                    element,
+                    self.aria_orientation_horizontal_before,
+                    self.aria_orientation_horizontal_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_ORIENTATION_OF
+                )
+        if element.has_attribute('aria-pressed'):
+            attribute_value = element.get_attribute('aria-pressed')
+            if attribute_value == 'true':
+                self._force_read_simple(
+                    element,
+                    self.aria_pressed_true_before,
+                    self.aria_pressed_true_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_PRESSED_OF
+                )
+            elif attribute_value == 'false':
+                self._force_read_simple(
+                    element,
+                    self.aria_pressed_false_before,
+                    self.aria_pressed_false_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_PRESSED_OF
+                )
+            elif attribute_value == 'mixed':
+                self._force_read_simple(
+                    element,
+                    self.aria_pressed_mixed_before,
+                    self.aria_pressed_mixed_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_PRESSED_OF
+                )
+        if element.has_attribute('aria-selected'):
+            attribute_value = element.get_attribute('aria-selected')
+            if attribute_value == 'true':
+                self._force_read_simple(
+                    element,
+                    self.aria_selected_true_before,
+                    self.aria_selected_true_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_SELECTED_OF
+                )
+            elif attribute_value == 'false':
+                self._force_read_simple(
+                    element,
+                    self.aria_selected_false_before,
+                    self.aria_selected_false_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_SELECTED_OF
+                )
+        if element.has_attribute('aria-sort'):
+            attribute_value = element.get_attribute('aria-sort')
+            if attribute_value == 'ascending':
+                self._force_read_simple(
+                    element,
+                    self.aria_sort_ascending_before,
+                    self.aria_sort_ascending_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_SORT_OF
+                )
+            elif attribute_value == 'descending':
+                self._force_read_simple(
+                    element,
+                    self.aria_sort_descending_before,
+                    self.aria_sort_descending_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_SORT_OF
+                )
+            elif attribute_value == 'other':
+                self._force_read_simple(
+                    element,
+                    self.aria_sort_other_before,
+                    self.aria_sort_other_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_SORT_OF
+                )
+        if (
+            (element.has_attribute('aria-required'))
+            and (element.get_attribute('aria-required') == 'true')
+        ):
+            self._force_read_simple(
+                element,
+                self.aria_required_true_before,
+                self.aria_required_true_after,
+                AccessibleDisplayImplementation.DATA_ARIA_REQUIRED_OF
+            )
+        if element.has_attribute('aria-valuemin'):
+            self._force_read(
+                element,
+                element.get_attribute('aria-valuemin'),
+                self.aria_value_minimum_prefix_before,
+                self.aria_value_minimum_suffix_before,
+                self.aria_value_minimum_prefix_after,
+                self.aria_value_minimum_suffix_after,
+                AccessibleDisplayImplementation.DATA_ARIA_RANGE_MIN_OF
+            )
+        if element.has_attribute('aria-valuemax'):
+            self._force_read(
+                element,
+                element.get_attribute('aria-valuemax'),
+                self.aria_value_maximum_prefix_before,
+                self.aria_value_maximum_suffix_before,
+                self.aria_value_maximum_prefix_after,
+                self.aria_value_maximum_suffix_after,
+                AccessibleDisplayImplementation.DATA_ARIA_RANGE_MAX_OF
+            )
+        if element.has_attribute('aria-autocomplete'):
+            attribute_value = element.get_attribute('aria-autocomplete')
+            if attribute_value == 'both':
+                self._force_read_simple(
+                    element,
+                    self.aria_autocomplete_both_before,
+                    self.aria_autocomplete_both_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_AUTOCOMPLETE_OF
+                )
+            elif attribute_value == 'inline':
+                self._force_read_simple(
+                    element,
+                    self.aria_autocomplete_list_before,
+                    self.aria_autocomplete_list_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_AUTOCOMPLETE_OF
+                )
+            elif attribute_value == 'list':
+                self._force_read_simple(
+                    element,
+                    self.aria_autocomplete_inline_before,
+                    self.aria_autocomplete_inline_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_AUTOCOMPLETE_OF
+                )
+
+    def display_all_waiaria_states(self):
+        elements = self.parser.find(
+            '[aria-busy=true],[aria-checked],[aria-dropeffect],'
+            + '[aria-expanded],[aria-grabbed],[aria-haspopup],[aria-level],'
+            + '[aria-orientation],[aria-pressed],[aria-selected],[aria-sort],'
+            + '[aria-required=true],[aria-valuemin],[aria-valuemax],'
+            + '[aria-autocomplete]'
+        ).list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.display_waiaria_states(element)

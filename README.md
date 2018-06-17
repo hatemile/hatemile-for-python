@@ -195,6 +195,7 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
     display.display_all_shortcuts()
     display.display_all_roles()
     display.display_all_cell_headers()
+    display.display_all_waiaria_states()
 
     navigation.provide_navigation_by_all_skippers()
 
