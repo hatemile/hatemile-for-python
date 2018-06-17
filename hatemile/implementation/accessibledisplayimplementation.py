@@ -50,6 +50,10 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     #: The name of attribute that links the description of shortcut of element.
     DATA_ATTRIBUTE_ACCESSKEY_OF = 'data-attributeaccesskeyof'
 
+    #: The name of attribute that links the content of role of element with the
+    #: element.
+    DATA_ROLE_OF = 'data-roleof'
+
     def __init__(self, parser, configure, user_agent=None):
         """
         Initializes a new object that manipulate the display for screen readers
@@ -64,6 +68,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         """
 
         self.parser = parser
+        self.configure = configure
         self.id_generator = IDGenerator('display')
         self.shortcut_prefix = self._get_shortcut_prefix(
             user_agent,
@@ -86,6 +91,18 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         )
         self.attribute_accesskey_suffix_after = configure.get_parameter(
             'attribute-accesskey-suffix-after'
+        )
+        self.attribute_role_prefix_before = configure.get_parameter(
+            'attribute-role-prefix-before'
+        )
+        self.attribute_role_suffix_before = configure.get_parameter(
+            'attribute-role-suffix-before'
+        )
+        self.attribute_role_prefix_after = configure.get_parameter(
+            'attribute-role-prefix-after'
+        )
+        self.attribute_role_suffix_after = configure.get_parameter(
+            'attribute-role-suffix-after'
         )
         self.list_shortcuts_added = False
         self.list_shortcuts_before = None
@@ -135,6 +152,21 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                 return 'ALT'
             return standart_prefix
         return standart_prefix
+
+    def _get_role_description(self, role):
+        """
+        Returns the description of role.
+
+        :param role: The role.
+        :type role: str
+        :return: The description of role.
+        :rtype: str
+        """
+
+        parameter = 'role-' + role.lower()
+        if self.configure.has_parameter(parameter):
+            return self.configure.get_parameter(parameter)
+        return None
 
     def _get_description(self, element):
         """
@@ -505,3 +537,25 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_shortcut(element)
+
+    def display_role(self, element):
+        if element.has_attribute('role'):
+            role_description = self._get_role_description(
+                element.get_attribute('role')
+            )
+            if role_description is not None:
+                self._force_read(
+                    element,
+                    role_description,
+                    self.attribute_role_prefix_before,
+                    self.attribute_role_suffix_before,
+                    self.attribute_role_prefix_after,
+                    self.attribute_role_suffix_after,
+                    AccessibleDisplayImplementation.DATA_ROLE_OF
+                )
+
+    def display_all_roles(self):
+        elements = self.parser.find('[role]').list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.display_role(element)

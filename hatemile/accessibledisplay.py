@@ -37,3 +37,20 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_role(self, element):
+        """
+        Display the WAI-ARIA role of element.
+
+        :param element: The element.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_roles(self):
+        """
+        Display the WAI-ARIA roles of all elements of page.
+        """
+
+        pass
