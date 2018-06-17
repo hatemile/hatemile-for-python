@@ -15,6 +15,7 @@ Module of AccessibleNavigationImplementation class.
 """
 
 import os
+import re
 from xml.dom import minidom
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
@@ -42,8 +43,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     #: The HTML class of anchor of heading link.
     CLASS_HEADING_ANCHOR = 'heading-anchor'
 
-    #: The HTML class of element for show the long description of image.
-    CLASS_LONG_DESCRIPTION_LINK = 'longdescription-link'
+    #: The HTML class of force link, before it.
+    CLASS_FORCE_LINK_BEFORE = 'force-link-before'
+
+    #: The HTML class of force link, after it.
+    CLASS_FORCE_LINK_AFTER = 'force-link-after'
 
     #: The name of attribute that links the anchor of skipper with the element.
     DATA_ANCHOR_FOR = 'data-anchorfor'
@@ -57,7 +61,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
     #: The name of attribute that link the anchor of long description with the
     #: image.
-    DATA_LONG_DESCRIPTION_FOR_IMAGE = 'data-longdescriptionfor'
+    DATA_ATTRIBUTE_LONG_DESCRIPTION_OF = 'data-attributelongdescriptionof'
 
     def __init__(
         self,
@@ -80,11 +84,21 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.parser = parser
         self.id_generator = IDGenerator('navigation')
         self.text_heading = configure.get_parameter('text-heading')
-        self.prefix_long_description_link = configure.get_parameter(
-            'prefix-longdescription'
+        self.attribute_long_description_prefix_before = (
+            configure.get_parameter(
+                'attribute-longdescription-prefix-before'
+            )
         )
-        self.suffix_long_description_link = configure.get_parameter(
-            'suffix-longdescription'
+        self.attribute_long_description_suffix_before = (
+            configure.get_parameter(
+                'attribute-longdescription-suffix-before'
+            )
+        )
+        self.attribute_long_description_prefix_after = configure.get_parameter(
+            'attribute-longdescription-prefix-after'
+        )
+        self.attribute_long_description_suffix_after = configure.get_parameter(
+            'attribute-longdescription-suffix-after'
         )
         self.skippers = AccessibleNavigationImplementation._get_skippers(
             skipper_file_name
@@ -407,43 +421,84 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
                 self.provide_navigation_by_heading(heading)
 
     def provide_navigation_to_long_description(self, image):
-        html_class = (
-            AccessibleNavigationImplementation.CLASS_LONG_DESCRIPTION_LINK
-        )
         custom_attribute = (
-            AccessibleNavigationImplementation.DATA_LONG_DESCRIPTION_FOR_IMAGE
+            AccessibleNavigationImplementation
+            .DATA_ATTRIBUTE_LONG_DESCRIPTION_OF
         )
-        if image.has_attribute('longdesc'):
+        if (image.has_attribute('longdesc')) and (image.has_attribute('alt')):
             self.id_generator.generate_id(image)
             id_image = image.get_attribute('id')
-            if self.parser.find(
+            selector = (
                 '['
                 + custom_attribute
                 + '="'
                 + id_image
                 + '"]'
-            ).first_result() is None:
-                if image.has_attribute('alt'):
-                    text = (
-                        self.prefix_long_description_link
-                        + ' '
-                        + image.get_attribute('alt')
-                        + ' '
-                        + self.suffix_long_description_link
+            )
+            selector_before = (
+                '.'
+                + AccessibleNavigationImplementation.CLASS_FORCE_LINK_BEFORE
+                + selector
+            )
+            selector_after = (
+                '.'
+                + AccessibleNavigationImplementation.CLASS_FORCE_LINK_AFTER
+                + selector
+            )
+            if (
+                (self.attribute_long_description_prefix_before)
+                and (self.attribute_long_description_suffix_before)
+                and (self.parser.find(selector_before).first_result() is None)
+            ):
+                before_text = (
+                    self.attribute_long_description_prefix_before
+                    + re.sub(
+                        '[ \n\r\t]+',
+                        ' ',
+                        image.get_attribute('alt').strip()
                     )
-                else:
-                    text = (
-                        self.prefix_long_description_link
-                        + ' '
-                        + self.suffix_long_description_link
+                    + self.attribute_long_description_suffix_before
+                ).strip()
+                before_anchor = self.parser.create_element('a')
+                before_anchor.set_attribute(
+                    'href',
+                    image.get_attribute('longdesc')
+                )
+                before_anchor.set_attribute('target', '_blank')
+                before_anchor.set_attribute(custom_attribute, id_image)
+                before_anchor.set_attribute(
+                    'class',
+                    AccessibleNavigationImplementation.CLASS_FORCE_LINK_BEFORE
+                )
+                before_anchor.append_text(before_text)
+                image.insert_after(before_anchor)
+            if (
+                (self.attribute_long_description_prefix_after)
+                and (self.attribute_long_description_suffix_after)
+                and (self.parser.find(selector_after).first_result() is None)
+            ):
+                after_text = (
+                    self.attribute_long_description_prefix_after
+                    + re.sub(
+                        '[ \n\r\t]+',
+                        ' ',
+                        image.get_attribute('alt').strip()
                     )
-                anchor = self.parser.create_element('a')
-                anchor.set_attribute('href', image.get_attribute('longdesc'))
-                anchor.set_attribute('target', '_blank')
-                anchor.set_attribute(custom_attribute, id_image)
-                anchor.set_attribute('class', html_class)
-                anchor.append_text(text.strip())
-                image.insert_after(anchor)
+                    + self.attribute_long_description_suffix_after
+                ).strip()
+                after_anchor = self.parser.create_element('a')
+                after_anchor.set_attribute(
+                    'href',
+                    image.get_attribute('longdesc')
+                )
+                after_anchor.set_attribute('target', '_blank')
+                after_anchor.set_attribute(custom_attribute, id_image)
+                after_anchor.set_attribute(
+                    'class',
+                    AccessibleNavigationImplementation.CLASS_FORCE_LINK_AFTER
+                )
+                after_anchor.append_text(after_text)
+                image.insert_after(after_anchor)
 
     def provide_navigation_to_all_long_descriptions(self):
         images = self.parser.find('[longdesc]').list_results()
