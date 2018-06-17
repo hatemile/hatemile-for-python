@@ -111,6 +111,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
             'attribute-longdescription-suffix-after'
         )
         self.skippers = AccessibleNavigationImplementation._get_skippers(
+            configure,
             skipper_file_name
         )
         self.list_skippers_added = False
@@ -122,10 +123,12 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         self.list_heading_after = None
 
     @staticmethod
-    def _get_skippers(file_name=None):
+    def _get_skippers(configure, file_name=None):
         """
         Returns the skippers of configuration.
 
+        :param configure: The configuration of HaTeMiLe.
+        :type configure: hatemile.util.configure.Configure
         :param file_name: The file path of skippers configuration.
         :type file_name: str
         :return: The skippers of configuration.
@@ -144,7 +147,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         for skipper_xml in skippers_xml:
             skippers.append({
                 'selector': skipper_xml.attributes['selector'].value,
-                'description': skipper_xml.attributes['description'].value,
+                'description': configure.get_parameter(
+                    skipper_xml.attributes['description'].value
+                ),
                 'shortcut': skipper_xml.attributes['shortcut'].value
             })
         return skippers
