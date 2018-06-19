@@ -1069,6 +1069,59 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                     self.aria_autocomplete_inline_after,
                     AccessibleDisplayImplementation.DATA_ARIA_AUTOCOMPLETE_OF
                 )
+        if element.has_attribute('aria-dropeffect'):
+            attribute_value = element.get_attribute('aria-dropeffect')
+            if attribute_value == 'copy':
+                self._force_read_simple(
+                    element,
+                    self.aria_dropeffect_copy_before,
+                    self.aria_dropeffect_copy_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_DROPEFFECT_OF
+                )
+            elif attribute_value == 'move':
+                self._force_read_simple(
+                    element,
+                    self.aria_dropeffect_move_before,
+                    self.aria_dropeffect_move_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_DROPEFFECT_OF
+                )
+            elif attribute_value == 'link':
+                self._force_read_simple(
+                    element,
+                    self.aria_dropeffect_link_before,
+                    self.aria_dropeffect_link_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_DROPEFFECT_OF
+                )
+            elif attribute_value == 'execute':
+                self._force_read_simple(
+                    element,
+                    self.aria_dropeffect_execute_before,
+                    self.aria_dropeffect_execute_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_DROPEFFECT_OF
+                )
+            elif attribute_value == 'popup':
+                self._force_read_simple(
+                    element,
+                    self.aria_dropeffect_popup_before,
+                    self.aria_dropeffect_popup_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_DROPEFFECT_OF
+                )
+        if element.has_attribute('aria-grabbed'):
+            attribute_value = element.get_attribute('aria-grabbed')
+            if attribute_value == 'true':
+                self._force_read_simple(
+                    element,
+                    self.aria_grabbed_true_before,
+                    self.aria_grabbed_true_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_GRABBED_OF
+                )
+            elif attribute_value == 'false':
+                self._force_read_simple(
+                    element,
+                    self.aria_grabbed_false_before,
+                    self.aria_grabbed_false_after,
+                    AccessibleDisplayImplementation.DATA_ARIA_GRABBED_OF
+                )
 
     def display_all_waiaria_states(self):
         elements = self.parser.find(
