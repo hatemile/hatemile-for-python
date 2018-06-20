@@ -50,9 +50,16 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     #: The name of attribute that links the description of shortcut of element.
     DATA_ATTRIBUTE_ACCESSKEY_OF = 'data-attributeaccesskeyof'
 
+    #: The name of attribute that links the content of download link.
+    DATA_ATTRIBUTE_DOWNLOAD_OF = 'data-attributedownloadof'
+
     #: The name of attribute that links the content of header cell with the
     #: data cell.
     DATA_ATTRIBUTE_HEADERS_OF = 'data-headersof'
+
+    #: The name of attribute that links the content of link that open a new
+    #: instance.
+    DATA_ATTRIBUTE_TARGET_OF = 'data-attributetargetof'
 
     #: The name of attribute that links the content of autocomplete state of
     #: field.
@@ -149,6 +156,12 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         self.attribute_accesskey_suffix_after = configure.get_parameter(
             'attribute-accesskey-suffix-after'
         )
+        self.attribute_download_before = configure.get_parameter(
+            'attribute-download-before'
+        )
+        self.attribute_download_after = configure.get_parameter(
+            'attribute-download-after'
+        )
         self.attribute_headers_prefix_before = configure.get_parameter(
             'attribute-headers-prefix-before'
         )
@@ -172,6 +185,12 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         )
         self.attribute_role_suffix_after = configure.get_parameter(
             'attribute-role-suffix-after'
+        )
+        self.attribute_target_blank_before = configure.get_parameter(
+            'attribute-target-blank-before'
+        )
+        self.attribute_target_blank_after = configure.get_parameter(
+            'attribute-target-blank-after'
         )
         self.aria_autocomplete_both_before = configure.get_parameter(
             'aria-autocomplete-both-before'
@@ -1134,3 +1153,30 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_waiaria_states(element)
+
+    def display_link_attributes(self, link):
+        if link.has_attribute('download'):
+            self._force_read_simple(
+                link,
+                self.attribute_download_before,
+                self.attribute_download_after,
+                AccessibleDisplayImplementation.DATA_ATTRIBUTE_DOWNLOAD_OF
+            )
+        if (
+            (link.has_attribute('target'))
+            and (link.get_attribute('target') == '_blank')
+        ):
+            self._force_read_simple(
+                link,
+                self.attribute_target_blank_before,
+                self.attribute_target_blank_after,
+                AccessibleDisplayImplementation.DATA_ATTRIBUTE_TARGET_OF
+            )
+
+    def display_all_links_attributes(self):
+        elements = self.parser.find(
+            'a[download],a[target="_blank"]'
+        ).list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.display_link_attributes(element)

@@ -88,3 +88,19 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_link_attributes(self, link):
+        """
+        Display the attributes of link.
+        :param link: The link element.
+        :type link: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_links_attributes(self):
+        """
+        Display the attributes of all links of page.
+        """
+
+        pass
