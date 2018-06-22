@@ -92,6 +92,7 @@ class AccessibleDisplay:
     def display_link_attributes(self, link):
         """
         Display the attributes of link.
+
         :param link: The link element.
         :type link: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
@@ -101,6 +102,23 @@ class AccessibleDisplay:
     def display_all_links_attributes(self):
         """
         Display the attributes of all links of page.
+        """
+
+        pass
+
+    def display_title(self, element):
+        """
+        Display the title of element.
+
+        :param element: The element with title.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_titles(self):
+        """
+        Display the titles of all elements of page.
         """
 
         pass
