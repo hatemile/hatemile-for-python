@@ -1239,7 +1239,9 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
                 self.display_link_attributes(element)
 
     def display_title(self, element):
-        if (
+        if element.get_tag_name() == 'IMG':
+            self.display_alternative_text_image(element)
+        elif (
             (element.has_attribute('title'))
             and (element.get_attribute('title'))
         ):
@@ -1284,3 +1286,31 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_language(element)
+
+    def display_alternative_text_image(self, image):
+        if (image.has_attribute('alt')) or (image.has_attribute('title')):
+            if (
+                (image.has_attribute('alt'))
+                and (not image.has_attribute('title'))
+            ):
+                image.set_attribute('title', image.get_attribute('alt'))
+            elif (
+                (image.has_attribute('title'))
+                and (not image.has_attribute('alt'))
+            ):
+                image.set_attribute('alt', image.get_attribute('title'))
+            self.id_generator.generate_id(image)
+            image.set_attribute(
+                AccessibleDisplayImplementation.DATA_ATTRIBUTE_TITLE_OF,
+                image.get_attribute('id')
+            )
+        else:
+            image.set_attribute('alt', '')
+            image.set_attribute('role', 'presentation')
+            image.set_attribute('aria-hidden', 'true')
+
+    def display_all_alternative_text_images(self):
+        images = self.parser.find('img').list_results()
+        for image in images:
+            if CommonFunctions.is_valid_element(image):
+                self.display_alternative_text_image(image)

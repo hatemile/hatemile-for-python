@@ -139,3 +139,20 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_alternative_text_image(self, image):
+        """
+        Display the alternative text of image.
+
+        :param image: The image.
+        :type image: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_alternative_text_images(self):
+        """
+        Display the alternative text of all images of page.
+        """
+
+        pass
