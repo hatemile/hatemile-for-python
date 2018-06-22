@@ -122,3 +122,20 @@ class AccessibleDisplay:
         """
 
         pass
+
+    def display_language(self, element):
+        """
+        Display the language of element.
+
+        :param element: The element.
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        """
+
+        pass
+
+    def display_all_languages(self):
+        """
+        Display the language of all elements of page.
+        """
+
+        pass

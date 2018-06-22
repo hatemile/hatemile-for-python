@@ -170,6 +170,8 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
         return False
 
     def get_parent_element(self):
+        if self.node.parent is None:
+            return None
         return BeautifulSoupHTMLDOMElement(self.node.parent)
 
     def get_inner_html(self):

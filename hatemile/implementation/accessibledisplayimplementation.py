@@ -57,6 +57,10 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
     #: data cell.
     DATA_ATTRIBUTE_HEADERS_OF = 'data-headersof'
 
+    #: The name of attribute that links the description of language with the
+    #: element.
+    DATA_ATTRIBUTE_LANGUAGE_OF = 'data-languageof'
+
     #: The name of attribute that links the content of link that open a new
     #: instance.
     DATA_ATTRIBUTE_TARGET_OF = 'data-attributetargetof'
@@ -176,6 +180,18 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         )
         self.attribute_headers_suffix_after = configure.get_parameter(
             'attribute-headers-suffix-after'
+        )
+        self.attribute_language_prefix_before = configure.get_parameter(
+            'attribute-language-prefix-before'
+        )
+        self.attribute_language_suffix_before = configure.get_parameter(
+            'attribute-language-suffix-before'
+        )
+        self.attribute_language_prefix_after = configure.get_parameter(
+            'attribute-language-prefix-after'
+        )
+        self.attribute_language_suffix_after = configure.get_parameter(
+            'attribute-language-suffix-after'
         )
         self.attribute_role_prefix_before = configure.get_parameter(
             'attribute-role-prefix-before'
@@ -473,6 +489,27 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         parameter = 'role-' + role.lower()
         if self.configure.has_parameter(parameter):
             return self.configure.get_parameter(parameter)
+        return None
+
+    def _get_language_description(self, language_code):
+        """
+        Returns the description of language.
+
+        :param language_code: The BCP 47 code language.
+        :type language_code: str
+        :return: The description of language.
+        :rtype: str
+        """
+
+        language = language_code.lower()
+        parameter = 'language-' + language
+        if self.configure.has_parameter(parameter):
+            return self.configure.get_parameter(parameter)
+        elif '-' in language:
+            codes = re.split(r'\-', language)
+            parameter = 'language-' + codes[0]
+            if self.configure.has_parameter(parameter):
+                return self.configure.get_parameter(parameter)
         return None
 
     def _get_description(self, element):
@@ -1221,3 +1258,29 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         for element in elements:
             if CommonFunctions.is_valid_element(element):
                 self.display_title(element)
+
+    def display_language(self, element):
+        language_code = None
+        if element.has_attribute('lang'):
+            language_code = element.get_attribute('lang')
+        elif element.has_attribute('hreflang'):
+            language_code = element.get_attribute('hreflang')
+        language = self._get_language_description(language_code)
+        if language is not None:
+            self._force_read(
+                element,
+                language,
+                self.attribute_language_prefix_before,
+                self.attribute_language_suffix_before,
+                self.attribute_language_prefix_after,
+                self.attribute_language_suffix_after,
+                AccessibleDisplayImplementation.DATA_ATTRIBUTE_LANGUAGE_OF
+            )
+
+    def display_all_languages(self):
+        elements = self.parser.find(
+            'html[lang],body[lang],body [lang],body [hreflang]'
+        ).list_results()
+        for element in elements:
+            if CommonFunctions.is_valid_element(element):
+                self.display_language(element)
