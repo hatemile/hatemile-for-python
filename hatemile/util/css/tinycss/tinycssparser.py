@@ -17,8 +17,8 @@ Module of TinyCSSParser interface.
 from urllib.parse import urljoin
 import requests
 import tinycss
-from .tinycssrule import TinyCSSRule
 from hatemile.util.css.stylesheetparser import StyleSheetParser
+from .tinycssrule import TinyCSSRule
 
 
 class TinyCSSParser(StyleSheetParser):
