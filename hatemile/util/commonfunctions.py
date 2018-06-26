@@ -19,7 +19,7 @@ import re
 
 class CommonFunctions:
     """
-    The CommonFuncionts class contains the used methods by HaTeMiLe classes.
+    The CommonFunctions class contains the used methods by HaTeMiLe classes.
     """
 
     #: The name of attribute for not modify the elements.
