@@ -171,7 +171,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
 
     def _fix_body_or_footer(self, element):
         """
-        Fix the table body or table footer.
+        Associate the data cell with header cell of row.
 
         :param element: The table body or table footer.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
@@ -199,7 +199,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
 
     def _fix_header(self, table_header):
         """
-        Fix the table header.
+        Set the scope of header cells of table header.
 
         :param table_header: The table header.
         :type table_header: hatemile.util.html.htmldomelement.HTMLDOMElement

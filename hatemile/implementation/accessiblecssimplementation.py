@@ -704,7 +704,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
 
     def _reverse_speak_as(self, element, data_property_value):
         """
-        Revert changes of a speakAs method for element and descendants.
+        Revert changes of a speak_as method for element and descendants.
 
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement

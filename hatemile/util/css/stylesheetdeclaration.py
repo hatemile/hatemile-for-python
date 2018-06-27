@@ -35,7 +35,7 @@ class StyleSheetDeclaration:
         """
         Returns a list with the values of declaration.
 
-        :return: The array with the values of declaration.
+        :return: The list with the values of declaration.
         :rtype: list(str)
         """
 

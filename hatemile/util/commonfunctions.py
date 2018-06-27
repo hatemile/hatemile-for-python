@@ -48,14 +48,14 @@ class CommonFunctions:
     @staticmethod
     def increase_in_list(list_to_increase, string_to_increase):
         """
-        The list of attributes that will be copied.
+        Increase a item in a HTML list.
 
         :param list_to_increase: The list.
         :type list_to_increase: str
         :param string_to_increase: The value of item.
         :type string_to_increase: str
-        :return: The list with the item added, if the item not was contained in
-                 list.
+        :return: The HTML list with the item added, if the item not was
+                 contained in list.
         :rtype: str
         """
 
@@ -76,7 +76,7 @@ class CommonFunctions:
         :type list_to_search: str
         :param string_to_search: The value of item.
         :type string_to_search: str
-        :return: True if the list contains the item or false is not contains.
+        :return: True if the list contains the item or False is not contains.
         :rtype: bool
         """
 
@@ -93,8 +93,8 @@ class CommonFunctions:
         Check that the element can be manipulated by HaTeMiLe.
 
         :param element: The element
-        :type element: hatemile.util.html.HTMLDOMElement
-        :return: True if element can be manipulated or false if element cannot
+        :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
+        :return: True if element can be manipulated or False if element cannot
                  be manipulated.
         :rtype: bool
         """

@@ -26,10 +26,9 @@ class TinyCSSRule(StyleSheetRule):
 
     def __init__(self, rule):
         """
-        Initializes a new object that encapsulate the Sabberworm PHP CSS
-        declaration block.
+        Initializes a new object that encapsulate the tinycss rule.
 
-        :param rule: The Sabberworm PHP CSS declaration block.
+        :param rule: The tinycss rule.
         :type rule: tinycss.css21.RuleSet
         """
 

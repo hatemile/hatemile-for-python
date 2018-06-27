@@ -26,8 +26,9 @@ from hatemile.util.html.htmldomtextnode import HTMLDOMTextNode
 
 class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
     """
-    The VanillaHTMLDOMNode class is official implementation of HTMLDOMNode
-    interface for the HTMLDOMNode.
+    The VanillaHTMLDOMNode class is official implementation of
+    :py:class:`hatemile.util.html.htmldomnode.HTMLDOMNode` for the
+    BeautifulSoup library.
     """
 
     def __init__(self, node):
@@ -66,7 +67,8 @@ class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
 class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
     """
     The BeautifulSoupHTMLDOMElement class is official implementation of
-    HTMLDOMElement interface for the BeautifulSoup library.
+    :py:class:`hatemile.util.html.htmldomelement.HTMLDOMElement` for the
+    BeautifulSoup library.
     """
 
     def get_tag_name(self):
@@ -239,7 +241,7 @@ class BeautifulSoupHTMLDOMTextNode(BeautifulSoupHTMLDOMNode, HTMLDOMTextNode):
     """
     The VanillaHTMLDOMTextNode class is official implementation of
     :py:class:`hatemile.util.html.htmldomtextnode.HTMLDOMTextNode` for the
-    :py:class:`bs4.element.NavigableString`.
+    BeautifulSoup library.
     """
 
     def get_text_content(self):

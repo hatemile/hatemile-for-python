@@ -39,8 +39,8 @@ class HTMLDOMElement(HTMLDOMNode):
 
         :param name: The name of attribute.
         :type name: str
-        :return: The value of the attribute, if the element not contains the
-                 attribute returns None.
+        :return: The value of the attribute or None if the element not contains
+                 the attribute.
         :rtype: str
         """
 
@@ -70,7 +70,7 @@ class HTMLDOMElement(HTMLDOMNode):
 
     def has_attribute(self, name):
         """
-        Returns if the element has an attribute.
+        Check that the element has an attribute.
 
         :param name: The name of attribute.
         :type name: str
@@ -83,7 +83,7 @@ class HTMLDOMElement(HTMLDOMNode):
 
     def has_attributes(self):
         """
-        Returns if the element has attributes.
+        Check that the element has attributes.
 
         :return: True if the element has attributes or False if the element not
                  has attributes.
@@ -150,7 +150,7 @@ class HTMLDOMElement(HTMLDOMNode):
         """
         Check that the element has elements children.
 
-        :return: True if the element has elements children or false if the
+        :return: True if the element has elements children or False if the
                  element not has elements children.
         :rtype: bool
         """

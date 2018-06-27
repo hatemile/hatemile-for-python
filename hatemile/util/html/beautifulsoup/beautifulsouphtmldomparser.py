@@ -23,7 +23,8 @@ from .beautifulsouphtmldomnode import BeautifulSoupHTMLDOMElement
 class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
     """
     The class BeautifulSoupHTMLDOMParser is official implementation of
-    HTMLDOMParser interface for the BeautifulSoup library.
+    :py:class:`hatemile.util.html.htmldomparser.HTMLDOMParser` for the
+    BeautifulSoup library.
     """
 
     def __init__(self, code_or_parser):
@@ -42,6 +43,17 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         self.results = []
 
     def _in_list(self, original_list, item):
+        """
+        Check that an item as contained in a list.
+
+        :param original_list: The list.
+        :type original_list: list(object)
+        :param item: The item.
+        :type item: hatemile.util.html.htmldomelement.HTMLDOMElement
+        :return: True if the item contained in the list or False if not.
+        :rtype: bool
+        """
+
         for item_list in original_list:
             if item is item_list:
                 return True
@@ -75,6 +87,11 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         return array
 
     def _fix_data_select(self):
+        """
+        Replace all hyphens of data attributes for 'aaaaa', to avoid error in
+        search.
+        """
+
         elements = self.document.select('*')
         for element in elements:
             attributes = element.attrs.keys()
@@ -98,6 +115,11 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
                     )
 
     def _remove_data_select(self):
+        """
+        Remove all data attributes with 'aaaaa', to display the correct HTML
+        code of page.
+        """
+
         elements = self.document.select('*')
         for element in elements:
             attributes = element.attrs.keys()

@@ -32,11 +32,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
     ID_CONTAINER_SKIPPERS = 'container-skippers'
 
     #: The id of list element that contains the links for the headings, before
-    #: the whole page.
+    #: the whole content of page.
     ID_CONTAINER_HEADING_BEFORE = 'container-heading-before'
 
     #: The id of list element that contains the links for the headings, after
-    #: the whole page.
+    #: the whole content of page.
     ID_CONTAINER_HEADING_AFTER = 'container-heading-after'
 
     #: The HTML class of text of description of container of heading links.
@@ -281,9 +281,9 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
 
     def _is_valid_heading(self):
         """
-        Inform if the headings of page are sintatic correct.
+        Check that the headings of page are sintatic correct.
 
-        :return: True if the headings of page are sintatic correct or false if
+        :return: True if the headings of page are sintatic correct or False if
                  not.
         :rtype: bool
         """

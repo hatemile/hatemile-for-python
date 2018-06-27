@@ -76,7 +76,7 @@ class Configure:
         """
         Returns the value of a parameter of configuration.
 
-        :param parameter: The name of parameter.
+        :param parameter: The parameter.
         :type parameter: str
         :return: The value of the parameter.
         :rtype: str

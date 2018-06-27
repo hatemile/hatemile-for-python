@@ -28,7 +28,7 @@ class StyleSheetParser:
         :param properties: The properties.
         :type properties: list(str)
         :return: The rules.
-        :rtype: hatemile.util.css.stylesheetrule.StyleSheetRule
+        :rtype: list(hatemile.util.css.stylesheetrule.StyleSheetRule)
         """
 
         pass

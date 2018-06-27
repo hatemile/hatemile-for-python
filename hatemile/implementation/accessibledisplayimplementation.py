@@ -516,7 +516,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         """
         Returns the description of element.
 
-        :param element: The element with description.
+        :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         :return: The description of element.
         :rtype: str
