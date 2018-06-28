@@ -10,13 +10,14 @@ HaTeMiLe is a libary that can convert a HTML code in a HTML code more accessible
 
 ## Example
     from hatemile.util.configure import Configure
-    from hatemile.util.html.beautifulsoup.beautifulsouphtmldomparser import BeautifulSoupHTMLDOMParser
-    from hatemile.implementation.accessibledisplayimplementation import AccessibleDisplayImplementation
-    from hatemile.implementation.accessiblecssimplementation import AccessibleCSSImplementation
-    from hatemile.implementation.accessibleeventimplementation import AccessibleEventImplementation
-    from hatemile.implementation.accessibleformimplementation import AccessibleFormImplementation
-    from hatemile.implementation.accessiblenavigationimplementation import AccessibleNavigationImplementation
-    from hatemile.implementation.accessibleassociationimplementation import AccessibleAssociationImplementation
+    from hatemile.util.html.bs.bshtmldomparser import BeautifulSoupHTMLDOMParser
+    from hatemile.util.css.tinycss.tinycssparser import TinyCSSParser
+    from hatemile.implementation.display import AccessibleDisplayImplementation
+    from hatemile.implementation.css import AccessibleCSSImplementation
+    from hatemile.implementation.event import AccessibleEventImplementation
+    from hatemile.implementation.form import AccessibleFormImplementation
+    from hatemile.implementation.navig import AccessibleNavigationImplementation
+    from hatemile.implementation.assoc import AccessibleAssociationImplementation
     
     configure = Configure()
     parser = BeautifulSoupHTMLDOMParser("""<!DOCTYPE html>
