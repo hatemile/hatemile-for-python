@@ -18,7 +18,7 @@ import os
 from hatemile.accessibleform import AccessibleForm
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
-from .accessibleeventimplementation import AccessibleEventImplementation
+from .event import AccessibleEventImplementation
 
 
 class AccessibleFormImplementation(AccessibleForm):

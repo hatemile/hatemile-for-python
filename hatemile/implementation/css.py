@@ -20,7 +20,7 @@ from xml.dom import minidom
 from hatemile.accessiblecss import AccessibleCSS
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.html.htmldomtextnode import HTMLDOMTextNode
-from .accessibledisplayimplementation import AccessibleDisplayImplementation
+from .display import AccessibleDisplayImplementation
 
 
 class AccessibleCSSImplementation(AccessibleCSS):
