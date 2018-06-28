@@ -298,14 +298,14 @@ class AccessibleFormImplementation(AccessibleForm):
             )
 
     def mark_all_autocomplete_fields(self):
-        elements = self.parser.find(
+        fields = self.parser.find(
             'input[autocomplete],textarea[autocomplete],'
             + 'form[autocomplete] input,form[autocomplete] textarea,'
             + '[list],[form]'
         ).list_results()
-        for element in elements:
-            if CommonFunctions.is_valid_element(element):
-                self.mark_autocomplete_field(element)
+        for field in fields:
+            if CommonFunctions.is_valid_element(field):
+                self.mark_autocomplete_field(field)
 
     def mark_invalid_field(self, field):
         if (

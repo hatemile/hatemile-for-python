@@ -38,7 +38,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         self.parser = parser
         self.id_generator = IDGenerator('association')
 
-    def _generate_part(self, part):
+    def _get_model_table(self, part):
         """
         Returns a list that represents the table.
 
@@ -51,12 +51,12 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         rows = self.parser.find(part).find_children('tr').list_results()
         table = []
         for row in rows:
-            table.append(self._generate_colspan(self.parser.find(
+            table.append(self._get_model_row(self.parser.find(
                 row
             ).find_children('td,th').list_results()))
-        return self._generate_rowspan(table)
+        return self._get_valid_model_table(table)
 
-    def _generate_rowspan(self, ros):
+    def _get_valid_model_table(self, ros):
         """
         Returns a list that represents the table with the rowspans.
 
@@ -66,46 +66,45 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :rtype: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         """
 
-        copy = [] + ros
-        table = []
+        new_table = []
         if bool(ros):
-            length_rows = len(ros)
-            for i in range(0, length_rows):
-                column_index = 0
-                cells = [] + copy[i]
-                if len(table) <= i:
-                    table.append([])
-                length_cells = len(cells)
-                for j in range(0, length_cells):
-                    cell = cells[j]
-                    new_column_index = j + column_index
-                    row = table[i]
+            length_table = len(ros)
+            for row_index in range(0, length_table):
+                cells_added = 0
+                original_row = [] + ros[row_index]
+                if len(new_table) <= row_index:
+                    new_table.append([])
+                length_row = len(original_row)
+                for cell_index in range(0, length_row):
+                    cell = original_row[cell_index]
+                    new_cell_index = cell_index + cells_added
+                    new_row = new_table[row_index]
                     while True:
-                        if len(row) <= new_column_index:
-                            row.append(None)
+                        if len(new_row) <= new_cell_index:
+                            new_row.append(None)
                             break
-                        elif row[new_column_index] is None:
+                        elif new_row[new_cell_index] is None:
                             break
                         else:
-                            column_index += 1
-                            new_column_index = j + column_index
-                    row[new_column_index] = cell
+                            cells_added += 1
+                            new_cell_index = cell_index + cells_added
+                    new_row[new_cell_index] = cell
                     if cell.has_attribute('rowspan'):
                         rowspan = int(cell.get_attribute('rowspan'))
                         if rowspan > 1:
-                            for k in range(1, rowspan):
-                                new_row_index = i + k
-                                if len(table) <= new_row_index:
-                                    table.append([])
+                            for rowspan_index in range(1, rowspan):
+                                new_row_index = row_index + rowspan_index
+                                if len(new_table) <= new_row_index:
+                                    new_table.append([])
                                 while (
-                                    len(table[new_row_index])
-                                    < new_column_index
+                                    len(new_table[new_row_index])
+                                    < new_cell_index
                                 ):
-                                    table[new_row_index].append(None)
-                                table[new_row_index].append(cell)
-        return table
+                                    new_table[new_row_index].append(None)
+                                new_table[new_row_index].append(cell)
+        return new_table
 
-    def _generate_colspan(self, row):
+    def _get_model_row(self, row):
         """
         Returns a list that represents the line of table with the colspans.
 
@@ -116,17 +115,16 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         """
 
-        copy = [] + row
-        cells = [] + row
+        new_row = [] + row
         size = len(row)
         for i in range(0, size):
-            cell = cells[i]
+            cell = row[i]
             if cell.has_attribute('colspan'):
                 colspan = int(cell.get_attribute('colspan'))
                 if colspan > 1:
                     for j in range(1, colspan):
-                        copy.insert(i + j, cell)
-        return copy
+                        new_row.insert(i + j, cell)
+        return new_row
 
     def _validate_header(self, hed):
         """
@@ -151,7 +149,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                 return False
         return True
 
-    def _return_list_ids_columns(self, hed, index):
+    def _get_cells_headers_ids(self, hed, index):
         """
         Returns a list with ids of rows of same column.
 
@@ -169,7 +167,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                 ids.append(row[index].get_attribute('id'))
         return ids
 
-    def _fix_body_or_footer(self, element):
+    def _associate_data_cells_with_header_cells_of_row(self, element):
         """
         Associate the data cell with header cell of row.
 
@@ -177,17 +175,17 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
 
-        table = self._generate_part(element)
-        for cells in table:
+        table = self._get_model_table(element)
+        for row in table:
             headers_ids = []
-            for cell in cells:
+            for cell in row:
                 if cell.get_tag_name() == 'TH':
                     self.id_generator.generate_id(cell)
                     headers_ids.append(cell.get_attribute('id'))
 
                     cell.set_attribute('scope', 'row')
             if bool(headers_ids):
-                for cell in cells:
+                for cell in row:
                     if cell.get_tag_name() == 'TD':
                         headers = cell.get_attribute('headers')
                         for header_id in headers_ids:
@@ -197,7 +195,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                             )
                         cell.set_attribute('headers', headers)
 
-    def _fix_header(self, table_header):
+    def _prepare_header_cells(self, table_header):
         """
         Set the scope of header cells of table header.
 
@@ -218,20 +216,20 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         body = self.parser.find(table).find_children('tbody').first_result()
         footer = self.parser.find(table).find_children('tfoot').first_result()
         if header is not None:
-            self._fix_header(header)
+            self._prepare_header_cells(header)
 
-            header_cells = self._generate_part(header)
-            if (body is not None) and (self._validate_header(header_cells)):
-                length_header = len(header_cells[0])
-                fake_table = self._generate_part(body)
+            header_rows = self._get_model_table(header)
+            if (body is not None) and (self._validate_header(header_rows)):
+                length_header = len(header_rows[0])
+                fake_table = self._get_model_table(body)
                 if footer is not None:
-                    fake_table = fake_table + self._generate_part(footer)
-                for cells in fake_table:
-                    if len(cells) == length_header:
+                    fake_table = fake_table + self._get_model_table(footer)
+                for row in fake_table:
+                    if len(row) == length_header:
                         i = 0
-                        for cell in cells:
-                            headers_ids = self._return_list_ids_columns(
-                                header_cells,
+                        for cell in row:
+                            headers_ids = self._get_cells_headers_ids(
+                                header_rows,
                                 i
                             )
                             headers = cell.get_attribute('headers')
@@ -243,9 +241,9 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                             cell.set_attribute('headers', headers)
                             i += 1
         if body is not None:
-            self._fix_body_or_footer(body)
+            self._associate_data_cells_with_header_cells_of_row(body)
         if footer is not None:
-            self._fix_body_or_footer(footer)
+            self._associate_data_cells_with_header_cells_of_row(footer)
 
     def associate_all_data_cells_with_header_cells(self):
         tables = self.parser.find('table').list_results()
