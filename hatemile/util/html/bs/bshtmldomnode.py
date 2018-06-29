@@ -18,7 +18,9 @@ BeautifulSoupHTMLDOMTextNode classes.
 import copy
 import re
 from bs4.element import NavigableString
+from bs4.element import PageElement
 from bs4.element import Tag
+from hatemile import helper
 from hatemile.util.html.htmldomelement import HTMLDOMElement
 from hatemile.util.html.htmldomnode import HTMLDOMNode
 from hatemile.util.html.htmldomtextnode import HTMLDOMTextNode
@@ -38,6 +40,9 @@ class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
         :param node: The BeautifulSoup node.
         :type node: bs4.element.PageElement
         """
+
+        helper.require_not_none(node)
+        helper.require_valid_type(node, PageElement)
 
         self.node = node
 
@@ -61,6 +66,9 @@ class BeautifulSoupHTMLDOMNode(HTMLDOMNode):
         return self.node
 
     def set_data(self, data):
+        helper.require_not_none(data)
+        helper.require_valid_type(data, PageElement)
+
         self.node = data
 
 

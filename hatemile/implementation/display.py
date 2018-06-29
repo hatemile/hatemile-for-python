@@ -15,9 +15,12 @@ Module of AccessibleDisplayImplementation class.
 """
 
 import re
+from hatemile import helper
 from hatemile.accessibledisplay import AccessibleDisplay
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.configure import Configure
 from hatemile.util.idgenerator import IDGenerator
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 
 
 class AccessibleDisplayImplementation(AccessibleDisplay):
@@ -137,6 +140,11 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         :param user_agent: The user agent of the user.
         :type user_agent: str
         """
+
+        helper.require_not_none(parser, configure)
+        helper.require_valid_type(parser, HTMLDOMParser)
+        helper.require_valid_type(configure, Configure)
+        helper.require_valid_type(user_agent, str)
 
         self.parser = parser
         self.configure = configure

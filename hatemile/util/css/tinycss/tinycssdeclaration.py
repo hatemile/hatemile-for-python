@@ -15,6 +15,8 @@ Module of TinyCSSDeclaration.
 """
 
 import re
+from tinycss.css21 import Declaration
+from hatemile import helper
 from hatemile.util.css.stylesheetdeclaration import StyleSheetDeclaration
 
 
@@ -32,6 +34,9 @@ class TinyCSSDeclaration(StyleSheetDeclaration):
         :param declaration: The tinycss declaration.
         :type declaration: tinycss.css21.Declaration
         """
+
+        helper.require_not_none(declaration)
+        helper.require_valid_type(declaration, Declaration)
 
         self.declaration = declaration
 

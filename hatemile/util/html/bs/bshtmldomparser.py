@@ -16,6 +16,7 @@ Module of BeautifulSoupHTMLDOMParser class.
 
 import re
 from bs4 import BeautifulSoup
+from hatemile import helper
 from hatemile.util.html.htmldomparser import HTMLDOMParser
 from .bshtmldomnode import BeautifulSoupHTMLDOMElement
 
@@ -32,8 +33,11 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         Initializes a new object that encapsulate the parser of BeautifulSoup.
 
         :param code_or_parser: The root element of the parser or the HTML code.
-        :type code_or_parser: str or bs4.element.Tag
+        :type code_or_parser: str or bs4.BeautifulSoup
         """
+
+        helper.require_not_none(code_or_parser)
+        helper.require_valid_type(code_or_parser, str, BeautifulSoup)
 
         if isinstance(code_or_parser, BeautifulSoup):
             self.document = code_or_parser

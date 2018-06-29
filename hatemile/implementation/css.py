@@ -17,8 +17,12 @@ Module of AccessibleCSSImplementation class.
 import os
 import re
 from xml.dom import minidom
+from hatemile import helper
 from hatemile.accessiblecss import AccessibleCSS
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.configure import Configure
+from hatemile.util.css.stylesheetparser import StyleSheetParser
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 from hatemile.util.html.htmldomtextnode import HTMLDOMTextNode
 from .display import AccessibleDisplayImplementation
 
@@ -189,6 +193,12 @@ class AccessibleCSSImplementation(AccessibleCSS):
         :param symbol_file_name: The file path of symbol configuration.
         :type symbol_file_name: str
         """
+
+        helper.require_not_none(html_parser, css_parser, configure)
+        helper.require_valid_type(html_parser, HTMLDOMParser)
+        helper.require_valid_type(css_parser, StyleSheetParser)
+        helper.require_valid_type(configure, Configure)
+        helper.require_valid_type(symbol_file_name, str)
 
         self.html_parser = html_parser
         self.css_parser = css_parser

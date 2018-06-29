@@ -14,6 +14,8 @@
 Module of TinyCSSRule class.
 """
 
+from tinycss.css21 import RuleSet
+from hatemile import helper
 from hatemile.util.css.stylesheetrule import StyleSheetRule
 from .tinycssdeclaration import TinyCSSDeclaration
 
@@ -31,6 +33,9 @@ class TinyCSSRule(StyleSheetRule):
         :param rule: The tinycss rule.
         :type rule: tinycss.css21.RuleSet
         """
+
+        helper.require_not_none(rule)
+        helper.require_valid_type(rule, RuleSet)
 
         self.rule = rule
 

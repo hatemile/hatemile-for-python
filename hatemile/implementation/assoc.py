@@ -15,9 +15,11 @@ Module of AccessibleAssociationImplementation class.
 """
 
 import re
+from hatemile import helper
 from hatemile.accessibleassociation import AccessibleAssociation
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 
 
 class AccessibleAssociationImplementation(AccessibleAssociation):
@@ -34,6 +36,9 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
+
+        helper.require_not_none(parser)
+        helper.require_valid_type(parser, HTMLDOMParser)
 
         self.parser = parser
         self.id_generator = IDGenerator('association')

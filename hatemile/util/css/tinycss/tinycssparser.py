@@ -17,7 +17,9 @@ Module of TinyCSSParser interface.
 from urllib.parse import urljoin
 import requests
 import tinycss
+from hatemile import helper
 from hatemile.util.css.stylesheetparser import StyleSheetParser
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 from .tinycssrule import TinyCSSRule
 
 
@@ -37,6 +39,10 @@ class TinyCSSParser(StyleSheetParser):
         :param current_url: The current URL of page.
         :type current_url: str
         """
+
+        helper.require_not_none(css_or_hp)
+        helper.require_valid_type(css_or_hp, str, HTMLDOMParser)
+        helper.require_valid_type(current_url, str)
 
         if isinstance(css_or_hp, str):
             self.stylesheet = tinycss.make_parser().parse_stylesheet(css_or_hp)

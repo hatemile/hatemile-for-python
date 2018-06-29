@@ -15,9 +15,11 @@ Module of AccessibleEventImplementation class.
 """
 
 import os
+from hatemile import helper
 from hatemile.accessibleevent import AccessibleEvent
 from hatemile.util.commonfunctions import CommonFunctions
 from hatemile.util.idgenerator import IDGenerator
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 
 
 class AccessibleEventImplementation(AccessibleEvent):
@@ -47,6 +49,9 @@ class AccessibleEventImplementation(AccessibleEvent):
         :param parser: The HTML parser.
         :type parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         """
+
+        helper.require_not_none(parser)
+        helper.require_valid_type(parser, HTMLDOMParser)
 
         self.parser = parser
         self.id_generator = IDGenerator('event')

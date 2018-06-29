@@ -17,6 +17,7 @@ Module of Configure class.
 import json
 import locale
 import os
+from hatemile import helper
 
 
 class Configure:
@@ -33,6 +34,9 @@ class Configure:
         :param locale_configuration: The locale of configuration.
         :type locale_configuration: tuple(str, str)
         """
+
+        helper.require_valid_type(file_name, str)
+        helper.require_valid_type(locale_configuration, tuple)
 
         if file_name is None:
             if locale_configuration is not None:

@@ -15,6 +15,7 @@ Module of IDGenerator class.
 """
 
 import uuid
+from hatemile import helper
 
 
 class IDGenerator:
@@ -30,6 +31,8 @@ class IDGenerator:
         :param prefix_part: A part of prefix id.
         :type prefix_part: str
         """
+
+        helper.require_valid_type(prefix_part, str)
 
         if prefix_part is None:
             self.prefix_id = 'id-hatemile-' + IDGenerator.get_random() + '-'

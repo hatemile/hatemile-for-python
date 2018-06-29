@@ -17,9 +17,12 @@ Module of AccessibleNavigationImplementation class.
 import os
 import re
 from xml.dom import minidom
+from hatemile import helper
 from hatemile.accessiblenavigation import AccessibleNavigation
 from hatemile.util.commonfunctions import CommonFunctions
+from hatemile.util.configure import Configure
 from hatemile.util.idgenerator import IDGenerator
+from hatemile.util.html.htmldomparser import HTMLDOMParser
 
 
 class AccessibleNavigationImplementation(AccessibleNavigation):
@@ -85,6 +88,11 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :param skipper_file_name: The file path of skippers configuration.
         :type skipper_file_name: str
         """
+
+        helper.require_not_none(parser, configure)
+        helper.require_valid_type(parser, HTMLDOMParser)
+        helper.require_valid_type(configure, Configure)
+        helper.require_valid_type(skipper_file_name, str)
 
         self.parser = parser
         self.id_generator = IDGenerator('navigation')
