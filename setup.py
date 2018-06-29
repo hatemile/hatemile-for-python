@@ -14,8 +14,49 @@
 Module to setup HaTeMiLe for Python.
 """
 
+import os
 from setuptools import find_packages
 from setuptools import setup
+
+LOCALES_DIRECTORY = '_locales'
+
+
+def get_packages():
+    """
+    Returns the packages used for HaTeMiLe for Python.
+
+    :return: The packages used for HaTeMiLe for Python.
+    :rtype: list(str)
+    """
+
+    packages = find_packages()
+    packages.append('')
+    packages.append('js')
+    packages.append(LOCALES_DIRECTORY)
+
+    for directory in os.listdir(LOCALES_DIRECTORY):
+        packages.append(LOCALES_DIRECTORY + '.' + directory)
+    return packages
+
+
+def get_package_data():
+    """
+    Returns the packages with static files of HaTeMiLe for Python.
+
+    :return: The packages with static files of HaTeMiLe for Python.
+    :rtype: dict(str, list(str))
+    """
+
+    package_data = {
+        '': ['*.xml'],
+        'js': ['*.js'],
+        LOCALES_DIRECTORY: ['*']
+    }
+
+    for directory in os.listdir(LOCALES_DIRECTORY):
+        package_data[LOCALES_DIRECTORY + '.' + directory] = ['*.json']
+    return package_data
+
 
 def get_requirements():
     """
@@ -31,6 +72,7 @@ def get_requirements():
         for line in lines:
             requirements.append(line.strip())
     return requirements
+
 
 setup(
     name='hatemile',
@@ -67,17 +109,7 @@ setup(
         'Natural Language :: English',
         'Topic :: Software Development :: Libraries'
     ],
-    packages=[
-        '',
-        'js',
-        '_locales',
-        '_locales.en_US'
-    ] + find_packages(),
-    package_data={
-        '': ['*.xml'],
-        'js': ['*'],
-        '_locales': ['*'],
-        '_locales.en_US': ['*']
-    },
+    packages=get_packages(),
+    package_data=get_package_data(),
     install_requires=get_requirements()
 )
