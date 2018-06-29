@@ -17,6 +17,21 @@ Module to setup HaTeMiLe for Python.
 from setuptools import find_packages
 from setuptools import setup
 
+def get_requirements():
+    """
+    Returns the content of 'requirements.txt' in a list.
+
+    :return: The content of 'requirements.txt'.
+    :rtype: list(str)
+    """
+
+    requirements = []
+    with open('requirements.txt', 'r') as requirements_file:
+        lines = requirements_file.readlines()
+        for line in lines:
+            requirements.append(line.strip())
+    return requirements
+
 setup(
     name='hatemile',
     description=(
@@ -64,34 +79,5 @@ setup(
         '_locales': ['*'],
         '_locales.en_US': ['*']
     },
-    install_requires=[
-        'alabaster>=0.7.10',
-        'astroid>=1.6.5',
-        'Babel>=2.6.0',
-        'beautifulsoup4>=4.6.0',
-        'certifi>=2018.4.16',
-        'chardet>=3.0.4',
-        'docutils>=0.14',
-        'idna>=2.6',
-        'imagesize>=1.0.0',
-        'isort>=4.3.4',
-        'Jinja2>=2.10',
-        'lazy-object-proxy>=1.3.1',
-        'MarkupSafe>=1.0',
-        'mccabe>=0.6.1',
-        'packaging>=17.1',
-        'pycodestyle>=2.4.0',
-        'Pygments>=2.2.0',
-        'pylint>=1.9.2',
-        'pyparsing>=2.2.0',
-        'pytz>=2018.4',
-        'requests>=2.18.4',
-        'six>=1.11.0',
-        'snowballstemmer>=1.2.1',
-        'Sphinx>=1.7.5',
-        'sphinxcontrib-websupport>=1.1.0',
-        'tinycss>=0.4',
-        'urllib3>=1.22',
-        'wrapt>=1.10.11'
-    ]
+    install_requires=get_requirements()
 )
