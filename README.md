@@ -229,3 +229,10 @@ To generate the full API documentation of HaTeMiLe of Python:
 ## Contributing
 
 If you want contribute with HaTeMiLe for Python, read [contributing guidelines](CONTRIBUTING.md).
+
+## See also
+* [HaTeMiLe for CSS](https://github.com/hatemile/hatemile-for-css)
+* [HaTeMiLe for JavaScript](https://github.com/hatemile/hatemile-for-javascript)
+* [HaTeMiLe for Java](https://github.com/hatemile/hatemile-for-java)
+* [HaTeMiLe for PHP](https://github.com/hatemile/hatemile-for-php)
+* [HaTeMiLe for Ruby](https://github.com/hatemile/hatemile-for-ruby)
