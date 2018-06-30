@@ -65,6 +65,7 @@ class AccessibleEventImplementation(AccessibleEvent):
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
+        # pylint: disable=no-self-use
 
         if not element.has_attribute('tabindex'):
             tag = element.get_tag_name()

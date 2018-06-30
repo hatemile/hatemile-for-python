@@ -57,6 +57,7 @@ class BeautifulSoupHTMLDOMParser(HTMLDOMParser):
         :return: True if the item contained in the list or False if not.
         :rtype: bool
         """
+        # pylint: disable=no-self-use
 
         for item_list in original_list:
             if item is item_list:

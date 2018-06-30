@@ -450,6 +450,7 @@ class AccessibleDisplayImplementation(AccessibleDisplay):
         :return: The shortcut prefix of browser.
         :rtype: str
         """
+        # pylint: disable=no-self-use
 
         if user_agent is not None:
             user_agent = user_agent.lower()

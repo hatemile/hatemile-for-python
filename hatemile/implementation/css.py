@@ -203,7 +203,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
         self.html_parser = html_parser
         self.css_parser = css_parser
         self.configure = configure
-        self.symbols = self._get_symbols(symbol_file_name, configure)
+        self._set_symbols(symbol_file_name, configure)
 
     def _operation_speak_as_spell_out(self, content, index, children):
         """
@@ -319,19 +319,17 @@ class AccessibleCSSImplementation(AccessibleCSS):
 
         return children
 
-    def _get_symbols(self, file_name, configure):
+    def _set_symbols(self, file_name, configure):
         """
-        Returns the symbols of configuration.
+        Load the symbols with configuration.
 
         :param file_name: The file path of symbol configuration.
         :type file_name: str
         :param configure: The configuration of HaTeMiLe.
         :type configure: hatemile.util.configure.Configure
-        :return: The symbols of configuration.
-        :rtype: list(dict(str, str))
         """
 
-        symbols = []
+        self.symbols = []
         if file_name is None:
             file_name = os.path.join(os.path.dirname(os.path.dirname(
                 os.path.dirname(os.path.realpath(__file__))
@@ -341,13 +339,12 @@ class AccessibleCSSImplementation(AccessibleCSS):
             'symbols'
         )[0].getElementsByTagName('symbol')
         for symbol_xml in symbols_xml:
-            symbols.append({
+            self.symbols.append({
                 'symbol': symbol_xml.attributes['symbol'].value,
                 'description': configure.get_parameter(
                     symbol_xml.attributes['description'].value
                 )
             })
-        return symbols
 
     def _get_formated_symbol(self, symbol):
         """
@@ -358,6 +355,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
         :return: The symbol formated.
         :rtype: str
         """
+        # pylint: disable=no-self-use
 
         old_symbols = [
             '\\',
@@ -456,6 +454,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
                  be manipulated to apply the CSS properties.
         :rtype: bool
         """
+        # pylint: disable=no-self-use
 
         tag_name = element.get_tag_name()
         return (
@@ -474,6 +473,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
                  apply the CSS properties.
         :rtype: bool
         """
+        # pylint: disable=no-self-use
 
         return element.get_tag_name() in AccessibleCSSImplementation.VALID_TAGS
 
@@ -512,6 +512,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
+        # pylint: disable=no-self-use
 
         if element.has_children_elements():
             children = element.get_children_elements()
@@ -650,6 +651,7 @@ class AccessibleCSSImplementation(AccessibleCSS):
         :param element: The element.
         :type element: hatemile.util.html.htmldomelement.HTMLDOMElement
         """
+        # pylint: disable=no-self-use
 
         element.set_attribute('role', 'presentation')
         element.set_attribute('aria-hidden', 'true')

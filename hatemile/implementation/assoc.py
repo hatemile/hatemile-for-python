@@ -70,6 +70,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :return The list that represents the table with the rowspans.
         :rtype: list(list(hatemile.util.html.htmldomelement.HTMLDOMElement))
         """
+        # pylint: disable=no-self-use
 
         new_table = []
         if bool(ros):
@@ -119,6 +120,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :return: The list that represents the line of table with the colspans.
         :rtype: list(hatemile.util.html.htmldomelement.HTMLDOMElement)
         """
+        # pylint: disable=no-self-use
 
         new_row = [] + row
         size = len(row)
@@ -141,6 +143,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
                  is not valid.
         :rtype: bool
         """
+        # pylint: disable=no-self-use
 
         if not bool(hed):
             return False
@@ -165,6 +168,7 @@ class AccessibleAssociationImplementation(AccessibleAssociation):
         :return: The list with ids of rows of same column.
         :rtype: list(str)
         """
+        # pylint: disable=no-self-use
 
         ids = []
         for row in hed:

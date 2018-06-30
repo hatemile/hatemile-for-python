@@ -271,6 +271,7 @@ class AccessibleNavigationImplementation(AccessibleNavigation):
         :return: The level of heading.
         :rtype: int
         """
+        # pylint: disable=no-self-use
 
         tag = element.get_tag_name()
         if tag == 'H1':

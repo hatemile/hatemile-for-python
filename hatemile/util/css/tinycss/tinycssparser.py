@@ -47,7 +47,7 @@ class TinyCSSParser(StyleSheetParser):
         if isinstance(css_or_hp, str):
             self.stylesheet = tinycss.make_parser().parse_stylesheet(css_or_hp)
         else:
-            self.stylesheet = self._create_parser(css_or_hp, current_url)
+            self._create_parser(css_or_hp, current_url)
 
     def _create_parser(self, html_parser, current_url):
         """
@@ -57,8 +57,6 @@ class TinyCSSParser(StyleSheetParser):
         :type html_parser: hatemile.util.html.htmldomparser.HTMLDOMParser
         :param current_url: The current URL of page.
         :type current_url: str
-        :return: The tinycss stylesheet.
-        :rtype: tinycss.css21.Stylesheet
         """
 
         css_code = ''
@@ -74,7 +72,7 @@ class TinyCSSParser(StyleSheetParser):
                     urljoin(current_url, element.get_attribute('href'))
                 ).text
 
-        return tinycss.make_parser().parse_stylesheet(css_code)
+        self.stylesheet = tinycss.make_parser().parse_stylesheet(css_code)
 
     def get_rules(self, properties):
         rules = list()

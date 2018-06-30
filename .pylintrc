@@ -135,7 +135,6 @@ disable=print-statement,
         exception-escape,
         comprehension-escape,
         bad-continuation,
-        no-self-use,
         unnecessary-lambda,
         duplicate-code,
         too-many-lines
