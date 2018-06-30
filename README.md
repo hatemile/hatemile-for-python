@@ -225,3 +225,7 @@ To generate the full API documentation of HaTeMiLe of Python:
     navigation.provide_navigation_by_all_skippers()
 
     print(parser.get_html())
+
+## Contributing
+
+If you want contribute with HaTeMiLe for Python, read [contributing guidelines](CONTRIBUTING.md).
