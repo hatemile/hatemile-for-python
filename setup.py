@@ -73,6 +73,21 @@ def get_requirements():
             requirements.append(line.strip())
     return requirements
 
+def get_requirements_dev():
+    """
+    Returns the content of 'requirements-dev.txt' in a list.
+
+    :return: The content of 'requirements-dev.txt'.
+    :rtype: list(str)
+    """
+
+    requirements = []
+    with open('requirements-dev.txt', 'r') as requirements_file:
+        lines = requirements_file.readlines()
+        for line in lines:
+            requirements.append(line.strip())
+    return requirements
+
 
 setup(
     name='hatemile',
@@ -111,5 +126,8 @@ setup(
     ],
     packages=get_packages(),
     package_data=get_package_data(),
-    install_requires=get_requirements()
+    install_requires=get_requirements(),
+    extras_require={
+        'dev': get_requirements_dev()
+    }
 )
