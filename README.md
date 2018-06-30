@@ -12,6 +12,19 @@ HaTeMiLe (HTML Accessible) is a library that can convert a HTML code in a HTML c
 * [Improve the acessibility of forms](https://github.com/hatemile/hatemile-for-python/wiki/Improve-the-acessibility-of-forms);
 * [Provide accessibility resources to navigate](https://github.com/hatemile/hatemile-for-python/wiki/Provide-accessibility-resources-to-navigate).
 
+## Documentation
+
+To generate the full API documentation of HaTeMiLe of Python:
+
+1. [Install, create and activate a virtualenv](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/);
+2. [Install dependencies](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/#using-requirements-files);
+3. [Execute the API docs of sphinx in `docs` directory](https://samnicholls.net/2016/06/15/how-to-sphinx-readthedocs/);
+    ```bash
+    sphinx-apidoc -e -f -o _modules/ ../hatemile
+    make html
+    ```
+4. Open the `docs/_build/html/index.html` with an internet browser.
+
 ## Example
     from hatemile.util.configure import Configure
     from hatemile.util.html.bs.bshtmldomparser import BeautifulSoupHTMLDOMParser
