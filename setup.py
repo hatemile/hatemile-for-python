@@ -73,6 +73,7 @@ def get_requirements():
             requirements.append(line.strip())
     return requirements
 
+
 def get_requirements_dev():
     """
     Returns the content of 'requirements-dev.txt' in a list.
