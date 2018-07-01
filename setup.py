@@ -29,7 +29,7 @@ def get_packages():
     :rtype: list(str)
     """
 
-    packages = find_packages()
+    packages = find_packages(exclude=['tests'])
     packages.append('')
     packages.append('js')
     packages.append(LOCALES_DIRECTORY)
