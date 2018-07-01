@@ -18,6 +18,8 @@ import os
 from setuptools import find_packages
 from setuptools import setup
 
+BASE_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
+
 LOCALES_DIRECTORY = '_locales'
 
 
@@ -67,7 +69,11 @@ def get_requirements():
     """
 
     requirements = []
-    with open('requirements.txt', 'r') as requirements_file:
+    with open(
+        os.path.join(BASE_DIRECTORY, 'requirements.txt'),
+        'r',
+        encoding='utf-8'
+    ) as requirements_file:
         lines = requirements_file.readlines()
         for line in lines:
             requirements.append(line.strip())
@@ -83,7 +89,11 @@ def get_requirements_dev():
     """
 
     requirements = []
-    with open('requirements-dev.txt', 'r') as requirements_file:
+    with open(
+        os.path.join(BASE_DIRECTORY, 'requirements-dev.txt'),
+        'r',
+        encoding='utf-8'
+    ) as requirements_file:
         lines = requirements_file.readlines()
         for line in lines:
             requirements.append(line.strip())
