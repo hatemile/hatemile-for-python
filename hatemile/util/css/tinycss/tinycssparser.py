@@ -17,6 +17,7 @@ Module of TinyCSSParser interface.
 from urllib.parse import urljoin
 import requests
 import tinycss
+from tinycss.css21 import RuleSet
 from hatemile import helper
 from hatemile.util.css.stylesheetparser import StyleSheetParser
 from hatemile.util.html.htmldomparser import HTMLDOMParser
@@ -77,9 +78,10 @@ class TinyCSSParser(StyleSheetParser):
     def get_rules(self, properties):
         rules = list()
         for rule in self.stylesheet.rules:
-            auxiliar_rule = TinyCSSRule(rule)
-            for property_name in properties:
-                if auxiliar_rule.has_property(property_name):
-                    rules.append(auxiliar_rule)
-                    break
+            if isinstance(rule, RuleSet):
+                auxiliar_rule = TinyCSSRule(rule)
+                for property_name in properties:
+                    if auxiliar_rule.has_property(property_name):
+                        rules.append(auxiliar_rule)
+                        break
         return rules
