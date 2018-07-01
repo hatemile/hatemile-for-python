@@ -90,7 +90,7 @@ print(parser.get_html())
 
 ## Contributing
 
-If you want contribute with HaTeMiLe for Python, read [contributing guidelines](CONTRIBUTING.md).
+If you want contribute with HaTeMiLe for Python, read [contributing guidelines](https://github.com/hatemile/hatemile-for-python/blob/master/CONTRIBUTING.md).
 
 ## See also
 * [HaTeMiLe for CSS](https://github.com/hatemile/hatemile-for-css)

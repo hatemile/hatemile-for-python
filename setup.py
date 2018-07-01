@@ -23,6 +23,22 @@ BASE_DIRECTORY = os.path.dirname(os.path.realpath(__file__))
 LOCALES_DIRECTORY = '_locales'
 
 
+def get_long_description():
+    """
+    Returns the long description of HaTeMiLe for Python.
+
+    :return: The long description of HaTeMiLe for Python.
+    :rtype: str
+    """
+
+    with open(
+        os.path.join(BASE_DIRECTORY, 'README.md'),
+        'r',
+        encoding='utf-8'
+    ) as readme_file:
+        return readme_file.read()
+
+
 def get_packages():
     """
     Returns the packages used for HaTeMiLe for Python.
@@ -106,23 +122,8 @@ setup(
         'HaTeMiLe is a library that can convert a HTML code in a HTML code '
         + 'more accessible.'
     ),
-    long_description=(
-        'HaTeMiLe (HTML Accessible) is a open source library developed to '
-        + 'improve accessibility converting a HTML code in a new HTML code '
-        + 'more accessible, its features is based in WCAG 2.0 document, eMAG '
-        + '3.1 document and some features of Job Access With Speech (JAWS), '
-        + 'Opera before version 15 and Mozilla Firefox.\n\n'
-        + 'HaTeMiLe objectives:\n\n'
-        + '* Improve the accessibility of pages, avoiding create new '
-        + 'inaccessibility problems;\n'
-        + '* Not change the original visual of converted pages;\n'
-        + '* Not change the features of original pages;\n'
-        + '* Allow that users and developers can use the HaTeMiLe features;\n'
-        + '* Allow that users and developers can change the texts of library;'
-        + '\n'
-        + '* Allow that the library can be used, extended and changed for any '
-        + 'people.'
-    ),
+    long_description=get_long_description(),
+    long_description_content_type='text/markdown',
     version='2.0.0',
     url='https://github.com/hatemile/hatemile-for-python',
     author='Carlson Santana Cruz',
