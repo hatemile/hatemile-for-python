@@ -25,6 +25,14 @@ To generate the full API documentation of HaTeMiLe of Python:
     ```
 4. Open the `docs/_build/html/index.html` with an internet browser.
 
+## Import the library to your project
+
+To install the HaTeMiLe for Python library, execute these command in terminal:
+
+```bash
+pip install hatemile
+```
+
 ## Usage
 
 Import all needed classes:
