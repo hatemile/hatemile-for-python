@@ -124,7 +124,7 @@ setup(
     ),
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
-    version='2.0.0',
+    version='2.0.1',
     url='https://github.com/hatemile/hatemile-for-python',
     author='Carlson Santana Cruz',
     license='Apache2',
