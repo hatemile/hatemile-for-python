@@ -153,6 +153,7 @@ class BeautifulSoupHTMLDOMElement(BeautifulSoupHTMLDOMNode, HTMLDOMElement):
                     child.prepend_text(last.get_text_content())
                     last.remove_node()
                 last = child
+        return self
 
     def append_text(self, text):
         self.node.append(text)
